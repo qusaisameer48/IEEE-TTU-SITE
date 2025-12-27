@@ -1,0 +1,351 @@
+/* تمييز الرابط الحالي */
+.nav a.active {
+  position: relative;
+}
+.nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+/* ===== Hero Section ===== */
+.events-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 420px;
+  background: url("../img/TeamEdited.jpeg") center/cover no-repeat;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.events-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.events-hero__content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.events-hero__content h1 {
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.events-hero__content p {
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  opacity: 0.9;
+}
+
+/* ===== Page Container ===== */
+.events-page {
+  padding: 60px 20px;
+  background: #eef2f6;
+}
+
+.event-block {
+  max-width: 100%;
+  padding: 0 30px; /* مسافة خفيفة من الأطراف */
+}
+
+
+
+/* ===== Event Card ===== */
+.event-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 34px 26px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.event-card h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 22px;
+  color: #0b3a5a;
+  letter-spacing: 0.5px;
+}
+
+.event-card__media {
+  display: flex;
+  justify-content: center;
+}
+
+.event-card__media img {
+  width: min(820px, 100%);
+  border-radius: 18px;
+  height: 360px;
+  object-fit: cover;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+.event-card__info {
+  width: min(820px, 100%);
+  margin: 18px auto 0;
+  display: grid;
+  gap: 10px;
+  color: #123;
+}
+
+.tag {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 98, 155, 0.12);
+  color: #00629b;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.date {
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.event-card__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #00629b;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #00629b;
+  color: #00629b;
+}
+.btn-outline:hover {
+  background: rgba(0, 98, 155, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .event-card__media img {
+    height: 240px;
+  }
+}
+.nav a {
+  position: relative;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.25s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+
+
+
+
+
+.events-page{
+  background:#eef2f6;
+  padding: 50px 16px;
+  display: grid;
+  gap: 24px;
+}
+
+.event-box{
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  padding: 0 30px;
+}
+
+.event-title{
+  text-align:center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color:#0b3a5a;
+  margin: 6px 0 14px;
+  letter-spacing: .5px;
+}
+
+.event-gallery{
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-image{
+  border-radius: 14px;
+  overflow: hidden;
+  background:#0b2a3a10;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+}
+
+.event-main-img{
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display:block;
+}
+
+.nav-btn{
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,98,155,0.35);
+  background: #fff;
+  color: #00629b;
+  font-size: 22px;
+  cursor: pointer;
+  display:grid;
+  place-items:center;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.nav-btn:hover{
+  transform: scale(1.05);
+  background: rgba(0,98,155,0.07);
+}
+
+
+
+
+
+
+
+
+
+
+/* ===================================
+   EVENTS — DARK MODE (match TEAM page)
+   Put at the VERY END of Event.css
+=================================== */
+
+html[data-theme="dark"] body{
+  background: #0b1622;
+  color: #ffffff;
+}
+
+/* Page background */
+html[data-theme="dark"] .events-page{
+  background: #0b1622 !important;
+}
+
+/* Event Card = glass like Team cards */
+html[data-theme="dark"] .event-card{
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.30) !important;
+}
+
+/* Title + text */
+html[data-theme="dark"] .event-card h2{
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .event-card__info{
+  color: rgba(255,255,255,0.78) !important;
+}
+
+/* Tag = same as member-position */
+html[data-theme="dark"] .tag{
+  color: #0099cc !important;
+  background: rgba(0, 153, 204, 0.18) !important;
+}
+
+/* Date */
+html[data-theme="dark"] .date{
+  color: rgba(255,255,255,0.70) !important;
+  opacity: 1 !important;
+}
+
+/* Buttons */
+html[data-theme="dark"] .btn{
+  background: rgba(0, 98, 155, 0.20) !important;   /* قريب من hover تبع team */
+  border: 1px solid rgba(0, 153, 204, 0.45) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .btn:hover{
+  background: rgba(0, 98, 155, 0.30) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 153, 204, 0.22);
+}
+
+/* Outline button */
+html[data-theme="dark"] .btn-outline{
+  background: transparent !important;
+  border: 2px solid rgba(0, 153, 204, 0.60) !important;
+  color: #0099cc !important;
+}
+
+html[data-theme="dark"] .btn-outline:hover{
+  background: rgba(0, 153, 204, 0.12) !important;
+}
+
+/* Image shadow softer (optional) */
+html[data-theme="dark"] .event-card__media img{
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35) !important;
+}
+
+/* Hero overlay a bit stronger in dark */
+html[data-theme="dark"] .events-hero__overlay{
+  background: rgba(0,0,0,0.65) !important;
+}
+
+/* Nav underline matches accent */
+html[data-theme="dark"] .nav a::after,
+html[data-theme="dark"] .nav a.active::after{
+  background: #0099cc !important;
+}
+
+
+.theme-btn{
+  margin-left: 16px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #fff;
+}
+
+ 

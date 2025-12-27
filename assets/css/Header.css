@@ -1,0 +1,99 @@
+/* =========================
+   HEADER (Shared)
+========================= */
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #00629b;
+  transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.10);
+}
+
+.nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  padding: 14px 18px;
+  flex-wrap: wrap;
+}
+
+/* links */
+.nav a{
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  transition: opacity .2s ease;
+}
+
+.nav a:hover{ opacity: .85; }
+
+/* underline hover */
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-7px;
+  width:0;
+  height:2px;
+  background:#fff;
+  transition: width .25s ease;
+}
+.nav a:hover::after{ width:100%; }
+
+/* active link underline */
+.nav a.active::after{
+  width:100%;
+}
+
+/* ===== Scroll effect (supports is-scrolled OR scrolled) ===== */
+.header.is-scrolled,
+.header.scrolled{
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.header.is-scrolled .nav a,
+.header.scrolled .nav a{
+  color:#0b2a3a;
+}
+.header.is-scrolled .nav a::after,
+.header.scrolled .nav a::after{
+  background:#0b2a3a;
+}
+
+/* ===== Dark Theme ===== */
+html[data-theme="dark"] .header{
+  background: rgba(6, 30, 52, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .nav a::after{
+  background:#0099cc;
+}
+
+html[data-theme="dark"] .header.is-scrolled,
+html[data-theme="dark"] .header.scrolled{
+  background: rgba(6, 30, 52, 0.60);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+html[data-theme="dark"] .header.is-scrolled .nav a,
+html[data-theme="dark"] .header.scrolled .nav a{
+  color:#fff;
+}
+html[data-theme="dark"] .header.is-scrolled .nav a::after,
+html[data-theme="dark"] .header.scrolled .nav a::after{
+  background:#0099cc;
+}
+
+/* theme toggle button spacing inside nav */
+.nav .theme-toggle{
+  margin-left: 10px;
+}
