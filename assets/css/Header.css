@@ -14,8 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 22px;
-  padding: 14px 18px;
+  gap: 25px;
+  padding: 15px;
   flex-wrap: wrap;
 }
 
@@ -23,7 +23,7 @@
 .nav a{
   color: #fff;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
   position: relative;
   transition: opacity .2s ease;
 }
@@ -35,7 +35,7 @@
   content:"";
   position:absolute;
   left:0;
-  bottom:-7px;
+  bottom:-6px;
   width:0;
   height:2px;
   background:#fff;

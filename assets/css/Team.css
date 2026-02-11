@@ -1,5 +1,5 @@
 /* =========================================
-   TEAM.CSS (LIGHT + DARK)
+   TEAM.CSS (LIGHT + DARK) - UPDATED VERSION
    Put AFTER style.css
    Theme: html[data-theme="dark"]
 ========================================= */
@@ -62,20 +62,44 @@ html[data-theme="dark"]{
   --social-icon: rgba(255,255,255,0.90);
 }
 
+
+
+/* Before
+  background: var(--team-bg);
+  color: var(--team-text);
+   */
+
 /* PAGE BASE */
 body{
   background: var(--team-bg);
   color: var(--team-text);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ============================= */
 /* HERO */
 /* ============================= */
 .hero{
   position: relative;
-  height: 85vh;
+  height: 55vh;
   padding-top: 100px;
-  background-image: url("../img/TeamNewEdit.jpeg");
+  background-image: url("../img/Our_Team.png");
   background-size: cover;
   background-position: center 80%;
   display: flex;
@@ -121,24 +145,35 @@ html[data-theme="dark"] .hero-overlay{
 ========================= */
 .team-section{
   position: relative;
-  padding: 90px 8%;
+  padding: 15px ;
   text-align: center;
-  background: var(--team-bg);
-}
 
-.team-section.alt{
-  background: var(--team-alt-bg);
-}
 
+
+  /* Before
+ var(--team-bg)
+   */
+ background: var(--team-bg);}
+
+
+/* إزالة الخلفية من الوضع الافتراضي */
 .team-section::before{
   content:"";
   position:absolute;
   inset:0;
-  background-image: url("../img/circuit.jpg");
-  background-size: 420px;
+  background-image: none; /* إلغاء الخلفية في الوضع العادي */
+  background-size: 820px;
   background-repeat: repeat;
-  opacity: var(--pattern-opacity);
+  opacity: 0;
   pointer-events:none;
+  z-index: 0;
+  transition: opacity 0.3s ease; /* انتقال سلس */
+}
+
+/* إظهار الخلفية فقط في الوضع الداكن */
+html[data-theme="dark"] .team-section::before{
+  background-image: url("../img/IMG_2758.PNG");
+  opacity: 0.15;  
 }
 
 .team-section > *{
@@ -149,9 +184,28 @@ html[data-theme="dark"] .hero-overlay{
 .team-section h2{
   font-size: 34px;
   font-weight: 800;
-  margin-bottom: 10px;
-  color: var(--team-text);
+  margin-bottom: 15px;
+ color: var(--team-text);
+   position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
 }
+
+.team-section h2::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;      /* طول الخط */
+  height: 4px;      /* سماكة الخط */
+  background: #0099cc;  
+  border-radius: 2px;
+  margin: 10px  auto 3px;
+}
+
+
+
 
 .section-desc{
   color: var(--team-muted);
@@ -164,27 +218,60 @@ html[data-theme="dark"] .hero-overlay{
 }
 
 /* =========================
-   GRID (نفس تقسيمتك)
+   GRID
 ========================= */
 .team-grid{
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: stretch;
+}
+.team-grid-Technical,
+.team-grid-Secretariat{
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   justify-items: center;
   align-items: stretch;
 }
 
+.team-grid-Organizers,
+.team-grid-Webmaster{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: stretch;
+}
+.team-grid-Treasure{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: stretch;
+}
 /* =========================
-   CARD (كل كروتك)
+   CARD
 ========================= */
 .team-member,
-.team-member-Saad,
-.team-member-Tala,
-.team-member-Ahmad{
+.team-member-jenan,
+.team-member-Ahmad,
+.team-member-Aisha,
+[class^="team-member"] {
+  position: relative;
   width: 100%;
-  max-width: 320px;
+  height: 100%;
+  max-width: 400px;
+  max-height: 350px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 25px;
@@ -194,28 +281,93 @@ html[data-theme="dark"] .hero-overlay{
   transition: transform .35s ease, box-shadow .35s ease, background .35s ease, border-color .35s ease;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
 }
 
 .team-member:hover,
-.team-member-Saad:hover,
-.team-member-Tala:hover,
-.team-member-Ahmad:hover{
+.team-member-jenan:hover,
+.team-member-Ahmad:hover,
+.team-member-Aisha:hover,
+[class^="team-member"]:hover{
   transform: translateY(-15px);
   background: var(--card-hover-bg);
   border-color: rgba(0,153,204,0.40);
   box-shadow: var(--card-hover-shadow);
 }
 
-/* نفس نظامك: الكروت الخاصة بالوسط */
-.team-member-Saad,
-.team-member-Tala,
-.team-member-Ahmad{
-  grid-column: 1 / -1;
-  justify-self: center;
+
+
+/* خلفية الكارت مع الشفافية */
+.team-member::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/White.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.09;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 25px;
 }
 
+/* الغباش (Overlay) يظهر عند hover */
+.team-member::after,
+.team-member-jenan::after,
+.team-member-Ahmad::after,
+.team-member-Aisha::after,
+[class^="team-member"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 25px;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .team-member::after,
+html[data-theme="dark"] .team-member-jenan::after,
+html[data-theme="dark"] .team-member-Ahmad::after,
+html[data-theme="dark"] .team-member-Aisha::after,
+html[data-theme="dark"] [class^="team-member"]::after {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* إظهار الغباش عند hover */
+.team-member:hover::after,
+.team-member-jenan:hover::after,
+.team-member-Ahmad:hover::after,
+.team-member-Aisha:hover::after,
+[class^="team-member"]:hover::after {
+  opacity: 1;
+}
+
+.team-member > * {
+  position: relative;
+  z-index: 1;
+}
+
+.team-member:hover::before {
+  opacity: 0.15;
+}
+
+
+
+
+
+
 /* =========================
-   IMAGE (موحد + crops)
+   IMAGE
 ========================= */
 .member-image,
 .member-image-jenan,
@@ -228,14 +380,19 @@ html[data-theme="dark"] .hero-overlay{
   border: 4px solid var(--img-ring);
   box-shadow: var(--img-shadow);
   transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 .team-member:hover .member-image,
 .team-member:hover .member-image-jenan,
 .team-member:hover .member-image-Aisha,
-.team-member-Saad:hover .member-image,
-.team-member-Tala:hover .member-image,
-.team-member-Ahmad:hover .member-image{
+.team-member-jenan:hover .member-image,
+.team-member-jenan:hover .member-image-jenan,
+.team-member-Ahmad:hover .member-image,
+.team-member-Aisha:hover .member-image,
+.team-member-Aisha:hover .member-image-Aisha
+ [class^="team-member"]:hover .member-image {
   transform: scale(1.08);
   border-color: rgba(0,153,204,0.75);
   box-shadow: 0 12px 40px rgba(0,153,204,0.45);
@@ -253,26 +410,41 @@ html[data-theme="dark"] .hero-overlay{
 
 .team-member:hover .member-image img,
 .team-member:hover .member-image-jenan img,
-.team-member:hover .member-image-Aisha img{
+.team-member:hover .member-image-Aisha img,
+.team-member-jenan:hover .member-image img,
+.team-member-jenan:hover .member-image-jenan img,
+.team-member-Aisha:hover .member-image-Aisha img{
   transform: scale(1.10);
 }
 
-/* crops زي اللي عندك */
-.member-image-jenan img{ object-position: center 35%; }
+/* Image crops */
+.member-image-jenan img{ 
+  object-position: center 35%; 
+}
 
-/* بدل translateX عشان ما يخرب بالهوفر */
-.member-image-Aisha img{ object-position: 60% center; }
+.member-image-Aisha img{ 
+  object-position: 60% center; 
+}
 
 /* =========================
    TEXT
 ========================= */
 .member-name{
   color: var(--team-text);
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  white-space: nowrap;
+ }
+.member-name-Abdulsamad,
+.member-name-AbdUlrahman{
+  color: var(--team-text);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  
 }
-
 .member-position{
   color: var(--accent);
   font-size: 0.85rem;
@@ -284,6 +456,7 @@ html[data-theme="dark"] .hero-overlay{
   background: rgba(0,98,155,0.12);
   border-radius: 999px;
   display: inline-block;
+  white-space: nowrap;
 }
 
 html[data-theme="dark"] .member-position{
@@ -291,51 +464,78 @@ html[data-theme="dark"] .member-position{
   color: var(--accent2);
 }
 
+
+
+
 /* =========================
-   SOCIAL
+   MEMBER LINKS (HOVER EFFECT)
+   الأيقونات تظهر في وسط الكارت فوق الغباش
 ========================= */
 .member-links{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 20px;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* إظهار الروابط عند hover على الكارت */
+[class^="team-member"]:hover .member-links{
+  opacity: 1;
+  pointer-events: all;
 }
 
 .social-link{
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  background: var(--social-bg);
-  border: 2px solid var(--social-border);
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  transition: transform .25s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-
-/* إذا عندك fill داخل SVG رح يغلب على هاظ */
-.social-link svg{
-  fill: var(--social-icon);
-  transition: fill .25s ease;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .social-link:hover{
-  background: var(--accent2);
-  border-color: var(--accent2);
-  transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 6px 22px rgba(0,153,204,0.35);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.15);
+  box-shadow: 0 8px 25px rgba(0,98,155,0.5);
 }
 
-.social-link:hover svg{
-  fill: #fff !important;
+.social-link svg{
+  fill: #ffffff !important;
+  opacity: 1 !important;
+  width: 24px;
+  height: 24px;
+}
+
+html[data-theme="dark"] .social-link:hover{
+  background: var(--accent2);
+  border-color: var(--accent2);
+  box-shadow: 0 8px 25px rgba(0,153,204,0.6);
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 768px){
-  .team-section{ padding: 70px 6%; }
+  .team-section{ 
+    padding: 70px 6%; 
+  }
 
   .team-grid{
-    grid-template-columns: 1fr; /* موبايل عمود واحد */
+    grid-template-columns: 1fr;
   }
 
   .member-image,
@@ -345,6 +545,61 @@ html[data-theme="dark"] .member-position{
     height: 150px;
   }
 
-  .member-name{ font-size: 1.2rem; }
-  .hero-content h1{ font-size: 2.2rem; }
+  .member-name{ 
+    font-size: 1.2rem; 
+  }
+  
+  .hero-content h1{ 
+    font-size: 2.2rem; 
+  }
+
+  /* في الموبايل، خلي الأيقونات تظهر دائمًا */
+  .member-links{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
 }
+
+
+
+
+
+
+/* حركة النقاط المتحركة */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.background-dot {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* تدرج متحرك */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-section {
+  background: linear-gradient(270deg, #1a2332, #0d1117, #1a2332);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,63 @@
+/* =========================================
+   IEEE TTU — THEME TOKENS (Global)
+   File: assets/css/theme.css
+   Light: soft (no harsh white)
+   Dark : soft navy (not pure black)
+========================================= */
+
+:root{
+  /* Brand */
+  --primary: #0B5FA7;         /* calm IEEE-ish */
+  --primary-strong: #084B86;  /* hover / emphasis */
+  --accent: #21A7B5;          /* teal accent */
+
+  /* Light theme (SOFTER) */
+  --bg: #EEF3F8;              /* page background (less white) */
+  --panel: #FFFFFF;           /* cards/sections */
+  --panel-2: #E6EDF5;         /* subtle blocks (topbar/stats/footer) */
+
+  --text: #0F172A;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+
+  --shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  --shadow-strong: 0 16px 40px rgba(15, 23, 42, 0.12);
+
+  --radius: 12px;
+  --ring: rgba(11, 95, 167, 0.28);
+
+  /* Backward compatibility (your existing CSS vars) */
+  --ieee-blue: var(--primary);
+  --ieee-blue-dark: var(--primary-strong);
+}
+
+/* Dark theme (soft navy charcoal) */
+html[data-theme="dark"]{
+  --bg: #0B1220;
+  --panel: #0F1B2D;
+  --panel-2: #12233A;
+
+  --text: #E7EEF8;
+  --muted: #A8B6C9;
+  --border: rgba(231, 238, 248, 0.10);
+
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+  --shadow-strong: 0 22px 70px rgba(0, 0, 0, 0.55);
+
+  /* Brighter brand in dark */
+  --primary: #63AEFF;
+  --primary-strong: #3D93F5;
+  --accent: #55D6C8;
+
+  --ring: rgba(99, 174, 255, 0.30);
+
+  /* Backward compatibility */
+  --ieee-blue: var(--primary);
+  --ieee-blue-dark: var(--primary-strong);
+}
+
+/* Optional global base */
+body{
+  background: var(--bg);
+  color: var(--text);
+}

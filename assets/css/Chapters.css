@@ -1,0 +1,499 @@
+/* ===================================
+   CHAPTERS & SOCIETIES PAGE STYLES
+   File: assets/css/chapters.css
+=================================== */
+
+/* ===== CHAPTER HERO ===== */
+.chapter-hero {
+  position: relative;
+  height: 55vh;
+  min-height: 400px;
+  background: linear-gradient(135deg, #00629b, #0b3a5a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.chapter-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.04) 2px,
+    transparent 2px,
+    transparent 40px
+  );
+}
+
+
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100px); }
+}
+
+.chapter-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.chapter-hero__content {
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+.chapter-hero__logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.6s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.chapter-hero__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.chapter-hero__content h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.chapter-hero__content p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+/* ===== PAGE CONTAINER ===== */
+.chapters-page {
+  background: #f8f9fa;
+  padding: 60px 20px;
+}
+
+html[data-theme="dark"] .chapters-page {
+  background: #0b1622;
+}
+
+/* ===== INTRO SECTION ===== */
+.intro-section {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.intro-content h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0b3a5a;
+  margin-bottom: 16px;
+}
+
+html[data-theme="dark"] .intro-content h2 {
+  color: #ffffff;
+}
+
+.intro-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+html[data-theme="dark"] .intro-content p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ===== CHAPTERS GRID ===== */
+.chapters-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+  padding: 0 10px;
+}
+
+/* ===== CHAPTER CARD ===== */
+.chapter-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+
+html[data-theme="dark"] .chapter-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.30);
+}
+
+.chapter-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 98, 155, 0.15);
+  border-color: rgba(0, 98, 155, 0.3);
+}
+
+html[data-theme="dark"] .chapter-card:hover {
+  box-shadow: 0 16px 40px rgba(0, 153, 204, 0.25);
+  border-color: rgba(0, 153, 204, 0.5);
+}
+
+/* Featured Card (Student Branch) */
+.chapter-card.featured {
+  grid-column: span 1;
+  background: linear-gradient(135deg, rgba(0, 98, 155, 0.08), rgba(11, 58, 90, 0.05));
+  border: 2px solid rgba(0, 98, 155, 0.2);
+}
+
+html[data-theme="dark"] .chapter-card.featured {
+  background: linear-gradient(135deg, rgba(0, 153, 204, 0.12), rgba(0, 98, 155, 0.08));
+  border-color: rgba(0, 153, 204, 0.3);
+}
+
+/* ===== CARD HEADER ===== */
+.chapter-card__header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chapter-logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 50%;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+html[data-theme="dark"] .chapter-logo {
+  background: rgba(160, 85, 85, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.chapter-card:hover .chapter-logo {
+  transform: scale(1.08);
+}
+
+.chapter-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.chapter-card__header h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0b3a5a;
+  line-height: 1.4;
+}
+
+html[data-theme="dark"] .chapter-card__header h3 {
+  color: #ffffff;
+}
+
+/* ===== CARD BODY ===== */
+.chapter-card__body {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.chapter-card__body p {
+  color: #555;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+html[data-theme="dark"] .chapter-card__body p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ===== CHAPTER STATS ===== */
+.chapter-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.stat {
+  text-align: center;
+  padding: 14px;
+  background: rgba(0, 98, 155, 0.06);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 98, 155, 0.15);
+}
+
+html[data-theme="dark"] .stat {
+  background: rgba(0, 153, 204, 0.12);
+  border-color: rgba(0, 153, 204, 0.25);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #00629b;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+html[data-theme="dark"] .stat-number {
+  color: #0099cc;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+html[data-theme="dark"] .stat-label {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ===== CHAPTER TAGS ===== */
+.chapter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(0, 98, 155, 0.1);
+  color: #00629b;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border: 1px solid rgba(0, 98, 155, 0.2);
+}
+
+html[data-theme="dark"] .tag {
+  background: rgba(0, 153, 204, 0.15);
+  color: #0099cc;
+  border-color: rgba(0, 153, 204, 0.35);
+}
+
+/* ===== CARD FOOTER ===== */
+.chapter-card__footer {
+  margin-top: auto;
+}
+
+.btn-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  padding: 12px 24px;
+  background: #00629b;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 98, 155, 0.2);
+}
+
+.btn-explore:hover {
+  background: #004a75;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 98, 155, 0.3);
+}
+
+.btn-explore svg {
+  transition: transform 0.3s ease;
+}
+
+.btn-explore:hover svg {
+  transform: translateX(4px);
+}
+
+html[data-theme="dark"] .btn-explore {
+  background: rgba(0, 98, 155, 0.25);
+  border: 1px solid rgba(0, 153, 204, 0.5);
+  color: #0099cc;
+}
+
+html[data-theme="dark"] .btn-explore:hover {
+  background: rgba(0, 98, 155, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 153, 204, 0.25);
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  max-width: 800px;
+  margin: 80px auto 0;
+  text-align: center;
+  background: linear-gradient(135deg, #00629b, #0b3a5a);
+  padding: 50px 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 98, 155, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+  background-size: 100px;
+  opacity: 0.3;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-content h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 28px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: #ffffff;
+  color: #00629b;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .cta-section {
+  background: linear-gradient(135deg, rgba(0, 153, 204, 0.25), rgba(0, 98, 155, 0.15));
+  border: 1px solid rgba(0, 153, 204, 0.3);
+}
+
+html[data-theme="dark"] .cta-btn {
+  background: rgba(0, 153, 204, 0.3);
+  border: 1px solid rgba(0, 153, 204, 0.6);
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .cta-btn:hover {
+  background: rgba(0, 153, 204, 0.4);
+}
+
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .chapters-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .chapter-card.featured {
+    grid-column: span 1;
+  }
+
+  .intro-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .cta-content h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapters-hero__content h1 {
+    font-size: 2rem;
+  }
+
+  .chapter-card {
+    padding: 24px 20px;
+  }
+
+  .chapter-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+
+
+/* ===== CS LOGO STYLES ===== */
+
+.chapter-logo-cs {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a3440, #0f1a24); /* أفتح شوي */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}

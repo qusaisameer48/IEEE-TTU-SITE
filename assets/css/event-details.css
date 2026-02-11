@@ -109,7 +109,7 @@ html[data-theme="dark"] .details-meta span{
   width: 100%;
   height: 420px;
   object-fit: cover;
-  display:block;
+  display: block;
 }
 
 /* Sections as cards */
@@ -175,4 +175,8 @@ html[data-theme="dark"] .details-meta span{
   .details-hero img{ height: 260px; }
   .gallery-grid{ grid-template-columns: 1fr; }
   .details-meta span{ width: fit-content; }
+}
+
+.details-gallery .x {
+  object-position: center 30%;
 }

@@ -2,26 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Join | IEEE TTU</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us - IEEE TTU Student Branch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <link rel="stylesheet" href="../assets/css/Footer.css">
+  <link rel="stylesheet" href="../assets/css/Home.css">
+  <link rel="stylesheet" href="../assets/css/Header.css">
+  <link rel="stylesheet" href="../assets/css/theme-toggle.css">
+  <link rel="stylesheet" href="../assets/css/join.css">
 </head>
 <body>
 
+
+<!-- Header -->
 <header class="header">
   <nav class="nav">
     <a href="../index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="activities.html">Activities</a>
+    <a href="chapters.html" >Chapters</a>
+    <a href="../index.html#about">About</a>
     <a href="team.html">Team</a>
-    <a href="join.html">Join</a>
-    <a href="contact.html">Contact</a>
+    <a href="events.html">Events</a>
+    <a href="join.html"class="active">Join</a>
+    <a href="#contact-section">Contact</a>
+    <a href="#faq-section">FAQs</a>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+      <span class="icon sun">☀️</span>
+      <span class="icon moon">🌙</span>
+      <span class="knob"></span>
+    </button>
   </nav>
 </header>
 
-<section style="padding: 60px; text-align:center;">
-  <h1>Join IEEE TTU</h1>
-  <p>Student Branch at Tafila Technical University.</p>
+
+
+<!-- Hero Section -->
+<section class="chapter-hero" id="chapterHero">
+  <div class="chapter-hero__overlay"></div>
+  <div class="chapter-hero__content">
+    <div class="chapter-hero__logo">
+      <img id="heroLogo" src="../assets/img/images-removebg-preview.png" alt="Chapter Logo">
+    </div>
+    <h1 id="chapterTitle">Join IEEE TTU</h1>
+    <p id="chapterTagline">Be part of our innovative student community</p>
+  </div>
 </section>
 
+
+
+
+
+
+<!-- Main Container -->
+<div class="container">
+  
+<section class="video-section">
+  <h2 class="section-title">How to Register</h2>
+
+  <div class="video-container">
+    <video src="../assets/video/Rigester.mp4" controls></video>
+  </div>
+</section>
+
+
+  <!-- FAQ Section -->
+  <section class="faq-section"id="faq-section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What is IEEE?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What benefits will I receive as a member?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>As an IEEE TTU member, you'll gain opportunities to develop your technical and leadership skills, participate in local and international workshops and competitions, network with industry professionals, access IEEE educational resources, and build a strong resume that distinguishes you in the job market.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Is there a membership fee?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, there is a nominal annual membership fee that helps cover the costs of events and activities. You can get details about the exact fees when you contact us. We also offer flexible payment options for students.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How can I participate in activities?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>After registration, you'll be added to our communication channels where we announce all events and activities. You can choose to participate in activities that interest you, whether they're technical workshops, competitions, or social events.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I join at any time during the year?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we accept membership applications throughout the academic year. However, we recommend registering at the beginning of the semester to take full advantage of all planned activities and events.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What committees are available to join?</h3>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <p>We have several specialized committees: Technical Committee, Public Relations Committee, Media & Design Committee, Events & Organization Committee, and Academic Committee. You can choose the committee that suits your interests and skills, or participate in more than one committee.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section"id="contact-section">
+    <div class="contact-intro">
+      <h2>Contact Us</h2>
+      <p>We're happy to connect with you and answer your questions</p>
+    </div>
+    
+    <form class="contact-form" id="contactForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="example@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+962 7X XXX XXXX">
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" required placeholder="Write your message or inquiry here..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+         <div class="footer-section">
+            <h3 class="footer-title">About Us</h3>
+            <p class="footer-description">
+                We are a community dedicated to innovation, learning, and collaboration. 
+                Join us to be part of something amazing.
+            </p>
+            <div class="footer-logo">
+                 <img src="../assets/img/IEEE_TTU_Logo.png" alt="Logo">
+            </div>
+        </div>
+
+        <!-- Links-->
+        <div class="footer-section">
+            <h3 class="footer-title">Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="team.html"><i class="fas fa-users"></i> Our Team</a></li>
+                <li><a href="chapters.html"><i class="fas fa-map-marked-alt"></i> Chapters</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a href="join.html"><i class="fas fa-user-plus"></i> Join Us</a></li>
+                <li><a href="Chapters/IeeeTtuStudentBranch.html"><i class="fas fa-info-circle"></i> About</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Information-->
+        <div class="footer-section">
+            <h3 class="footer-title">Contact Info</h3>
+            <ul class="footer-contact">
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:info@example.com">info@example.com</a>
+                </li>
+        
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Tafila, Jordan</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="footer-section">
+            <h3 class="footer-title">Follow Us</h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/ieeettu" target="_blank" class="social-icon facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/ieeettu/" target="_blank" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/ieeettu/posts/?feedView=all" target="_blank" class="social-icon linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://youtube.com/yourchannel" target="_blank" class="social-icon youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+      
+        </div>
+    </div>
+
+    <!-- Copyright-->
+    <div class="footer-bottom">
+        <div class="footer-container">
+            <p>&copy; 2026 IEEE Tafila Technical University Student Branch. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="https://privacy.ieee.org/policies">Privacy Policy</a>
+                <span>•</span>
+                <a href="https://www.ieee.org/about/help/site-terms-conditions">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+<script src="../assets/js/join.js"></script>
 </body>
 </html>

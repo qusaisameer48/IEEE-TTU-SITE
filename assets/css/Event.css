@@ -14,12 +14,15 @@
 
 /* ===== Hero Section ===== */
 .events-hero {
-  position: relative;
-  height: 70vh;
-  min-height: 420px;
-  background: url("../img/TeamEdited.jpeg") center/cover no-repeat;
-  display: grid;
-  place-items: center;
+ position: relative;
+  height: 55vh;
+  padding-top: 100px;
+  background-image: url("../img/Our_Team.jpg");
+  background-size: cover;
+  background-position: center 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -29,24 +32,38 @@
   background: rgba(0, 0, 0, 0.55);
 }
 
-.events-hero__content {
+
+
+
+
+.events-hero__content{
   position: relative;
   z-index: 1;
   color: #fff;
+  max-width: 900px;
   padding: 0 20px;
+  margin: 0 auto;
+   padding-bottom: 50px;
+
 }
 
-.events-hero__content h1 {
-  font-size: clamp(2.2rem, 4.5vw, 4rem);
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+.events-hero__content h1{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
 }
 
-.events-hero__content p {
-  font-size: clamp(1.1rem, 2vw, 1.6rem);
-  opacity: 0.9;
+.events-hero__content h3{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 2.0rem;
 }
+
+
+
+
+
 
 /* ===== Page Container ===== */
 .events-page {
@@ -67,7 +84,7 @@
   border-radius: 22px;
   padding: 34px 26px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
+ }
 
 .event-card h2 {
   text-align: center;
@@ -349,3 +366,6 @@ html[data-theme="dark"] .nav a.active::after{
 }
 
  
+
+
+
