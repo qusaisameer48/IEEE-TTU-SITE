@@ -7,7 +7,7 @@
   position: relative;
   height: 55vh;
   min-height: 400px;
-background: linear-gradient(135deg, #1a4d6d, #2871a8, #3a8bc9, #4ea5e0);
+  background: linear-gradient(135deg, #1a4d6d, #2871a8, #3a8bc9, #4ea5e0);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,9 +19,9 @@ background: linear-gradient(135deg, #1a4d6d, #2871a8, #3a8bc9, #4ea5e0);
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><text x="20" y="40" font-family="monospace" font-size="30" fill="rgba(255,255,255,0.18)" font-weight="bold">&lt;/&gt;</text><text x="120" y="100" font-family="monospace" font-size="25" fill="rgba(255,255,255,0.15)">{}</text><text x="40" y="150" font-family="monospace" font-size="20" fill="rgba(255,255,255,0.16)">def</text><text x="140" y="170" font-family="monospace" font-size="22" fill="rgba(255,255,255,0.14)">( )</text></svg>');
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M45 30 L70 40 L70 70 Q70 90 45 98 Q20 90 20 70 L20 40 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/><path d="M140 120 L165 130 L165 160 Q165 180 140 188 Q115 180 115 160 L115 130 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/><line x1="140" y1="135" x2="140" y2="175" stroke="rgba(255,255,255,0.18)" stroke-width="2"/><line x1="120" y1="155" x2="160" y2="155" stroke="rgba(255,255,255,0.18)" stroke-width="2"/><text x="85" y="45" font-family="monospace" font-size="14" fill="rgba(255,255,255,0.16)">0xA3</text><text x="10" y="180" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.14)">SHA</text><text x="150" y="95" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.13)">RSA</text><path d="M180 25 L190 15 L200 25 L190 35 Z" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/></svg>');
   background-size: 250px;
-  animation: float 10s linear infinite;
+  animation: float 5s linear infinite;
   opacity: 1;
   filter: contrast(1.15);
 }
@@ -30,9 +30,10 @@ background: linear-gradient(135deg, #1a4d6d, #2871a8, #3a8bc9, #4ea5e0);
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="120" cy="25" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="95" cy="70" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="30" cy="120" r="3" fill="rgba(255,255,255,0.15)"/><rect x="70" y="30" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="15" y="85" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="90" y="135" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
   background-size: 180px;
-  animation: float 25s linear infinite reverse;
+  animation: float2 18s ease-in-out infinite;
+  animation-delay: -9s;
   opacity: 0.6;
 }
 
@@ -41,7 +42,7 @@ background: linear-gradient(135deg, #1a4d6d, #2871a8, #3a8bc9, #4ea5e0);
     transform: translate(0, 0) rotate(0deg);
   }
   100% {
-    transform: translate(60px, 60px) rotate(5deg);
+    transform: translate(10px, 10px) rotate(5deg);
   }
 }
 

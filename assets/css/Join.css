@@ -17,14 +17,51 @@
   overflow: hidden;
 }
 
+
+/* نمط الخطوط الأفقية والعمودية */
 .chapter-hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="rgba(255,255,255,0.03)"/></svg>');
-  background-size: 150px;
-  animation: float 20s linear infinite;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 60px
+    );
 }
+
+/* خطوط قطرية متقاطعة */
+.chapter-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 50px,
+      rgba(255,255,255,0.025) 50px,
+      rgba(255,255,255,0.025) 52px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 50px,
+      rgba(255,255,255,0.025) 50px,
+      rgba(255,255,255,0.025) 52px
+    );
+}
+
 
 @keyframes float {
   from { transform: translateY(0); }

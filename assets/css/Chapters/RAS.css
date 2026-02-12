@@ -20,35 +20,59 @@ display: flex;
   overflow: hidden;
 }
 
-.chapter-hero::before {
+ .chapter-hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='rgba(255,255,255,0.25)' stroke-width='6'><rect x='40' y='40' width='120' height='90' rx='20'/><circle cx='70' cy='75' r='10'/><circle cx='130' cy='75' r='10'/><path d='M70 105 Q100 125 130 105'/><line x1='40' y1='85' x2='25' y2='85'/><line x1='160' y1='85' x2='175' y2='85'/><line x1='100' y1='40' x2='100' y2='25'/></g></svg>");
-  background-size: 150px;
-  animation: floatTech 10s ease-in-out infinite;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ctext x='50%25' y='35%25' text-anchor='middle' fill='%23ffffff' opacity='0.22' font-size='38' font-weight='bold' font-family='Arial'%3EIEEE RAS%3C/text%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23ffffff' opacity='0.16' font-size='16' font-family='monospace'%3ERobotics %26 Automation%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' fill='%23ffffff' opacity='0.14' font-size='14' font-family='monospace'%3ETTU Branch%3C/text%3E%3C/svg%3E");
+  background-size: 350px;
+  background-position: center;
+  animation: float 5s linear infinite;
   opacity: 1;
-}
+  filter: contrast(1.15);
+ }
 
-.chapter-hero::after {
+ .chapter-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><g opacity="0.75"><circle cx="50" cy="45" r="10" fill="rgba(255,255,255,0.15)"/><circle cx="46" cy="43" r="1.5" fill="rgba(255,255,255,0.35)"/><circle cx="54" cy="43" r="1.5" fill="rgba(255,255,255,0.35)"/><path d="M 47 48 Q 50 49.5 53 48" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/><rect x="42" y="55" width="16" height="14" rx="2" fill="rgba(255,255,255,0.12)"/><rect x="38" y="58" width="6" height="10" rx="1" fill="rgba(255,255,255,0.1)"/><rect x="56" y="58" width="6" height="10" rx="1" fill="rgba(255,255,255,0.1)"/><rect x="45" y="69" width="4" height="8" rx="1" fill="rgba(255,255,255,0.13)"/><rect x="51" y="69" width="4" height="8" rx="1" fill="rgba(255,255,255,0.13)"/></g><g opacity="0.65"><circle cx="120" cy="60" r="2" fill="rgba(255,255,255,0.22)"/><circle cx="135" cy="55" r="2" fill="rgba(255,255,255,0.22)"/><circle cx="150" cy="58" r="2" fill="rgba(255,255,255,0.22)"/><circle cx="130" cy="70" r="2" fill="rgba(255,255,255,0.22)"/><line x1="120" y1="60" x2="135" y2="55" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="135" y1="55" x2="150" y2="58" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="120" y1="60" x2="130" y2="70" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="135" y1="55" x2="130" y2="70" stroke="rgba(255,255,255,0.18)" stroke-width="1"/></g><g opacity="0.7"><path d="M 30 120 L 45 115 L 60 122 L 75 118 L 90 125" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/><circle cx="30" cy="120" r="1.5" fill="rgba(255,255,255,0.25)"/><circle cx="45" cy="115" r="1.5" fill="rgba(255,255,255,0.25)"/><circle cx="60" cy="122" r="1.5" fill="rgba(255,255,255,0.25)"/><circle cx="75" cy="118" r="1.5" fill="rgba(255,255,255,0.25)"/><circle cx="90" cy="125" r="1.5" fill="rgba(255,255,255,0.25)"/></g></svg>');
-  background-size: 220px;
-  animation: floatTech 50s ease-in-out infinite reverse;
-  opacity: 0.85;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3C!-- Robot Icon --%3E%3Crect x='15%25' y='15%25' width='15' height='20' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.15'/%3E%3Ccircle cx='calc(15%25 + 7.5)' cy='calc(15%25 - 5)' r='5' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.15'/%3E%3C!-- Gear --%3E%3Ccircle cx='75%25' y='25%25' r='12' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.16'/%3E%3Ctext x='75%25' y='27%25' text-anchor='middle' fill='%23ffffff' opacity='0.16' font-size='10'%3E⚙%3C/text%3E%3C!-- Sensor --%3E%3Ccircle cx='85%25' cy='45%25' r='4' fill='%23ffffff' opacity='0.14'/%3E%3Ccircle cx='85%25' cy='45%25' r='8' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.12'/%3E%3C!-- Code Symbols --%3E%3Ctext x='20%25' y='50%25' fill='%23ffffff' opacity='0.18' font-size='18' font-family='monospace' font-weight='600'%3E&lt;/&gt;%3C/text%3E%3Ctext x='65%25' y='65%25' fill='%23ffffff' opacity='0.16' font-size='16' font-family='monospace'%3E{ }%3C/text%3E%3C!-- Circuit Lines --%3E%3Cline x1='10%25' y1='70%25' x2='35%25' y2='70%25' stroke='%23ffffff' stroke-width='1.5' opacity='0.13'/%3E%3Ccircle cx='22.5%25' cy='70%25' r='3' fill='%23ffffff' opacity='0.13'/%3E%3C!-- Robot Arm --%3E%3Cline x1='70%25' y1='80%25' x2='85%25' y2='75%25' stroke='%23ffffff' stroke-width='2' opacity='0.15'/%3E%3Ccircle cx='85%25' cy='75%25' r='4' fill='%23ffffff' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 380px;
+  background-position: center;
+  animation: float 5s linear infinite;
+  opacity: 1;
+ }
+
+ .chapter-hero-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='18%25' y='12%25' fill='%23ffffff' opacity='0.19' font-size='17' font-family='monospace' font-weight='bold'%3ESERVO%3C/text%3E%3Ctext x='68%25' y='20%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='600'%3EPWM%3C/text%3E%3Ctext x='88%25' y='33%25' fill='%23ffffff' opacity='0.13' font-size='13' font-family='monospace'%3E01101%3C/text%3E%3Ctext x='10%25' y='42%25' fill='%23ffffff' opacity='0.18' font-size='16' font-family='monospace' font-weight='600'%3ESENSOR%3C/text%3E%3Ctext x='50%25' y='52%25' fill='%23ffffff' opacity='0.20' font-size='19' font-family='monospace' font-weight='bold'%3EROS%3C/text%3E%3Ctext x='78%25' y='62%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3EGPIO%3C/text%3E%3Ctext x='25%25' y='72%25' fill='%23ffffff' opacity='0.17' font-size='16' font-family='monospace' font-weight='600'%3EKINEMATICS%3C/text%3E%3Ctext x='65%25' y='83%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='500'%3EPID%3C/text%3E%3Ctext x='12%25' y='90%25' fill='%23ffffff' opacity='0.14' font-size='13' font-family='monospace'%3E11010%3C/text%3E%3Ctext x='85%25' y='15%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3EIMU%3C/text%3E%3Ctext x='40%25' y='35%25' fill='%23ffffff' opacity='0.17' font-size='15' font-family='monospace' font-weight='500'%3ELIDAR%3C/text%3E%3C/svg%3E");
+  background-size: 520px;
+  background-position: center;
+  animation: float 10s linear infinite;
+  opacity: 1;
+   z-index: 0;
 }
 
-@keyframes floatTech {
-  0%, 100% {
-    transform: translate(0, 0);
+ .chapter-hero-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='15%25' y='18%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='500'%3Erobot.move()%3C/text%3E%3Ctext x='70%25' y='28%25' fill='%23ffffff' opacity='0.14' font-size='14' font-family='monospace'%3Ewhile(1)%3C/text%3E%3Ctext x='32%25' y='40%25' fill='%23ffffff' opacity='0.19' font-size='18' font-family='monospace' font-weight='bold'%3E=&gt;%3C/text%3E%3Ctext x='78%25' y='50%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3Eloop()%3C/text%3E%3Ctext x='20%25' y='62%25' fill='%23ffffff' opacity='0.17' font-size='16' font-family='monospace' font-weight='500'%3Eanalog()%3C/text%3E%3Ctext x='62%25' y='75%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace'%3Eserial.%3C/text%3E%3Ctext x='38%25' y='88%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3E[ ][ ]%3C/text%3E%3Ctext x='10%25' y='55%25' fill='%23ffffff' opacity='0.14' font-size='13' font-family='monospace'%3Evoid%3C/text%3E%3Ctext x='85%25' y='70%25' fill='%23ffffff' opacity='0.13' font-size='12' font-family='monospace'%3E++%3C/text%3E%3C/svg%3E");
+  background-size: 490px;
+  background-position: center;
+  animation: float 10s linear infinite;
+  opacity: 1;
+   z-index: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
   }
-  33% {
-    transform: translate(25px, 15px);
-  }
-  66% {
-    transform: translate(12px, 30px);
+  100% {
+    transform: translate(10px, 10px) rotate(5deg);
   }
 }
 
@@ -533,78 +557,6 @@ html[data-theme="dark"] .team-btn:hover {
   background: rgba(0, 98, 155, 0.35);
 }
 
-/* ===== JOIN CTA ===== */
-.join-cta-section {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  background: linear-gradient(135deg, #00629b, #0b3a5a);
-  padding: 45px 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 98, 155, 0.25);
-  position: relative;
-  overflow: hidden;
-}
-
-.join-cta-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
-  background-size: 100px;
-  opacity: 0.3;
-}
-
-.join-cta-content {
-  position: relative;
-  z-index: 1;
-}
-
-.join-cta-content h2 {
-  font-size: 1.9rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.join-cta-content p {
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 24px;
-}
-
-.join-cta-btn {
-  display: inline-block;
-  padding: 14px 34px;
-  background: #ffffff;
-  color: #00629b;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1.05rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.join-cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
-html[data-theme="dark"] .join-cta-section {
-  background: linear-gradient(135deg, rgba(0, 153, 204, 0.25), rgba(0, 98, 155, 0.15));
-  border: 1px solid rgba(0, 153, 204, 0.3);
-}
-
-html[data-theme="dark"] .join-cta-btn {
-  background: rgba(0, 153, 204, 0.3);
-  border: 1px solid rgba(0, 153, 204, 0.6);
-  color: #ffffff;
-}
-
-html[data-theme="dark"] .join-cta-btn:hover {
-  background: rgba(0, 153, 204, 0.4);
-}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

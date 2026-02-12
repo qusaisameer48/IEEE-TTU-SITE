@@ -7,57 +7,56 @@
   position: relative;
   height: 55vh;
   min-height: 400px;
-background: linear-gradient(135deg, #850b71, #9120ad, #8b168e, #bc83bd);  display: flex;
+  background: linear-gradient(135deg, #850b71, #9120ad, #8b168e, #bc83bd);
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
 }
 
-.chapter-hero::before {
+ .chapter-hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='rgba(0,0,0,0.6)' stroke-width='3'><path d='M70 40 Q100 15 130 40'/><path d='M60 40 H140'/><circle cx='100' cy='65' r='18'/><path d='M82 65 Q100 75 118 65'/><path d='M65 90 V150'/><path d='M135 90 V150'/><rect x='70' y='90' width='60' height='70' rx='8'/></g></svg>");
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='rgba(255,192,203,0.3)' stroke='rgba(255,182,193,0.4)' stroke-width='2'><ellipse cx='140' cy='55' rx='15' ry='20'/><ellipse cx='170' cy='55' rx='15' ry='20'/><rect x='150' y='45' width='10' height='20' rx='2'/><path d='M140 65 L130 85 L140 80 Z'/><path d='M170 65 L180 85 L170 80 Z'/></g></svg>");
+  background-size: 250px;
+  animation: float 15s linear infinite;
+  opacity: 1;
+    filter: contrast(1.15);
+
+    
+
+}
+
+ .chapter-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><text x="25" y="50" font-family="monospace" font-size="15" fill="rgba(255,192,203,0.28)" font-weight="bold">WIE</text><text x="160" y="165" font-family="monospace" font-size="13" fill="rgba(255,182,193,0.25)">&lt;/&gt;</text><text x="90" y="95" font-family="monospace" font-size="12" fill="rgba(255,192,203,0.24)">CODE</text><circle cx="80" cy="170" r="3" fill="rgba(255,192,203,0.3)"/><circle cx="35" cy="85" r="3" fill="rgba(255,182,193,0.3)"/><circle cx="165" cy="130" r="3" fill="rgba(255,192,203,0.3)"/><path d="M160 108 Q155 103 150 108 T160 118 Q170 108 165 103 T160 108 Z" fill="rgba(255,182,193,0.35)" stroke="rgba(255,192,203,0.25)" stroke-width="0.5"/><path d="M180 108 Q175 103 170 108 T180 118 Q190 108 185 103 T180 108 Z" fill="rgba(255,192,203,0.35)" stroke="rgba(255,182,193,0.25)" stroke-width="0.5"/><rect x="125" y="150" width="30" height="1.8" fill="rgba(255,192,203,0.2)"/><rect x="50" y="120" width="40" height="1.8" fill="rgba(255,182,193,0.2)"/></svg>');
+  background-size: 180px;
+  animation: float 25s linear infinite reverse;
+  opacity: 0.9;
+}
+ 
+.chapter-hero-content {
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><text x="25" y="50" font-family="monospace" font-size="15" fill="rgba(255,192,203,0.28)" font-weight="bold">WIE</text><text x="160" y="165" font-family="monospace" font-size="13" fill="rgba(255,182,193,0.25)">&lt;/&gt;</text><text x="90" y="95" font-family="monospace" font-size="12" fill="rgba(255,192,203,0.24)">CODE</text><circle cx="80" cy="170" r="3" fill="rgba(255,192,203,0.3)"/><circle cx="35" cy="85" r="3" fill="rgba(255,182,193,0.3)"/><circle cx="165" cy="130" r="3" fill="rgba(255,192,203,0.3)"/><path d="M165 115 L160 110 L155 115 L160 125 Z M175 115 L180 110 L185 115 L180 125 Z" fill="rgba(255,182,193,0.28)"/><rect x="125" y="150" width="30" height="1.8" fill="rgba(255,192,203,0.2)"/><rect x="50" y="120" width="40" height="1.8" fill="rgba(255,182,193,0.2)"/></svg>');
   background-size: 200px;
-  background-position: 10% 20%;
-  animation: slowDrift 15s ease-in-out infinite;
-  opacity: 0.8;
-  filter: contrast(1.1);
+  animation: float3 20s ease-in-out infinite;
+  opacity: 0.85;
+  pointer-events: none;
 }
 
-.chapter-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
-  background-size: 150px;
-  background-position: 80% 60%;
-  animation: gentleFloat 15s ease-in-out infinite alternate;
-  opacity: 0.5;
-}
-
-@keyframes slowDrift {
-  0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translate(30px, -20px);
-    opacity: 0.6;
-  }
-}
-
-@keyframes gentleFloat {
+@keyframes float {
   0% {
-    transform: translateY(0);
+    transform: translate(0, 0) rotate(0deg);
   }
   100% {
-    transform: translateY(-25px);
+    transform: translate(10px, 10px) rotate(5deg);
   }
 }
-
-
 
 
 
