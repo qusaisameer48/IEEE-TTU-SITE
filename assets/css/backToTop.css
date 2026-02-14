@@ -1,0 +1,60 @@
+/* =========================
+   Back to Top Button - Circular
+========================= */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 15px;
+    width: 55px;
+    height: 55px;
+    
+    /* Light Mode - IEEE Blue */
+    background: var(--ieee-blue);
+    color: white;
+    
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    
+    box-shadow: 0 4px 15px rgba(0, 98, 155, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--ieee-blue-dark);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 98, 155, 0.4);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Dark Mode */
+html[data-theme="dark"] .back-to-top {
+    background: rgba(0, 153, 204, 0.25);
+    border: 2px solid rgba(0, 153, 204, 0.5);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 153, 204, 0.3);
+}
+
+html[data-theme="dark"] .back-to-top:hover {
+    background: rgba(0, 153, 204, 0.35);
+    border-color: rgba(0, 153, 204, 0.7);
+    box-shadow: 0 8px 25px rgba(0, 153, 204, 0.4);
+}
