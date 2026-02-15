@@ -216,23 +216,20 @@ html[data-theme="dark"] .chapter-card.featured {
   border-radius: 50%;
   padding: 18px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
-}
-
-html[data-theme="dark"] .chapter-logo {
-  background: rgba(160, 85, 85, 0.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.chapter-card:hover .chapter-logo {
-  transform: scale(1.08);
+  overflow: hidden; /* مهم */
 }
 
 .chapter-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.3s ease;
 }
+
+.chapter-card:hover .chapter-logo img {
+  transform: scale(1.15);
+}
+
 
 .chapter-card__header h3 {
   font-size: 1.35rem;
