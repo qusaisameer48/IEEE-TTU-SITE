@@ -19,7 +19,8 @@ background: linear-gradient(135deg, #2d5016, #4a7c2c, #6b9d3e, #8bc34a);
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='200 200'><circle cx='90' cy='100' r='45' fill='%239AD1D4'/><circle cx='130' cy='90' r='25' fill='none' stroke='%2399C24D' stroke-width='6'/><path d='M120 130 Q135 150 150 130' fill='%2399C24D'/></svg>");
+background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><text x="10" y="25" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.22)" font-weight="bold">renewable</text><text x="85" y="35" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">energy</text><text x="5" y="55" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">sustainable</text><text x="95" y="65" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.24)">green</text><text x="35" y="80" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.19)">eco</text><text x="105" y="95" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.17)">solar</text><text x="15" y="110" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.21)">power</text><text x="70" y="125" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">clean</text><text x="40" y="140" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">future</text></svg>');   
+  
   background-size: 250px;
   animation: float 10s linear infinite;
   opacity: 1;
@@ -31,6 +32,9 @@ background: linear-gradient(135deg, #2d5016, #4a7c2c, #6b9d3e, #8bc34a);
   position: absolute;
   inset: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
+  
+  
+  
   background-size: 180px;
   animation: float 25s linear infinite reverse;
   opacity: 0.6;
@@ -338,6 +342,84 @@ html[data-theme="dark"] .activity-card p {
 }
 
 
+
+
+
+
+/* ===== ACHIEVEMENTS TIMELINE ===== */
+.achievements-timeline {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 40px;
+}
+
+ 
+
+html[data-theme="dark"] .achievements-timeline::before {
+  background: linear-gradient(180deg, rgba(0, 153, 204, 0.5), rgba(0, 153, 204, 0.2));
+}
+
+.achievement-item {
+  position: relative;
+  margin-bottom: 35px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.achievement-item::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  background: #00629b;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(0, 98, 155, 0.15);
+}
+
+html[data-theme="dark"] .achievement-item::before {
+  background: #0099cc;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(0, 153, 204, 0.2);
+}
+
+.achievement-year {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00629b;
+  min-width: 60px;
+  padding-top: 2px;
+}
+
+html[data-theme="dark"] .achievement-year {
+  color: #0099cc;
+}
+
+.achievement-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0b3a5a;
+  margin-bottom: 6px;
+}
+
+html[data-theme="dark"] .achievement-content h3 {
+  color: #ffffff;
+}
+
+.achievement-content p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+html[data-theme="dark"] .achievement-content p {
+  color: rgba(255, 255, 255, 0.7);
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

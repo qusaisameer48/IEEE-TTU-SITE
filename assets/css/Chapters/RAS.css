@@ -376,16 +376,7 @@ html[data-theme="dark"] .activity-card p {
   padding-left: 40px;
 }
 
-.achievements-timeline::before {
-  content: '';
-  position: absolute;
-  left: 12px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, #00629b, #0099cc);
-  border-radius: 2px;
-}
+ 
 
 html[data-theme="dark"] .achievements-timeline::before {
   background: linear-gradient(180deg, rgba(0, 153, 204, 0.5), rgba(0, 153, 204, 0.2));
@@ -606,3 +597,5 @@ html[data-theme="dark"] .team-btn:hover {
 .about-section {
   padding-bottom: 30px !important;
 }
+
+ 

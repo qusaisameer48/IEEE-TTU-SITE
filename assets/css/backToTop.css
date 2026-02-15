@@ -8,9 +8,9 @@
     width: 55px;
     height: 55px;
     
-    /* Light Mode - IEEE Blue */
-    background: var(--ieee-blue);
-    color: white;
+    /* استخدام اللون المباشر بدلاً من المتغير */
+    background: #00629B !important;  /* IEEE Blue */
+    color: white !important;
     
     border: none;
     border-radius: 50%;
@@ -31,12 +31,12 @@
 }
 
 .back-to-top.show {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .back-to-top:hover {
-    background: var(--ieee-blue-dark);
+    background: #004d7a !important;  /* IEEE Blue Dark */
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 8px 25px rgba(0, 98, 155, 0.4);
 }
@@ -47,14 +47,19 @@
 
 /* Dark Mode */
 html[data-theme="dark"] .back-to-top {
-    background: rgba(0, 153, 204, 0.25);
+    background: rgba(0, 153, 204, 0.25) !important;
     border: 2px solid rgba(0, 153, 204, 0.5);
-    color: #ffffff;
+    color: #ffffff !important;
     box-shadow: 0 4px 15px rgba(0, 153, 204, 0.3);
 }
 
 html[data-theme="dark"] .back-to-top:hover {
-    background: rgba(0, 153, 204, 0.35);
+    background: rgba(0, 153, 204, 0.35) !important;
     border-color: rgba(0, 153, 204, 0.7);
     box-shadow: 0 8px 25px rgba(0, 153, 204, 0.4);
+}
+
+/* تأكد من أن SVG يرث اللون الصحيح */
+.back-to-top svg {
+    stroke: currentColor;
 }
