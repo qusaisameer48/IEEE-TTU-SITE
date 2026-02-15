@@ -87,3 +87,26 @@ html[data-theme="dark"] .theme-toggle .moon{
 html[data-theme="dark"] .theme-toggle.sm .knob{
   transform: translateX(26px);
 }
+
+
+
+.theme-toggle.neumorphic {
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+  box-shadow: 
+    8px 8px 16px rgba(0,0,0,0.15),
+    -8px -8px 16px rgba(255,255,255,0.7);
+  border: none;
+}
+
+.theme-toggle.neumorphic:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0,0,0,0.15),
+    inset -4px -4px 8px rgba(255,255,255,0.5);
+}
+
+html[data-theme="dark"] .theme-toggle.neumorphic {
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+  box-shadow: 
+    8px 8px 16px rgba(0,0,0,0.4),
+    -8px -8px 16px rgba(40,40,60,0.3);
+}

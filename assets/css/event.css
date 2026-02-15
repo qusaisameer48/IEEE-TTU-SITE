@@ -1,5 +1,4 @@
-/* تمييز الرابط الحالي */
-.nav a.active {
+ .nav a.active {
   position: relative;
 }
 .nav a.active::after {
@@ -68,7 +67,7 @@
 
 .event-block {
   max-width: 100%;
-  padding: 0 30px; /* مسافة خفيفة من الأطراف */
+  padding: 0 30px;  
 }
 
 
