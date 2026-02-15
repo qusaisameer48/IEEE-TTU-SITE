@@ -599,3 +599,9 @@ html[data-theme="dark"] .team-btn:hover {
 }
 
  
+
+
+.WhiteSpaces
+{
+  white-space: nowrap;
+}
