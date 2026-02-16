@@ -18,7 +18,6 @@
 }
 
 
-/* نمط الخطوط الأفقية والعمودية */
 .chapter-hero::before {
   content: '';
   position: absolute;
@@ -40,7 +39,6 @@
     );
 }
 
-/* خطوط قطرية متقاطعة */
 .chapter-hero::after {
   content: '';
   position: absolute;
@@ -303,7 +301,7 @@ html[data-theme="dark"] .video-section {
 .register-btn {
   display: inline-block;
   padding: 14px 36px;
-  background: linear-gradient(135deg, #00b4db, #0083b0);
+  background: linear-gradient(90deg, #00629b, #004a75);
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
@@ -319,14 +317,6 @@ html[data-theme="dark"] .video-section {
   box-shadow: var(--shadow-lg);
   opacity: 0.95;
 }
-
-/* Dark mode */
-html[data-theme="dark"] .register-btn {
-  background: linear-gradient(135deg, #00b4db, #0083b0);
-}
-
-
-
 
 /* ===== FAQ SECTION ===== */
 .faq-section {
