@@ -23,35 +23,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // ===== FORM SUBMISSION HANDLER (WHATSAPP) =====
-  const contactForm = document.getElementById('contactForm');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+ // ===== FORM SUBMISSION HANDLER (WHATSAPP) =====
+const contactForm = document.getElementById('contactForm');
 
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const message = document.getElementById("message").value.trim();
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-      const whatsappNumber = "0775726812"; // حط رقم واتساب تبعكم بدون +
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const message = document.getElementById("message").value.trim();
 
-      const text =
-        `New Contact Message:\n` +
-        `Name: ${name}\n` +
-        `Email: ${email}\n` +
-        `Phone: ${phone || "Not provided"}\n` +
-        `Message: ${message}`;
+    const whatsappNumber = "962775726812";  
 
-      const encodedText = encodeURIComponent(text);
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
+   const text = message;
 
-      window.open(whatsappURL, "_blank");
+    const encodedText = encodeURIComponent(text);
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
 
-      this.reset();
-    });
-  }
+    window.open(whatsappURL, "_blank");
+
+    this.reset();
+  });
+}
 
   // ===== THEME TOGGLE =====
   const themeToggle = document.getElementById('themeToggle');
