@@ -19,10 +19,9 @@ background: linear-gradient(135deg, #2d5016, #4a7c2c, #6b9d3e, #8bc34a);
   content: '';
   position: absolute;
   inset: 0;
-background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><text x="10" y="25" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.22)" font-weight="bold">renewable</text><text x="85" y="35" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">energy</text><text x="5" y="55" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">sustainable</text><text x="95" y="65" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.24)">green</text><text x="35" y="80" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.19)">eco</text><text x="105" y="95" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.17)">solar</text><text x="15" y="110" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.21)">power</text><text x="70" y="125" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">clean</text><text x="40" y="140" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">future</text></svg>');   
-  
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><text x="10" y="25" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.22)" font-weight="bold">renewable</text><text x="85" y="35" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">energy</text><text x="5" y="55" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">sustainable</text><text x="95" y="65" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.24)">green</text><text x="35" y="80" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.19)">eco</text><text x="105" y="95" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.17)">solar</text><text x="15" y="110" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.21)">power</text><text x="70" y="125" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.18)">clean</text><text x="40" y="140" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.2)">future</text></svg>');   
   background-size: 250px;
-  animation: float 10s linear infinite;
+  animation: float 15s ease-in-out infinite alternate;
   opacity: 1;
   filter: contrast(1.15);
 }
@@ -32,22 +31,20 @@ background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" view
   position: absolute;
   inset: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
-  
-  
-  
   background-size: 180px;
-  animation: float 25s linear infinite reverse;
+  animation: float 25s ease-in-out infinite alternate-reverse;
   opacity: 0.6;
 }
 
 @keyframes float {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+transform: scaleX(1.5);
   }
   100% {
-    transform: translate(60px, 60px) rotate(5deg);
+transform: scaleY(0.8);
   }
 }
+
 
 
 

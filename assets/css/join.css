@@ -287,6 +287,47 @@ html[data-theme="dark"] .video-section {
   opacity: 0.7;
 }
 
+
+
+
+
+
+
+
+
+.register-cta {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.register-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  opacity: 0.95;
+}
+
+/* Dark mode */
+html[data-theme="dark"] .register-btn {
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+}
+
+
+
+
 /* ===== FAQ SECTION ===== */
 .faq-section {
   margin-bottom: 60px;

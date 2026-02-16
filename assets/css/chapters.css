@@ -216,7 +216,7 @@ html[data-theme="dark"] .chapter-card.featured {
   border-radius: 50%;
   padding: 18px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  overflow: hidden; /* مهم */
+  overflow: hidden; 
 }
 
 .chapter-logo img {
@@ -395,9 +395,13 @@ html[data-theme="dark"] .btn-explore:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
-  background-size: 100px;
-  opacity: 0.3;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.04) 2px,
+    transparent 2px,
+    transparent 40px
+  );
 }
 
 .cta-content {
@@ -501,7 +505,7 @@ html[data-theme="dark"] .cta-btn:hover {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: radial-gradient(circle, #2a3440, #0f1a24); /* أفتح شوي */
+  background: radial-gradient(circle, #2a3440, #0f1a24);  
   display: flex;
   align-items: center;
   justify-content: center;

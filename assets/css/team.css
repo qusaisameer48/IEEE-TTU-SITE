@@ -469,8 +469,7 @@ html[data-theme="dark"] .member-position{
 
 /* =========================
    MEMBER LINKS (HOVER EFFECT)
-   الأيقونات تظهر في وسط الكارت فوق الغباش
-========================= */
+========================== */
 .member-links{
   position: absolute;
   top: 45%;
@@ -602,4 +601,8 @@ html[data-theme="dark"] .social-link:hover{
 
 
 
- 
+ img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+ }

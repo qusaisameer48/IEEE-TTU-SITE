@@ -15,43 +15,43 @@
   overflow: hidden;
 }
 
-.chapter-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-   animation: float 15s linear infinite;
-  opacity: 1;
-  filter: contrast(1.15);
-}
+ 
 
 .chapter-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><text x='15%' y='30%' font-family='monospace' font-size='20' fill='rgba(255,192,203,0.28)' font-weight='bold'>&lt;girl/&gt;</text><text x='75%' y='80%' font-family='monospace' font-size='18' fill='rgba(255,182,193,0.25)'>code</text><text x='45%' y='55%' font-family='monospace' font-size='16' fill='rgba(255,192,203,0.24)'>girlcode</text><circle cx='30%' cy='85%' r='3' fill='rgba(255,192,203,0.3)'/><circle cx='15%' cy='45%' r='3' fill='rgba(255,182,193,0.3)'/><circle cx='80%' cy='65%' r='3' fill='rgba(255,192,203,0.3)'/></svg>");
-  background-size: 180px;
-  animation: float 25s linear infinite reverse;
-  opacity: 0.9;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
+  
+  
+  background-size: 150px;
+  background-position: 80% 60%;
+  animation: float 25s ease-in-out infinite alternate-reverse;
+  opacity: 0.5;
 }
 
 .chapter-hero-content {
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><text x='20%' y='35%' font-family='monospace' font-size='22' fill='rgba(255,192,203,0.32)' font-weight='bold'>girlcode</text><text x='70%' y='75%' font-family='monospace' font-size='19' fill='rgba(255,182,193,0.28)'>&lt;/&gt;</text><text x='40%' y='60%' font-family='monospace' font-size='17' fill='rgba(255,192,203,0.26)'>girl</text><circle cx='35%' cy='80%' r='3' fill='rgba(255,192,203,0.3)'/><circle cx='18%' cy='50%' r='3' fill='rgba(255,182,193,0.3)'/><circle cx='78%' cy='55%' r='3' fill='rgba(255,192,203,0.3)'/></svg>");
-  background-size: 200px;
-  animation: float3 20s ease-in-out infinite;
+
+background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><text x='20%' y='35%' font-family='monospace' font-size='22' fill='rgba(255,192,203,0.32)' font-weight='bold'>girlcode</text><text x='70%' y='75%' font-family='monospace' font-size='19' fill='rgba(255,182,193,0.28)'>&lt;/&gt;</text><text x='40%' y='60%' font-family='monospace' font-size='17' fill='rgba(255,192,203,0.26)'>girl</text><text x='55%' y='30%' font-family='monospace' font-size='18' fill='rgba(255,182,193,0.3)' font-weight='bold'>Engineering%20Diva</text><text x='12%' y='80%' font-family='monospace' font-size='15' fill='rgba(255,192,203,0.25)'>Empowerment</text><text x='78%' y='40%' font-family='monospace' font-size='15' fill='rgba(255,182,193,0.25)'>STEM</text><text x='60%' y='82%' font-family='monospace' font-size='14' fill='rgba(255,182,193,0.22)'>Diversity</text><text x='25%' y='20%' font-family='monospace' font-size='14' fill='rgba(255,192,203,0.22)'>Confidence</text></svg>");
+  
+  
+  background-size: 350px;
+  animation: float 15s ease-in-out infinite alternate;
   opacity: 0.85;
   pointer-events: none;
 }
 
 @keyframes float {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+transform: scaleX(1.5);
   }
   100% {
-    transform: translate(10px, 10px) rotate(5deg);
+transform: scaleY(0.8);
   }
 }
+
 
 
 

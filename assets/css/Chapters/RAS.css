@@ -27,7 +27,7 @@ display: flex;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ctext x='50%25' y='35%25' text-anchor='middle' fill='%23ffffff' opacity='0.22' font-size='38' font-weight='bold' font-family='Arial'%3EIEEE RAS%3C/text%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23ffffff' opacity='0.16' font-size='16' font-family='monospace'%3ERobotics %26 Automation%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' fill='%23ffffff' opacity='0.14' font-size='14' font-family='monospace'%3ETTU Branch%3C/text%3E%3C/svg%3E");
   background-size: 350px;
   background-position: center;
-  animation: float 5s linear infinite;
+  animation: float 10s ease-in-out infinite alternate;
   opacity: 1;
   filter: contrast(1.15);
  }
@@ -39,7 +39,7 @@ display: flex;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3C!-- Robot Icon --%3E%3Crect x='15%25' y='15%25' width='15' height='20' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.15'/%3E%3Ccircle cx='calc(15%25 + 7.5)' cy='calc(15%25 - 5)' r='5' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.15'/%3E%3C!-- Gear --%3E%3Ccircle cx='75%25' y='25%25' r='12' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.16'/%3E%3Ctext x='75%25' y='27%25' text-anchor='middle' fill='%23ffffff' opacity='0.16' font-size='10'%3E⚙%3C/text%3E%3C!-- Sensor --%3E%3Ccircle cx='85%25' cy='45%25' r='4' fill='%23ffffff' opacity='0.14'/%3E%3Ccircle cx='85%25' cy='45%25' r='8' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.12'/%3E%3C!-- Code Symbols --%3E%3Ctext x='20%25' y='50%25' fill='%23ffffff' opacity='0.18' font-size='18' font-family='monospace' font-weight='600'%3E&lt;/&gt;%3C/text%3E%3Ctext x='65%25' y='65%25' fill='%23ffffff' opacity='0.16' font-size='16' font-family='monospace'%3E{ }%3C/text%3E%3C!-- Circuit Lines --%3E%3Cline x1='10%25' y1='70%25' x2='35%25' y2='70%25' stroke='%23ffffff' stroke-width='1.5' opacity='0.13'/%3E%3Ccircle cx='22.5%25' cy='70%25' r='3' fill='%23ffffff' opacity='0.13'/%3E%3C!-- Robot Arm --%3E%3Cline x1='70%25' y1='80%25' x2='85%25' y2='75%25' stroke='%23ffffff' stroke-width='2' opacity='0.15'/%3E%3Ccircle cx='85%25' cy='75%25' r='4' fill='%23ffffff' opacity='0.15'/%3E%3C/svg%3E");
   background-size: 380px;
   background-position: center;
-  animation: float 5s linear infinite;
+  animation: float 10s ease-in-out infinite alternate;
   opacity: 1;
  }
 
@@ -50,7 +50,7 @@ display: flex;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='18%25' y='12%25' fill='%23ffffff' opacity='0.19' font-size='17' font-family='monospace' font-weight='bold'%3ESERVO%3C/text%3E%3Ctext x='68%25' y='20%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='600'%3EPWM%3C/text%3E%3Ctext x='88%25' y='33%25' fill='%23ffffff' opacity='0.13' font-size='13' font-family='monospace'%3E01101%3C/text%3E%3Ctext x='10%25' y='42%25' fill='%23ffffff' opacity='0.18' font-size='16' font-family='monospace' font-weight='600'%3ESENSOR%3C/text%3E%3Ctext x='50%25' y='52%25' fill='%23ffffff' opacity='0.20' font-size='19' font-family='monospace' font-weight='bold'%3EROS%3C/text%3E%3Ctext x='78%25' y='62%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3EGPIO%3C/text%3E%3Ctext x='25%25' y='72%25' fill='%23ffffff' opacity='0.17' font-size='16' font-family='monospace' font-weight='600'%3EKINEMATICS%3C/text%3E%3Ctext x='65%25' y='83%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='500'%3EPID%3C/text%3E%3Ctext x='12%25' y='90%25' fill='%23ffffff' opacity='0.14' font-size='13' font-family='monospace'%3E11010%3C/text%3E%3Ctext x='85%25' y='15%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3EIMU%3C/text%3E%3Ctext x='40%25' y='35%25' fill='%23ffffff' opacity='0.17' font-size='15' font-family='monospace' font-weight='500'%3ELIDAR%3C/text%3E%3C/svg%3E");
   background-size: 520px;
   background-position: center;
-  animation: float 10s linear infinite;
+  animation: float 15s ease-in-out infinite alternate;
   opacity: 1;
    z-index: 0;
 }
@@ -62,19 +62,20 @@ display: flex;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ctext x='15%25' y='18%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace' font-weight='500'%3Erobot.move()%3C/text%3E%3Ctext x='70%25' y='28%25' fill='%23ffffff' opacity='0.14' font-size='14' font-family='monospace'%3Ewhile(1)%3C/text%3E%3Ctext x='32%25' y='40%25' fill='%23ffffff' opacity='0.19' font-size='18' font-family='monospace' font-weight='bold'%3E=&gt;%3C/text%3E%3Ctext x='78%25' y='50%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3Eloop()%3C/text%3E%3Ctext x='20%25' y='62%25' fill='%23ffffff' opacity='0.17' font-size='16' font-family='monospace' font-weight='500'%3Eanalog()%3C/text%3E%3Ctext x='62%25' y='75%25' fill='%23ffffff' opacity='0.16' font-size='15' font-family='monospace'%3Eserial.%3C/text%3E%3Ctext x='38%25' y='88%25' fill='%23ffffff' opacity='0.15' font-size='14' font-family='monospace'%3E[ ][ ]%3C/text%3E%3Ctext x='10%25' y='55%25' fill='%23ffffff' opacity='0.14' font-size='13' font-family='monospace'%3Evoid%3C/text%3E%3Ctext x='85%25' y='70%25' fill='%23ffffff' opacity='0.13' font-size='12' font-family='monospace'%3E++%3C/text%3E%3C/svg%3E");
   background-size: 490px;
   background-position: center;
-  animation: float 10s linear infinite;
+  animation: float 15s ease-in-out infinite alternate;
   opacity: 1;
    z-index: 0;
 }
 
 @keyframes float {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+transform: scaleX(1.5);
   }
   100% {
-    transform: translate(10px, 10px) rotate(5deg);
+transform: scaleY(0.8);
   }
 }
+
 
 
 

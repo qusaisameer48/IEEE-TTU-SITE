@@ -21,7 +21,7 @@
   inset: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M45 30 L70 40 L70 70 Q70 90 45 98 Q20 90 20 70 L20 40 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/><path d="M140 120 L165 130 L165 160 Q165 180 140 188 Q115 180 115 160 L115 130 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/><line x1="140" y1="135" x2="140" y2="175" stroke="rgba(255,255,255,0.18)" stroke-width="2"/><line x1="120" y1="155" x2="160" y2="155" stroke="rgba(255,255,255,0.18)" stroke-width="2"/><text x="85" y="45" font-family="monospace" font-size="14" fill="rgba(255,255,255,0.16)">0xA3</text><text x="10" y="180" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.14)">SHA</text><text x="150" y="95" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.13)">RSA</text><path d="M180 25 L190 15 L200 25 L190 35 Z" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/></svg>');
   background-size: 250px;
-  animation: float 5s linear infinite;
+  animation: float 15s ease-in-out infinite alternate;
   opacity: 1;
   filter: contrast(1.15);
 }
@@ -32,19 +32,20 @@
   inset: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="120" cy="25" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="95" cy="70" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="30" cy="120" r="3" fill="rgba(255,255,255,0.15)"/><rect x="70" y="30" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="15" y="85" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="90" y="135" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
   background-size: 180px;
-  animation: float2 18s ease-in-out infinite;
+  animation: float 20s ease-in-out infinite alternate-reverse;
   animation-delay: -9s;
   opacity: 0.6;
 }
 
 @keyframes float {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+transform: scaleX(1.5);
   }
   100% {
-    transform: translate(10px, 10px) rotate(5deg);
+transform: scaleY(0.8);
   }
 }
+
 
 
 
