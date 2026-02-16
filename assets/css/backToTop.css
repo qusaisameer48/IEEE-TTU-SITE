@@ -8,8 +8,7 @@
     width: 55px;
     height: 55px;
     
-    /* استخدام اللون المباشر بدلاً من المتغير */
-    background: #00629B !important;  /* IEEE Blue */
+     background: #00629B !important;  /* IEEE Blue */
     color: white !important;
     
     border: none;
@@ -59,7 +58,6 @@ html[data-theme="dark"] .back-to-top:hover {
     box-shadow: 0 8px 25px rgba(0, 153, 204, 0.4);
 }
 
-/* تأكد من أن SVG يرث اللون الصحيح */
-.back-to-top svg {
+ .back-to-top svg {
     stroke: currentColor;
 }
