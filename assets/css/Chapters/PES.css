@@ -52,12 +52,6 @@ transform: scaleY(0.8);
 
 
 
-
-
-
-
-
-
 .chapter-hero__overlay {
   position: absolute;
   inset: 0;
@@ -523,6 +517,8 @@ html[data-theme="dark"] .team-btn {
 html[data-theme="dark"] .team-btn:hover {
   background: rgba(0, 98, 155, 0.35);
 }
+
+
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
