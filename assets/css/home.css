@@ -894,6 +894,29 @@ html[data-theme="dark"] .more-events-btn:hover{
     height: 55vh;
     background-size: cover;
   }
+  @media (max-width: 576px) {
+  .about-container {
+    padding: 30px 20px;
+    margin: 0 16px 60px;   
+  }
+}
+
+
+@media (max-width: 576px) {
+  .stats-container {
+    padding: 30px 16px 50px;
+    grid-template-columns: repeat(2, 1fr);  
+  }
+}
+@media (max-width: 768px) {
+  .hero-content {
+    padding-top: 20px;
+  }
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+}
+
 }
 
 
