@@ -7,7 +7,13 @@
   position: relative;
   height: 55vh;
   min-height: 400px;
-  background: linear-gradient(135deg, #850b71, #9120ad, #8b168e, #bc83bd);
+background: linear-gradient(135deg, #850b71, #8b168e);
+
+
+
+
+
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,39 +22,41 @@
 }
 
  
+ 
+
+.chapter-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Ctext x='20' y='40' font-family='monospace' font-size='26' fill='rgba(255,255,255,0.18)' font-weight='bold'%3EWIE%3C/text%3E%3Ctext x='40' y='120' font-family='monospace' font-size='22' fill='rgba(255,255,255,0.15)'%3ESTEM%3C/text%3E%3Ctext x='120' y='150' font-family='monospace' font-size='20' fill='rgba(255,255,255,0.16)'%3Elead%3C/text%3E%3Ctext x='60' y='190' font-family='monospace' font-size='18' fill='rgba(255,255,255,0.14)'%3Einnovate%3C/text%3E%3C/svg%3E");
+  background-size: 260px;
+  animation: floatSoft 10s ease-in-out infinite alternate;
+  opacity: 1;
+  filter: contrast(1.15);
+}
+
+
+
+
 
 .chapter-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><circle cx="30" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="50" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.15)"/><rect x="20" y="45" width="60" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="55" width="80" height="2" fill="rgba(255,255,255,0.1)"/><rect x="20" y="65" width="50" height="2" fill="rgba(255,255,255,0.1)"/></svg>');
-  
-  
-  background-size: 150px;
-  background-position: 80% 60%;
-  animation: float 25s ease-in-out infinite alternate-reverse;
-  opacity: 0.5;
+background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Ccircle cx='40' cy='40' r='4' fill='rgba(255,255,255,0.14)'/%3E%3Ccircle cx='80' cy='40' r='4' fill='rgba(255,255,255,0.14)'/%3E%3Ccircle cx='120' cy='40' r='4' fill='rgba(255,255,255,0.14)'/%3E%3Cline x1='40' y1='40' x2='80' y2='40' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3Cline x1='80' y1='40' x2='120' y2='40' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3Ctext x='30' y='90' font-family='monospace' font-size='16' fill='rgba(255,255,255,0.12)'%3Ecommunity%3C/text%3E%3Ctext x='60' y='120' font-family='monospace' font-size='15' fill='rgba(255,255,255,0.12)'%3Eempower%3C/text%3E%3C/svg%3E");
+  background-size: 200px;
+  animation: floatSoft 20s ease-in-out infinite alternate-reverse;
+  opacity: 0.55;
 }
 
-.chapter-hero-content {
-  position: absolute;
-  inset: 0;
 
-background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><text x='20%' y='35%' font-family='monospace' font-size='22' fill='rgba(255,192,203,0.32)' font-weight='bold'>girlcode</text><text x='70%' y='75%' font-family='monospace' font-size='19' fill='rgba(255,182,193,0.28)'>&lt;/&gt;</text><text x='40%' y='60%' font-family='monospace' font-size='17' fill='rgba(255,192,203,0.26)'>girl</text><text x='55%' y='30%' font-family='monospace' font-size='18' fill='rgba(255,182,193,0.3)' font-weight='bold'>Engineering%20Diva</text><text x='12%' y='80%' font-family='monospace' font-size='15' fill='rgba(255,192,203,0.25)'>Empowerment</text><text x='78%' y='40%' font-family='monospace' font-size='15' fill='rgba(255,182,193,0.25)'>STEM</text><text x='60%' y='82%' font-family='monospace' font-size='14' fill='rgba(255,182,193,0.22)'>Diversity</text><text x='25%' y='20%' font-family='monospace' font-size='14' fill='rgba(255,192,203,0.22)'>Confidence</text></svg>");
-  
-  
-  background-size: 350px;
-  animation: float 15s ease-in-out infinite alternate;
-  opacity: 0.85;
-  pointer-events: none;
-}
 
-@keyframes float {
+@keyframes floatSoft {
   0% {
-transform: scaleX(1.5);
+    transform: translateY(0) scale(1);
   }
   100% {
-transform: scaleY(0.8);
+    transform: translateY(-12px) scale(1.05);
   }
 }
 

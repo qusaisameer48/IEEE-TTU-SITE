@@ -25,6 +25,9 @@ function redirectToPage(query) {
     
     "chapters": "pages/chapters.html",
     "فصول": "pages/chapters.html",
+
+    "Society": "pages/chapters.html",
+    "فرع": "pages/chapters.html",
     
     "team": "pages/team.html",
     "فريق": "pages/team.html",

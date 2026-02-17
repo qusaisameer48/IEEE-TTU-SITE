@@ -373,7 +373,7 @@ html[data-theme="dark"] .faq-question:hover {
 .faq-question h3 {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--primary-blue);
   flex: 1;
 }
 
@@ -413,7 +413,7 @@ html[data-theme="dark"] .faq-icon {
 }
 
 .faq-answer p {
-  color: var(--text-gray);
+  color: var(--primary-blue);
   font-size: 15px;
   line-height: 1.7;
 }

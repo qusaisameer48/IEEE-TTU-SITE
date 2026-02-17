@@ -35,7 +35,7 @@ if (contactForm) {
     const phone = document.getElementById("phone").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    const whatsappNumber = "962775726812";  
+    const whatsappNumber = "962782793950";  
 
    const text = message;
 
