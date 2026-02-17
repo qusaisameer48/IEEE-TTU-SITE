@@ -343,6 +343,7 @@ html[data-theme="dark"] .activity-card p {
 
 
 
+
 /* ===== ACHIEVEMENTS TIMELINE ===== */
 .achievements-timeline {
   max-width: 800px;
@@ -397,8 +398,8 @@ html[data-theme="dark"] .achievement-year {
 }
 
 .achievement-content h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 1.30rem;
+  font-weight: 800;
   color: #0b3a5a;
   margin-bottom: 6px;
 }
@@ -416,6 +417,111 @@ html[data-theme="dark"] .achievement-content h3 {
 
 html[data-theme="dark"] .achievement-content p {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== TEAM SECTION ===== */
+.team-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.team-photo-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.team-photo-card:hover {
+  transform: scale(1.03);
+}
+
+.team-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.75));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-photo-card:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-overlay h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.photo-overlay p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.team-cta {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 2px solid rgba(0, 98, 155, 0.15);
+}
+
+html[data-theme="dark"] .team-cta {
+  border-top-color: rgba(0, 153, 204, 0.2);
+}
+
+.team-cta p {
+  font-size: 1.05rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+html[data-theme="dark"] .team-cta p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.team-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #00629b;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 98, 155, 0.2);
+}
+
+.team-btn:hover {
+  background: #004a75;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 98, 155, 0.3);
+}
+
+html[data-theme="dark"] .team-btn {
+  background: rgba(0, 98, 155, 0.25);
+  border: 1px solid rgba(0, 153, 204, 0.5);
+  color: #0099cc;
+}
+
+html[data-theme="dark"] .team-btn:hover {
+  background: rgba(0, 98, 155, 0.35);
 }
 
 /* ===== RESPONSIVE ===== */
