@@ -167,11 +167,10 @@ html[data-theme="dark"] .hero-overlay{
   opacity: 0;
   pointer-events:none;
   z-index: 0;
-  transition: opacity 0.3s ease; /* انتقال سلس */
+  transition: opacity 0.3s ease; 
 }
 
-/* إظهار الخلفية فقط في الوضع الداكن */
-html[data-theme="dark"] .team-section::before{
+ html[data-theme="dark"] .team-section::before{
   background-image: url("../img/IMG_2758.PNG");
   opacity: 0.15;  
 }
@@ -197,8 +196,8 @@ html[data-theme="dark"] .team-section::before{
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;      /* طول الخط */
-  height: 4px;      /* سماكة الخط */
+  width: 60px;       
+  height: 4px;       
   background: #0099cc;  
   border-radius: 2px;
   margin: 10px  auto 3px;
@@ -297,8 +296,7 @@ html[data-theme="dark"] .team-section::before{
 
 
 
-/* خلفية الكارت مع الشفافية */
-.team-member::before {
+ .team-member::before {
   content: '';
   position: absolute;
   top: 0;
@@ -315,8 +313,7 @@ html[data-theme="dark"] .team-section::before{
   border-radius: 25px;
 }
 
-/* الغباش (Overlay) يظهر عند hover */
-.team-member::after,
+ .team-member::after,
 .team-member-jenan::after,
 .team-member-Ahmad::after,
 .team-member-Aisha::after,
@@ -343,8 +340,7 @@ html[data-theme="dark"] [class^="team-member"]::after {
   background: rgba(0, 0, 0, 0.65);
 }
 
-/* إظهار الغباش عند hover */
-.team-member:hover::after,
+ .team-member:hover::after,
 .team-member-jenan:hover::after,
 .team-member-Ahmad:hover::after,
 .team-member-Aisha:hover::after,
@@ -528,16 +524,27 @@ html[data-theme="dark"] .social-link:hover{
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 768px){
-  .team-section{ 
-    padding: 70px 6%; 
+@media (max-width: 768px) {
+  .team-grid-Technical,
+  .team-grid-Secretariat,
+  .team-grid-Organizers,
+  .team-grid-Webmaster {
+    grid-template-columns: 1fr;
+    max-width: 100%;
   }
-
+ [class^="team-member"] {
+    max-height: none;
+  }
   .team-grid{
     grid-template-columns: 1fr;
   }
 
-  .member-image,
+  .member-name,
+  .member-name-Abdulsamad,
+  .member-name-AbdUlrahman {
+    white-space: normal;
+  }
+   .member-image,
   .member-image-jenan,
   .member-image-Aisha{
     width: 150px;
@@ -552,8 +559,7 @@ html[data-theme="dark"] .social-link:hover{
     font-size: 2.2rem; 
   }
 
-  /* في الموبايل، خلي الأيقونات تظهر دائمًا */
-  .member-links{
+   .member-links{
     opacity: 1;
     transform: translateY(0);
     pointer-events: all;
@@ -565,8 +571,7 @@ html[data-theme="dark"] .social-link:hover{
 
 
 
-/* حركة النقاط المتحركة */
-@keyframes float {
+ @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
 }
