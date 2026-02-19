@@ -908,6 +908,7 @@ html[data-theme="dark"] .more-events-btn:hover{
     grid-template-columns: repeat(2, 1fr);  
   }
 }
+
 @media (max-width: 768px) {
   .hero-content {
     padding-top: 20px;
@@ -941,15 +942,13 @@ html[data-theme="dark"] .more-events-btn:hover{
   transition: background .3s ease, border .3s ease;
 }
 
-/* الأيقونات */
-.theme-toggle .icon{
+ .theme-toggle .icon{
   font-size: 14px;
   z-index: 2;
   transition: opacity .3s ease, transform .3s ease;
 }
 
-/* الدائرة المتحركة */
-.theme-toggle .knob{
+ .theme-toggle .knob{
   position: absolute;
   top: 3px;
   left: 3px;
@@ -983,15 +982,13 @@ html[data-theme="dark"] .more-events-btn:hover{
   transition: background .3s ease, border .3s ease;
 }
 
-/* الأيقونات */
-.theme-toggle .icon{
+ .theme-toggle .icon{
   font-size: 14px;
   z-index: 2;
   transition: opacity .3s ease, transform .3s ease;
 }
 
-/* الدائرة المتحركة */
-.theme-toggle .knob{
+ .theme-toggle .knob{
   position: absolute;
   top: 3px;
   left: 3px;
@@ -1015,8 +1012,7 @@ html[data-theme="dark"] .theme-toggle .knob{
   background: linear-gradient(135deg, #0099cc, #00629b);
 }
 
-/* إخفاء/إظهار الأيقونات */
-html[data-theme="dark"] .theme-toggle .sun{
+ html[data-theme="dark"] .theme-toggle .sun{
   opacity: 0.3;
   transform: scale(0.8);
 }
