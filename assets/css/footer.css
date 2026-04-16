@@ -215,7 +215,6 @@
 /* Footer Bottom */
 .footer-bottom {
     margin-top: 50px;
-    padding: 25px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -225,12 +224,12 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
+    padding: 25px 20px;
 }
 
 .footer-bottom p {
     margin: 0;
     color: rgba(255, 255, 255, 0.7);
-    text-align: left;
     line-height: 1.6;
 }
 
@@ -255,6 +254,59 @@
     color: rgba(255, 255, 255, 0.4);
 }
 
+/* IEEE Official Links Bar */
+.footer-ieee-links {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+}
+
+.ieee-links-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ieee-links-group a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.ieee-links-group a:hover {
+    color: #0088cc;
+}
+
+.ieee-links-group span {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-bottom .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-bottom-links {
+        justify-content: center;
+    }
+
+    .ieee-links-group {
+        gap: 8px;
+    }
+
+    .ieee-links-group a {
+        font-size: 0.75rem;
+    }
+}
 /* Responsive */
 @media (max-width: 768px) {
     .footer {
@@ -279,3 +331,6 @@
 
  
 
+
+
+ 
