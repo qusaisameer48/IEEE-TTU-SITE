@@ -529,6 +529,7 @@ html[data-theme="dark"] .social-link:hover{
   .team-grid-Technical,
   .team-grid-Secretariat,
   .team-grid-Organizers,
+  .team-grid-Pr,
   .team-grid-Webmaster {
     grid-template-columns: 1fr;
     max-width: 100%;
