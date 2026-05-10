@@ -240,8 +240,7 @@ html[data-theme="dark"] .hero-overlay{
 }
 
 .team-grid-Organizers,
-.team-grid-Pr,
-.team-grid-Webmaster{
+ .team-grid-Webmaster{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -250,7 +249,7 @@ html[data-theme="dark"] .hero-overlay{
   justify-items: center;
   align-items: stretch;
 }
-.team-grid-Treasure{
+.team-grid-WebMaster,.team-grid-Pr{
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
