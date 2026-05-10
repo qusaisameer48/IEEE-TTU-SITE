@@ -307,6 +307,112 @@
         font-size: 0.75rem;
     }
 }
+
+
+
+
+
+
+.footer-developed-by {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.developed-label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.developer-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.developer-name {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+
+.developer-item:hover .developer-name {
+    color: #0088cc;
+}
+
+.dev-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: #0077b5;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.7rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dev-linkedin:hover {
+    background: #0088cc;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .footer-developed-by {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+
+
+
+.footer-team {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-team-label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.footer-team-member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.footer-team-member a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-team-member a:hover {
+    color: #0088cc;
+}
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .footer {
