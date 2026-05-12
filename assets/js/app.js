@@ -259,16 +259,16 @@ function validateP4() {
 // ===== SUBMIT =====
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCCCPDhruUno4accpabHUPSYxjLgCPp6Ih5WfTechk4Gd62ZLFpm5ZkbpSeX2Q5wKL/exec'; // ← حط URL هون
 
-if (isSubmitting) return;
-isSubmitting = true;
+
 
 async function submitForm() {
-
+if (isSubmitting) return;
+isSubmitting = true;
   if (isSubmitting) return;
   isSubmitting = true;
 
   const g = id => document.getElementById(id).value;
-  
+
   const isTeam = selectedSport === 'football' || selectedSport === 'basketball';
 
   // ===== جمع البيانات =====
