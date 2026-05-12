@@ -1,5 +1,77 @@
 // ===== IEEE SPORTS TOURNAMENT 2026 — VERSION A — SCRIPT =====
 
+
+
+// ===== AUDIO ENGINE =====
+const AC = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(freq, type = 'square', duration = 0.08, vol = 0.3) {
+  const osc  = AC.createOscillator();
+  const gain = AC.createGain();
+  osc.connect(gain);
+  gain.connect(AC.destination);
+  osc.type      = type;
+  osc.frequency.setValueAtTime(freq, AC.currentTime);
+  gain.gain.setValueAtTime(vol, AC.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + duration);
+  osc.start(AC.currentTime);
+  osc.stop(AC.currentTime + duration);
+}
+
+const SFX = {
+  // كبسة زر عادية
+  click: () => playTone(440, 'square', 0.06, 0.2),
+
+  // wakka wakka — صوت Pac-Man
+  wakka: () => {
+    playTone(600, 'square', 0.07, 0.25);
+    setTimeout(() => playTone(400, 'square', 0.07, 0.25), 80);
+  },
+
+  // اختيار رياضة
+  select: () => {
+    playTone(300, 'square', 0.05, 0.2);
+    setTimeout(() => playTone(500, 'square', 0.05, 0.2), 60);
+    setTimeout(() => playTone(700, 'square', 0.08, 0.2), 120);
+  },
+
+  // تيك checkbox
+  tick: () => playTone(800, 'sine', 0.05, 0.15),
+
+  // انتقال صفحة
+  next: () => {
+    playTone(350, 'square', 0.06, 0.2);
+    setTimeout(() => playTone(500, 'square', 0.06, 0.2), 70);
+    setTimeout(() => playTone(650, 'square', 0.08, 0.2), 140);
+  },
+
+  // خطأ
+  error: () => {
+    playTone(200, 'sawtooth', 0.1, 0.3);
+    setTimeout(() => playTone(150, 'sawtooth', 0.1, 0.3), 120);
+  },
+
+  // انتصار 🏆
+  win: () => {
+    const notes = [523, 659, 784, 1047];
+    notes.forEach((f, i) => setTimeout(() => playTone(f, 'square', 0.15, 0.3), i * 130));
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ===== CURSOR =====
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
@@ -92,6 +164,7 @@ const sportNames = {
 
 // ===== NAVIGATION =====
 function goTo(n) {
+  SFX.next();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const id = n === 35 ? 'page35' : 'page' + n;
   document.getElementById(id).classList.add('active');
@@ -100,6 +173,8 @@ function goTo(n) {
 
 // ===== IEEE TOGGLE =====
 function toggleIEEE() {
+  AC.resume();
+  SFX.tick();
   isIEEEMember = !isIEEEMember;
   document.getElementById('toggleSw').classList.toggle('on', isIEEEMember);
   document.getElementById('toggleLabel').textContent = isIEEEMember ? 'نعم، أنا عضو IEEE' : 'لا، لست عضوًا';
@@ -110,6 +185,7 @@ function toggleIEEE() {
 
 // ===== SPORT SELECTION =====
 function selectSport(sport, el) {
+    SFX.select();
   document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   selectedSport = sport;
@@ -119,12 +195,16 @@ function selectSport(sport, el) {
 
 // ===== CAPTAIN TOGGLE =====
 function toggleCaptain() {
+  AC.resume();
+  SFX.tick(); // ← كان ناقص
   isCaptain = !isCaptain;
   document.getElementById('captainSw').classList.toggle('on', isCaptain);
 }
 
 // ===== UNDERSTOOD CHECKBOX =====
 function toggleUnderstood() {
+  AC.resume();
+  SFX.tick(); // ← كان ناقص
   understoodRules = !understoodRules;
   document.getElementById('checkBox').classList.toggle('checked', understoodRules);
   document.getElementById('checkBox').textContent = understoodRules ? '✓' : '';
@@ -182,7 +262,9 @@ function updateTeamSection() {
 
 // ===== VALIDATE PAGE 2 =====
 function validateP2() {
+  AC.resume();
   if (!isIEEEMember) {
+    SFX.error();
     document.getElementById('nonMemberBox').classList.add('show');
     return;
   }
@@ -209,36 +291,48 @@ function validateP2() {
     document.getElementById('studentId').classList.remove('error');
   }
 
-  if (ok) goTo(3);
+  if (!ok) {
+    SFX.error(); // ← بس لما في خطأ فعلي
+  } else {
+    goTo(3); // goTo فيها SFX.next() أصلاً
+  }
 }
 
 // ===== VALIDATE PAGE 3 =====
 function validateP3() {
+  AC.resume();
   if (!selectedSport) {
+    SFX.error(); // ← ناقص
     document.getElementById('sportsGrid').style.outline = '3px solid red';
     setTimeout(() => document.getElementById('sportsGrid').style.outline = '', 1000);
     return;
   }
   buildRules();
-  goTo(35);
+  goTo(35); // goTo فيها SFX.next()
 }
+
 
 // ===== VALIDATE UNDERSTOOD =====
 function validateUnderstood() {
-  if (!understoodRules) return;
+  AC.resume();
+  if (!understoodRules) {
+    SFX.error(); // ← لو حاول يكبس بدون ما يشيك
+    return;
+  }
   updateTeamSection();
-  goTo(4);
+  goTo(4); // goTo فيها SFX.next()
 }
 
 // ===== VALIDATE PAGE 4 =====
 function validateP4() {
+  AC.resume();
   const checks = [
-    { id: 'firstName', err: 'fnError',    fn: v => v.trim() !== '' },
-    { id: 'lastName',  err: 'lnError',    fn: v => v.trim() !== '' },
-    { id: 'email',     err: 'emailError', fn: v => v.includes('@') && v.trim() !== '' },
-    { id: 'phone',     err: 'phoneError', fn: v => v.trim().length >= 7 },
-    { id: 'year',      err: 'yearError',  fn: v => v !== '' },
-    { id: 'gender',    err: 'genderError',fn: v => v !== '' },
+    { id: 'firstName', err: 'fnError',     fn: v => v.trim() !== '' },
+    { id: 'lastName',  err: 'lnError',     fn: v => v.trim() !== '' },
+    { id: 'email',     err: 'emailError',  fn: v => v.includes('@') && v.trim() !== '' },
+    { id: 'phone',     err: 'phoneError',  fn: v => v.trim().length >= 7 },
+    { id: 'year',      err: 'yearError',   fn: v => v !== '' },
+    { id: 'gender',    err: 'genderError', fn: v => v !== '' },
   ];
 
   const isTeam = selectedSport === 'football' || selectedSport === 'basketball';
@@ -253,8 +347,13 @@ function validateP4() {
     if (!pass) ok = false;
   });
 
-  if (ok) submitForm();
+  if (!ok) {
+    SFX.error(); // ← ناقص
+    return;
+  }
+  submitForm();
 }
+
 
 // ===== SUBMIT =====
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCCCPDhruUno4accpabHUPSYxjLgCPp6Ih5WfTechk4Gd62ZLFpm5ZkbpSeX2Q5wKL/exec'; // ← حط URL هون
@@ -283,7 +382,6 @@ async function submitForm() {
     gender:     g('gender'),
   };
 
-  // ← إرسل بالخلفية بدون await، ما حدا ينتظر
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -291,7 +389,6 @@ async function submitForm() {
     body: JSON.stringify(payload)
   }).catch(err => console.error('خطأ في الحفظ:', err));
 
-  // ← انتقل فوراً بدون انتظار
   isSubmitting = false;
 
   const teamRow = isTeam
@@ -311,12 +408,15 @@ async function submitForm() {
     <div class="sum-row"><span class="sl">السنة</span><span class="sv">${payload.year}</span></div>
   `;
 
+  SFX.win();  // ← ناقص
   goTo(5);
   launchConfetti();
 }
 
 // ===== RESET =====
 function resetAll() {
+  AC.resume();
+  SFX.click(); // ← ناقص
   const ids = ['university','studentId','ieeeId','firstName','lastName','email','phone','year','gender','teamName'];
   ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 
@@ -324,6 +424,7 @@ function resetAll() {
   isIEEEMember    = true;
   isCaptain       = false;
   understoodRules = false;
+  isSubmitting    = false;
 
   document.getElementById('toggleSw').classList.add('on');
   document.getElementById('toggleLabel').textContent = 'نعم، أنا عضو IEEE';
