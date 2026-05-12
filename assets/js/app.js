@@ -262,8 +262,6 @@ const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCCCPDhruUno4accpabH
 
 
 async function submitForm() {
-if (isSubmitting) return;
-isSubmitting = true;
   if (isSubmitting) return;
   isSubmitting = true;
 
