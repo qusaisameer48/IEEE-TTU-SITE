@@ -266,10 +266,8 @@ async function submitForm() {
   isSubmitting = true;
 
   const g = id => document.getElementById(id).value;
-
   const isTeam = selectedSport === 'football' || selectedSport === 'basketball';
 
-  // ===== جمع البيانات =====
   const payload = {
     firstName:  g('firstName'),
     lastName:   g('lastName'),
@@ -285,36 +283,32 @@ async function submitForm() {
     gender:     g('gender'),
   };
 
-  // ===== إرسال لـ Google Sheets =====
-  try {
-await fetch(SHEET_URL, {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(payload)
-});
-  } catch (err) {
-    console.error('خطأ في الحفظ:', err);
-  }
+  // ← إرسل بالخلفية بدون await، ما حدا ينتظر
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err => console.error('خطأ في الحفظ:', err));
 
-  // ===== باقي الكود زي ما هو =====
+  // ← انتقل فوراً بدون انتظار
+  isSubmitting = false;
+
   const teamRow = isTeam
     ? `<div class="sum-row"><span class="sl">اسم الفريق</span><span class="sv">${payload.teamName}</span></div>
        <div class="sum-row"><span class="sl">الكابتن</span><span class="sv">${payload.isCaptain}</span></div>`
     : '';
 
   document.getElementById('summaryCard').innerHTML = `
-    <div class="sum-row"><span class="sl">الاسم</span>        <span class="sv">${payload.firstName} ${payload.lastName}</span></div>
-    <div class="sum-row"><span class="sl">الجامعة</span>      <span class="sv">${payload.university}</span></div>
+    <div class="sum-row"><span class="sl">الاسم</span><span class="sv">${payload.firstName} ${payload.lastName}</span></div>
+    <div class="sum-row"><span class="sl">الجامعة</span><span class="sv">${payload.university}</span></div>
     <div class="sum-row"><span class="sl">الرقم الجامعي</span><span class="sv">${payload.studentId}</span></div>
-    <div class="sum-row"><span class="sl">الرياضة</span>      <span class="sv">${payload.sport}</span></div>
+    <div class="sum-row"><span class="sl">الرياضة</span><span class="sv">${payload.sport}</span></div>
     ${teamRow}
-    <div class="sum-row"><span class="sl">رقم IEEE</span>     <span class="sv">${payload.ieeeId}</span></div>
-    <div class="sum-row"><span class="sl">البريد</span>       <span class="sv" dir="ltr">${payload.email}</span></div>
-    <div class="sum-row"><span class="sl">الهاتف</span>       <span class="sv" dir="ltr">${payload.phone}</span></div>
-    <div class="sum-row"><span class="sl">السنة</span>        <span class="sv">${payload.year}</span></div>
+    <div class="sum-row"><span class="sl">رقم IEEE</span><span class="sv">${payload.ieeeId}</span></div>
+    <div class="sum-row"><span class="sl">البريد</span><span class="sv" dir="ltr">${payload.email}</span></div>
+    <div class="sum-row"><span class="sl">الهاتف</span><span class="sv" dir="ltr">${payload.phone}</span></div>
+    <div class="sum-row"><span class="sl">السنة</span><span class="sv">${payload.year}</span></div>
   `;
 
   goTo(5);
