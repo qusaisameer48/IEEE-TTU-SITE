@@ -1,162 +1,133 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IEEE Sports Tournament 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEEE Sports Tournament 2026</title>
   <link rel="stylesheet" href="../assets/css/R.css">
 </head>
 <body>
 
-<!-- Custom Pac-Man cursor -->
-<div class="custom-cursor" id="cursor"></div>
-
-<!-- Scanlines overlay -->
+<!-- Pac-Man cursor -->
+<div class="cursor" id="cursor"></div>
 <div class="scanlines"></div>
 
-<!-- ===== LOADING SCREEN ===== -->
+<!-- LOADER -->
 <div class="loader" id="loader">
   <div class="loader-text">INSERT COIN</div>
-  <div class="loader-bar">
-    <div class="loader-fill" id="loaderFill"></div>
-  </div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
   <div class="loader-brand">IEEE TTU STUDENT BRANCH</div>
 </div>
 
 <!-- ============================================================
-     PAGE 1 — INTRO / HERO
+     PAGE 1 — HERO
      ============================================================ -->
 <div class="page active" id="page1">
   <div class="maze-bg"></div>
-
   <nav class="nav-bar">
     <div class="nav-brand">⚡ IEEE TTU</div>
     <div class="nav-steps">
-      <div class="nav-step active"  id="step1"></div>
-      <div class="nav-step"         id="step2"></div>
-      <div class="nav-step"         id="step3"></div>
-      <div class="nav-step"         id="step4"></div>
+      <div class="nav-step active"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
     </div>
-    <div style="width:80px"></div>
+    <div style="width:70px"></div>
   </nav>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:30px 20px;position:relative;z-index:2;">
-    <div class="page1-content">
-
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;position:relative;z-index:2;">
+    <div class="p1-content">
       <div class="ieee-logo">◆ IEEE TTU STUDENT BRANCH ◆</div>
 
       <div class="dots-row">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         <div class="dot"></div><div class="dot"></div>
       </div>
 
-      <!-- Title block -->
       <div class="title-block">
-        <div class="pixel-corner tl"></div>
-        <div class="pixel-corner tr"></div>
-        <div class="pixel-corner bl"></div>
-        <div class="pixel-corner br"></div>
-        <span class="title-sports">SPORTS</span>
-        <div class="title-tournament">· TOURNAMENT ·</div>
-        <div class="title-year">2026</div>
+        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
+        <span class="t-sports">SPORTS</span>
+        <div class="t-tournament">· TOURNAMENT ·</div>
+        <div class="t-year">2026</div>
       </div>
 
-      <!-- Ghosts row -->
       <div class="ghosts-row">
         <div class="ghost" style="color:#ff0000;">
           <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
+            <rect x="10" y="5" width="30" height="30" rx="15"/>
+            <rect x="5" y="20" width="40" height="25"/>
+            <rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/>
+            <rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/>
+            <rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/>
           </svg>
         </div>
         <div class="ghost" style="color:#00ffff;">
           <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
+            <rect x="10" y="5" width="30" height="30" rx="15"/>
+            <rect x="5" y="20" width="40" height="25"/>
+            <rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/>
+            <rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/>
+            <rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/>
           </svg>
         </div>
         <div class="ghost" style="color:#ff69b4;">
           <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
+            <rect x="10" y="5" width="30" height="30" rx="15"/>
+            <rect x="5" y="20" width="40" height="25"/>
+            <rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/>
+            <rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/>
+            <rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/>
           </svg>
         </div>
         <div class="ghost" style="color:#ffa500;">
           <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
+            <rect x="10" y="5" width="30" height="30" rx="15"/>
+            <rect x="5" y="20" width="40" height="25"/>
+            <rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/>
+            <rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/>
+            <rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/>
           </svg>
         </div>
       </div>
 
-      <!-- About block -->
       <div class="about-block">
         <div class="about-text">
-          بطولة رياضية طلابية تجمع فروع <span class="about-highlight">IEEE</span>
+          بطولة رياضية طلابية تجمع فروع <span class="about-hl">IEEE</span>
           من مختلف الجامعات الأردنية، في أجواء تنافسية مليئة بالحماس والعمل الجماعي.
         </div>
-        <div class="about-date-badge">
-          <span class="date-icon">📅</span>
-          <span class="date-text">السبت <span class="about-highlight">25 / 7 / 2026</span></span>
+        <div class="about-sports-list">
+          <span>⚽ كرة القدم</span><span>🏀 كرة السلة</span>
+          <span>🏓 تنس الطاولة</span><span>🏸 الريشة الطائرة</span><span>♟ الشطرنج</span>
         </div>
+        <div class="about-date">📅 السبت <span>25 / 7 / 2026</span> · جامعة الطفيلة التقنية</div>
       </div>
 
-      <!-- Sport icons with labels -->
       <div class="sports-icons">
-        <div class="sport-icon" title="ريشة"><span>🏸</span><small>ريشة</small></div>
-        <div class="sport-icon" title="كرة القدم"><span>⚽</span><small>قدم</small></div>
-        <div class="sport-icon" title="كرة السلة"><span>🏀</span><small>سلة</small></div>
-        <div class="sport-icon" title="شطرنج"><span>♟️</span><small>شطرنج</small></div>
-        <div class="sport-icon" title="تنس الطاولة"><span>🏓</span><small>تنس</small></div>
+        <div class="s-icon"><span>🏸</span><small>ريشة</small></div>
+        <div class="s-icon"><span>⚽</span><small>قدم</small></div>
+        <div class="s-icon"><span>🏀</span><small>سلة</small></div>
+        <div class="s-icon"><span>♟️</span><small>شطرنج</small></div>
+        <div class="s-icon"><span>🏓</span><small>تنس</small></div>
       </div>
 
       <div class="dots-row">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
 
-      <button class="btn-start" onclick="goToPage(2)">Start ▶</button>
-
-      <div class="page1-footer">TTU · IEEE · 2026 · SPORTS TOURNAMENT</div>
+      <button class="btn-start" onclick="goTo(2)">سجّل الآن</button>
+      <div class="p1-footer">TTU · IEEE · 2026 · SPORTS TOURNAMENT</div>
     </div>
   </div>
 
   <!-- Pac-Man runner -->
   <div class="pacman-runner">
     <div class="pacman-icon"></div>
-    <div style="display:flex;gap:15px;">
-      <div class="dot" style="width:10px;height:10px;"></div>
-      <div class="dot" style="width:10px;height:10px;animation-delay:0.2s"></div>
-      <div class="dot" style="width:10px;height:10px;animation-delay:0.4s"></div>
+    <div style="display:flex;gap:13px;">
+      <div class="dot" style="width:9px;height:9px;"></div>
+      <div class="dot" style="width:9px;height:9px;animation-delay:.2s"></div>
+      <div class="dot" style="width:9px;height:9px;animation-delay:.4s"></div>
     </div>
   </div>
 </div>
@@ -166,42 +137,33 @@
      ============================================================ -->
 <div class="page" id="page2">
   <nav class="nav-bar">
-    <button class="btn-nav" onclick="goToPage(1)">◀ Back</button>
+    <button class="btn-nav" onclick="goTo(1)">◀ رجوع</button>
     <div class="nav-steps">
-      <div class="nav-step done"></div>
-      <div class="nav-step active"></div>
-      <div class="nav-step"></div>
-      <div class="nav-step"></div>
+      <div class="nav-step done"></div><div class="nav-step active"></div>
+      <div class="nav-step"></div><div class="nav-step"></div><div class="nav-step"></div>
     </div>
-    <div class="nav-brand" style="font-size:8px;">خطوة 1 / 3</div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 1 / 4</div>
   </nav>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:30px 20px;">
-    <div class="page2-content">
-
-      <div class="page-header">
-        <div style="font-size:40px;margin-bottom:10px;filter:drop-shadow(0 0 15px var(--yellow));">🎮</div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
+    <div class="p2-content">
+      <div style="text-align:center;margin-bottom:22px;">
+        <div style="font-size:36px;margin-bottom:8px;filter:drop-shadow(0 0 12px var(--yellow));">🎮</div>
         <div class="page-title">عضوية IEEE</div>
-        <div class="dots-row" style="margin:10px 0;">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+        <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
         <div class="page-subtitle">MEMBERSHIP VERIFICATION</div>
       </div>
 
       <div class="form-container">
-        <div class="pixel-corner tl"></div>
-        <div class="pixel-corner tr"></div>
-        <div class="pixel-corner bl"></div>
-        <div class="pixel-corner br"></div>
+        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
 
-        <!-- University -->
         <div class="form-group">
           <label class="form-label">⚡ الجامعة</label>
           <select class="form-select" id="university">
             <option value="">-- اختر جامعتك --</option>
             <option>جامعة الطفيلة التقنية</option>
             <option>جامعة الأردن</option>
-            <option>جامعة العلوم والتكنولوجيا</option>
             <option>الجامعة الأردنية للعلوم والتكنولوجيا</option>
             <option>جامعة مؤتة</option>
             <option>جامعة اليرموك</option>
@@ -219,31 +181,36 @@
           <div class="error-msg" id="uniError">الرجاء اختيار جامعتك</div>
         </div>
 
-        <!-- Student ID -->
         <div class="form-group">
           <label class="form-label">🎓 الرقم الجامعي</label>
           <input type="text" class="form-input" id="studentId" placeholder="أدخل رقمك الجامعي">
-          <div class="error-msg" id="studentIdError">الرجاء إدخال الرقم الجامعي</div>
+          <div class="error-msg" id="sidError">الرجاء إدخال الرقم الجامعي</div>
         </div>
 
-        <!-- IEEE member toggle -->
         <div class="form-group">
           <label class="form-label">⚡ هل أنت عضو IEEE؟</label>
-          <div class="ieee-member-toggle" onclick="toggleIEEE()">
-            <span id="toggleLabel">لا، لست عضوًا</span>
-            <div class="toggle-switch" id="toggleSwitch"></div>
+          <div class="toggle-row" onclick="toggleIEEE()">
+            <span id="toggleLabel">نعم، أنا عضو IEEE</span>
+            <div class="toggle-sw on" id="toggleSw"></div>
           </div>
         </div>
 
-        <!-- IEEE ID (hidden until toggle on) -->
-        <div class="ieee-id-field" id="ieeeIdField">
+        <div class="ieee-field show" id="ieeeField">
           <div class="form-group">
             <label class="form-label">🔑 رقم عضوية IEEE</label>
             <input type="text" class="form-input" id="ieeeId" placeholder="أدخل رقم عضويتك IEEE">
           </div>
         </div>
 
-        <button class="btn-next" onclick="validatePage2()">Next ▶</button>
+        <div class="non-member-box" id="nonMemberBox">
+          <div class="nm-icon">⚠️</div>
+          <div class="nm-title">هذا التسجيل مخصص لأعضاء IEEE فقط</div>
+          <div class="nm-text">إذا أردت المشاركة، تواصل معنا عبر واتساب وسنساعدك في الخطوات اللازمة للانضمام.</div>
+          <a class="nm-wa" href="https://wa.me/962792064812" target="_blank">💬 تواصل معنا على واتساب</a>
+          <div class="nm-num" dir="ltr">0792064812</div>
+        </div>
+
+        <button class="btn-next" onclick="validateP2()">التالي ▶</button>
       </div>
     </div>
   </div>
@@ -254,20 +221,17 @@
      ============================================================ -->
 <div class="page" id="page3">
   <nav class="nav-bar">
-    <button class="btn-nav" onclick="goToPage(2)">◀ Back</button>
+    <button class="btn-nav" onclick="goTo(2)">◀ رجوع</button>
     <div class="nav-steps">
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
-      <div class="nav-step active"></div>
-      <div class="nav-step"></div>
+      <div class="nav-step done"></div><div class="nav-step done"></div>
+      <div class="nav-step active"></div><div class="nav-step"></div><div class="nav-step"></div>
     </div>
-    <div class="nav-brand" style="font-size:8px;">Step 2 / 3</div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 2 / 4</div>
   </nav>
 
-  <div style="padding:30px 20px;">
-    <div class="page3-content" style="max-width:1100px;margin:0 auto;">
-
-      <div style="text-align:center;margin-bottom:10px;">
+  <div style="padding:26px 18px;">
+    <div style="max-width:1050px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:8px;">
         <div class="page-title">اختر رياضتك</div>
         <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
         <div class="page-subtitle">SELECT YOUR SPORT</div>
@@ -275,120 +239,119 @@
 
       <div class="sports-grid" id="sportsGrid">
 
-        <!-- Badminton -->
-        <div class="sport-card" onclick="selectSport('badminton', this)" data-sport="badminton">
-          <div class="select-badge">✓ محدد</div>
-          <div class="sport-card-header">
-            <span class="sport-emoji">🏸</span>
-            <div class="sport-name-ar">ريشة</div>
-            <div class="sport-name-en">BADMINTON</div>
+        <div class="sport-card" onclick="selectSport('badminton', this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header">
+            <span class="sc-emoji">🏸</span>
+            <div class="sc-name-ar">ريشة</div>
+            <div class="sc-name-en">BADMINTON</div>
           </div>
-          <div class="sport-card-body">
-            <div class="sport-details">
-              <div class="sport-detail">
-                <span class="d-label">FORMAT</span>
-                <div class="d-value">فردي / زوجي</div>
-              </div>
-              <div class="sport-detail">
-                <span class="d-label">TYPE</span>
-                <div class="d-value">⚡ سريع</div>
-              </div>
+          <div class="sc-body">
+            <div class="sc-details">
+              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
+              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨👩 مختلط</div></div>
             </div>
           </div>
         </div>
 
-        <!-- Football -->
-        <div class="sport-card" onclick="selectSport('football', this)" data-sport="football">
-          <div class="select-badge">✓ محدد</div>
-          <div class="sport-card-header">
-            <span class="sport-emoji">⚽</span>
-            <div class="sport-name-ar">كرة القدم</div>
-            <div class="sport-name-en">FOOTBALL</div>
+        <div class="sport-card" onclick="selectSport('football', this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header">
+            <span class="sc-emoji">⚽</span>
+            <div class="sc-name-ar">كرة القدم</div>
+            <div class="sc-name-en">FOOTBALL</div>
           </div>
-          <div class="sport-card-body">
-            <div class="sport-details">
-              <div class="sport-detail">
-                <span class="d-label">FORMAT</span>
-                <div class="d-value">5 vs 5</div>
-              </div>
-              <div class="sport-detail">
-                <span class="d-label">TYPE</span>
-                <div class="d-value">🔥 جماعي</div>
-              </div>
+          <div class="sc-body">
+            <div class="sc-details">
+              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">خماسي 5v5</div></div>
+              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+            </div>
+            <div class="sc-note">🏅 فريق · الحد الأقصى 8 لاعبين</div>
+          </div>
+        </div>
+
+        <div class="sport-card" onclick="selectSport('basketball', this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header">
+            <span class="sc-emoji">🏀</span>
+            <div class="sc-name-ar">كرة السلة</div>
+            <div class="sc-name-en">BASKETBALL</div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-details">
+              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">3 vs 3</div></div>
+              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+            </div>
+            <div class="sc-note">🏅 فريق · 3 لاعبين داخل الملعب</div>
+          </div>
+        </div>
+
+        <div class="sport-card" onclick="selectSport('chess', this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header">
+            <span class="sc-emoji">♟️</span>
+            <div class="sc-name-ar">شطرنج</div>
+            <div class="sc-name-en">CHESS</div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-details">
+              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
+              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨👩 مختلط</div></div>
+            </div>
+            <div class="sc-note">⚠ الحد الأقصى 3 أشخاص من كل جامعة</div>
+          </div>
+        </div>
+
+        <div class="sport-card" onclick="selectSport('tabletennis', this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header">
+            <span class="sc-emoji">🏓</span>
+            <div class="sc-name-ar">تنس الطاولة</div>
+            <div class="sc-name-en">TABLE TENNIS</div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-details">
+              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
+              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
             </div>
           </div>
         </div>
 
-        <!-- Basketball -->
-        <div class="sport-card" onclick="selectSport('basketball', this)" data-sport="basketball">
-          <div class="select-badge">✓ محدد</div>
-          <div class="sport-card-header">
-            <span class="sport-emoji">🏀</span>
-            <div class="sport-name-ar">كرة السلة</div>
-            <div class="sport-name-en">BASKETBALL</div>
-          </div>
-          <div class="sport-card-body">
-            <div class="sport-details">
-              <div class="sport-detail">
-                <span class="d-label">FORMAT</span>
-                <div class="d-value">3 vs 3</div>
-              </div>
-              <div class="sport-detail">
-                <span class="d-label">TYPE</span>
-                <div class="d-value">🔥 جماعي</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
 
-        <!-- Chess -->
-        <div class="sport-card" onclick="selectSport('chess', this)" data-sport="chess">
-          <div class="select-badge">✓ محدد</div>
-          <div class="sport-card-header">
-            <span class="sport-emoji">♟️</span>
-            <div class="sport-name-ar">شطرنج</div>
-            <div class="sport-name-en">CHESS</div>
-          </div>
-          <div class="sport-card-body">
-            <div class="sport-details">
-              <div class="sport-detail">
-                <span class="d-label">FORMAT</span>
-                <div class="d-value">فردي</div>
-              </div>
-              <div class="sport-detail">
-                <span class="d-label">TYPE</span>
-                <div class="d-value">🧠 ذهني</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div style="text-align:center;margin-top:22px;">
+        <button class="btn-next" style="max-width:380px;" onclick="validateP3()">التالي — عرض الشروط ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- Table Tennis -->
-        <div class="sport-card" onclick="selectSport('tabletennis', this)" data-sport="tabletennis">
-          <div class="select-badge">✓ محدد</div>
-          <div class="sport-card-header">
-            <span class="sport-emoji">🏓</span>
-            <div class="sport-name-ar">تنس الطاولة</div>
-            <div class="sport-name-en">TABLE TENNIS</div>
-          </div>
-          <div class="sport-card-body">
-            <div class="sport-details">
-              <div class="sport-detail">
-                <span class="d-label">FORMAT</span>
-                <div class="d-value">فردي</div>
-              </div>
-              <div class="sport-detail">
-                <span class="d-label">TYPE</span>
-                <div class="d-value">⚡ سريع</div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- ============================================================
+     PAGE 3.5 — SPORT RULES
+     ============================================================ -->
+<div class="page" id="page35">
+  <nav class="nav-bar">
+    <button class="btn-nav" onclick="goTo(3)">◀ رجوع</button>
+    <div class="nav-steps">
+      <div class="nav-step done"></div><div class="nav-step done"></div>
+      <div class="nav-step done"></div><div class="nav-step active"></div><div class="nav-step"></div>
+    </div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 3 / 4</div>
+  </nav>
 
-      </div><!-- /sports-grid -->
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:26px 18px;">
+    <div class="rules-container">
+      <div class="rules-sport-header" id="rulesHeader"></div>
+      <div class="rules-card"         id="rulesCard"></div>
 
-      <div style="text-align:center;margin-top:25px;">
-        <button class="btn-next" style="max-width:400px;" onclick="validatePage3()">التالي ▶</button>
+      <div class="understood-check" onclick="toggleUnderstood()">
+        <div class="check-box" id="checkBox"></div>
+        <span class="check-label">فهمت الشروط وأنا جاهز للتسجيل</span>
+      </div>
+
+      <div class="rules-btn-row">
+        <button class="btn-rules-back" onclick="goTo(3)">◀ تغيير الرياضة</button>
+        <button class="btn-rules-go" id="rulesGoBtn" onclick="validateUnderstood()" disabled style="opacity:.5;cursor:not-allowed;">ابدأ التسجيل ▶</button>
       </div>
     </div>
   </div>
@@ -399,54 +362,64 @@
      ============================================================ -->
 <div class="page" id="page4">
   <nav class="nav-bar">
-    <button class="btn-nav" onclick="goToPage(3)">◀ رجوع</button>
+    <button class="btn-nav" onclick="goTo(35)">◀ رجوع</button>
     <div class="nav-steps">
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
-      <div class="nav-step active"></div>
+      <div class="nav-step done"></div><div class="nav-step done"></div>
+      <div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step active"></div>
     </div>
-    <div class="nav-brand" style="font-size:8px;">خطوة 3 / 3</div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 4 / 4</div>
   </nav>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:30px 20px;">
-    <div style="width:100%;max-width:650px;">
-
-      <div style="text-align:center;margin-bottom:25px;">
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
+    <div style="width:100%;max-width:620px;">
+      <div style="text-align:center;margin-bottom:22px;">
         <div class="page-title">معلوماتك الشخصية</div>
         <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
         <div class="page-subtitle">PLAYER PROFILE</div>
       </div>
 
       <div class="form-container">
-        <div class="pixel-corner tl"></div>
-        <div class="pixel-corner tr"></div>
-        <div class="pixel-corner bl"></div>
-        <div class="pixel-corner br"></div>
+        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
+
+        <!-- Team section (shown for football/basketball) -->
+        <div id="teamSection" style="display:none;">
+          <div class="captain-section">
+            <div class="captain-toggle-row" onclick="toggleCaptain()">
+              <span>⭐ أنا كابتن الفريق</span>
+              <div class="toggle-sw" id="captainSw"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🏅 اسم الفريق</label>
+            <input type="text" class="form-input" id="teamName" placeholder="أدخل اسم فريقك">
+            <div class="error-msg" id="teamNameError">الرجاء إدخال اسم الفريق</div>
+          </div>
+        </div>
 
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">👤 الاسم الأول</label>
             <input type="text" class="form-input" id="firstName" placeholder="الاسم الأول">
-            <div class="error-msg" id="firstNameError">مطلوب</div>
+            <div class="error-msg" id="fnError">مطلوب</div>
           </div>
           <div class="form-group">
             <label class="form-label">👤 اسم العائلة</label>
             <input type="text" class="form-input" id="lastName" placeholder="اسم العائلة">
-            <div class="error-msg" id="lastNameError">مطلوب</div>
+            <div class="error-msg" id="lnError">مطلوب</div>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">📧 البريد الإلكتروني</label>
           <input type="email" class="form-input" id="email" placeholder="your@email.com" dir="ltr">
-          <div class="error-msg" id="emailError">الرجاء إدخال بريد إلكتروني صحيح</div>
+          <div class="error-msg" id="emailError">بريد إلكتروني غير صحيح</div>
         </div>
 
         <div class="form-group">
           <label class="form-label">📱 رقم الهاتف</label>
           <input type="tel" class="form-input" id="phone" placeholder="07xxxxxxxx" dir="ltr">
-          <div class="error-msg" id="phoneError">الرجاء إدخال رقم هاتف صحيح</div>
+          <div class="error-msg" id="phoneError">رقم هاتف غير صحيح</div>
         </div>
 
         <div class="form-row">
@@ -454,11 +427,8 @@
             <label class="form-label">🎓 السنة الدراسية</label>
             <select class="form-select" id="year">
               <option value="">اختر...</option>
-              <option>السنة الأولى</option>
-              <option>السنة الثانية</option>
-              <option>السنة الثالثة</option>
-              <option>السنة الرابعة</option>
-              <option>السنة الخامسة</option>
+              <option>السنة الأولى</option><option>السنة الثانية</option>
+              <option>السنة الثالثة</option><option>السنة الرابعة</option><option>السنة الخامسة</option>
             </select>
             <div class="error-msg" id="yearError">مطلوب</div>
           </div>
@@ -466,25 +436,14 @@
             <label class="form-label">⚡ الجنس</label>
             <select class="form-select" id="gender">
               <option value="">اختر...</option>
-              <option>ذكر</option>
-              <option>أنثى</option>
+              <option>ذكر</option><option>أنثى</option>
             </select>
             <div class="error-msg" id="genderError">مطلوب</div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">💬 ملاحظات (اختياري)</label>
-          <input type="text" class="form-input" id="notes" placeholder="أي معلومات إضافية...">
-        </div>
-
-        <div class="terms-box">
-          بالتسجيل، تؤكد صحة المعلومات المدخلة وتوافق على شروط وأحكام البطولة.
-        </div>
-
-        <button class="btn-next" onclick="validatePage4()" style="background:var(--cyan);color:var(--black);">
-          🏆 أكمل التسجيل
-        </button>
+        <div class="terms-box">بالتسجيل، تؤكد صحة المعلومات المدخلة وتوافق على شروط وأحكام البطولة.</div>
+        <button class="btn-next" onclick="validateP4()" style="background:var(--cyan);color:var(--black);">🏆 أكمل التسجيل</button>
       </div>
     </div>
   </div>
@@ -494,94 +453,45 @@
      PAGE 5 — SUCCESS
      ============================================================ -->
 <div class="page" id="page5">
-  <div class="confetti-container" id="confetti"></div>
-
+  <div class="confetti-c" id="confetti"></div>
   <nav class="nav-bar">
     <div class="nav-brand">⚡ IEEE TTU</div>
     <div class="nav-steps">
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
-      <div class="nav-step done"></div>
+      <div class="nav-step done"></div><div class="nav-step done"></div>
+      <div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step done"></div>
     </div>
-    <div style="width:80px"></div>
+    <div style="width:70px"></div>
   </nav>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:30px 20px;">
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
     <div class="success-content">
-
-      <div class="trophy-animation">🏆</div>
+      <div class="trophy-anim">🏆</div>
       <div class="success-title">تم التسجيل!</div>
-      <div class="success-subtitle">
+      <div class="success-sub">
         PLAYER REGISTERED SUCCESSFULLY<br>
         <span style="color:var(--yellow);">GET READY TO PLAY!</span>
       </div>
 
-      <div class="summary-card" id="summaryCard">
-        <!-- Populated by JS -->
-      </div>
+      <div class="summary-card" id="summaryCard"></div>
 
-      <!-- Ghosts celebration -->
       <div class="ghosts-row">
         <div class="ghost" style="color:#ff0000;">
-          <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
-          </svg>
+          <svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg>
         </div>
-        <div class="ghost" style="color:#00ffff;animation-delay:0.4s">
-          <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
-          </svg>
+        <div class="ghost" style="color:#00ffff;animation-delay:.4s">
+          <svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg>
         </div>
-        <div class="ghost" style="color:#ff69b4;animation-delay:0.8s">
-          <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
-          </svg>
+        <div class="ghost" style="color:#ff69b4;animation-delay:.8s">
+          <svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg>
         </div>
         <div class="ghost" style="color:#ffa500;animation-delay:1.2s">
-          <svg viewBox="0 0 50 55" fill="currentColor">
-            <rect x="10" y="5"  width="30" height="30" rx="15"/>
-            <rect x="5"  y="20" width="40" height="25"/>
-            <rect x="5"  y="45" width="8"  height="8"/>
-            <rect x="21" y="45" width="8"  height="8"/>
-            <rect x="37" y="45" width="8"  height="8"/>
-            <rect x="16" y="20" width="8"  height="10" fill="white"/>
-            <rect x="17" y="21" width="4"  height="6"  fill="#333"/>
-            <rect x="26" y="20" width="8"  height="10" fill="white"/>
-            <rect x="27" y="21" width="4"  height="6"  fill="#333"/>
-          </svg>
+          <svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg>
         </div>
       </div>
 
-      <button class="btn-next" onclick="resetForm()"
-        style="background:transparent;border:2px solid var(--blue);color:var(--cyan);">
+      <button class="btn-next" onclick="resetAll()" style="background:transparent;border:2px solid var(--blue);color:var(--cyan);">
         تسجيل مشارك آخر ▶
       </button>
-
     </div>
   </div>
 </div>

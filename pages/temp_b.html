@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEEE Sports Tournament 2026 — نسخة B</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000;--blue:#1a1aff;--yellow:#FFD700;--white:#fff;--red:#FF0000;--cyan:#00FFFF;--orange:#FFB852;--green:#25D366;--maze-blue:#0000cc;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);font-family:'Tajawal',sans-serif;color:var(--white);min-height:100vh;overflow-x:hidden;cursor:none;}
+.cursor{width:22px;height:22px;background:var(--yellow);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;clip-path:polygon(0% 15%,100% 0%,100% 100%,0% 85%);transform:translate(-50%,-50%);filter:drop-shadow(0 0 6px var(--yellow));}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px);pointer-events:none;z-index:1000;}
+
+/* LOADER */
+.loader{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:9998;transition:opacity .5s;}
+.loader.hidden{opacity:0;pointer-events:none;}
+.loader-text{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--yellow);text-shadow:0 0 20px var(--yellow);margin-bottom:30px;animation:blink .8s infinite;}
+.loader-bar{width:300px;height:20px;border:2px solid var(--blue);border-radius:2px;overflow:hidden;}
+.loader-fill{height:100%;background:var(--yellow);width:0;box-shadow:0 0 10px var(--yellow);}
+
+/* PAGES */
+.page{display:none;min-height:100vh;flex-direction:column;}
+.page.active{display:flex;}
+
+/* NAV */
+.nav-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:2px solid var(--blue);background:rgba(0,0,20,.85);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);}
+.nav-brand{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--yellow);text-shadow:0 0 8px var(--yellow);}
+.nav-steps{display:flex;gap:8px;align-items:center;}
+.nav-step{width:12px;height:12px;border-radius:50%;background:var(--blue);border:1px solid var(--cyan);transition:all .3s;}
+.nav-step.active{background:var(--yellow);box-shadow:0 0 10px var(--yellow);transform:scale(1.3);}
+.nav-step.done{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+.btn-nav{font-family:'Press Start 2P',monospace;font-size:9px;background:transparent;border:2px solid var(--blue);color:var(--cyan);padding:10px 14px;cursor:pointer;border-radius:4px;transition:all .2s;}
+.btn-nav:hover{border-color:var(--cyan);color:var(--yellow);}
+
+/* COMMON */
+.dots-row{display:flex;gap:12px;align-items:center;justify-content:center;padding:6px 0;}
+.dot{width:8px;height:8px;background:var(--yellow);border-radius:50%;animation:dotPulse 1s infinite alternate;}
+.dot:nth-child(2n){animation-delay:.5s;}.dot:nth-child(3n){animation-delay:.25s;}
+.page-title{font-family:'Press Start 2P',monospace;font-size:clamp(13px,3vw,20px);color:var(--yellow);text-shadow:0 0 15px var(--yellow);margin-bottom:6px;}
+.page-subtitle{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);}
+.pixel-corner{position:absolute;width:14px;height:14px;background:var(--black);border:3px solid var(--blue);}
+.pixel-corner.tl{top:-3px;left:-3px;border-right:none;border-bottom:none;}
+.pixel-corner.tr{top:-3px;right:-3px;border-left:none;border-bottom:none;}
+.pixel-corner.bl{bottom:-3px;left:-3px;border-right:none;border-top:none;}
+.pixel-corner.br{bottom:-3px;right:-3px;border-left:none;border-top:none;}
+.ghost{width:44px;height:50px;animation:ghostFloat 2s ease-in-out infinite;filter:drop-shadow(0 0 8px currentColor);}
+.ghost:nth-child(2){animation-delay:.5s;}.ghost:nth-child(3){animation-delay:1s;}.ghost:nth-child(4){animation-delay:1.5s;}
+.ghost svg{width:100%;height:100%;}
+.ghosts-row{display:flex;justify-content:center;gap:18px;margin:16px 0;flex-wrap:wrap;}
+
+/* ====== PAGE 1 — HERO ====== */
+#page1{background:var(--black);align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.maze-bg{position:absolute;inset:0;background-image:linear-gradient(var(--maze-blue) 2px,transparent 2px),linear-gradient(90deg,var(--maze-blue) 2px,transparent 2px);background-size:60px 60px;opacity:.07;}
+.p1-content{z-index:2;width:100%;max-width:860px;padding:28px 18px;text-align:center;}
+.ieee-logo{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--cyan);letter-spacing:4px;margin-bottom:8px;text-shadow:0 0 10px var(--cyan);animation:flicker 3s infinite;}
+.title-block{margin:16px 0;padding:24px;border:3px solid var(--blue);border-radius:12px;background:rgba(0,0,60,.4);box-shadow:0 0 30px var(--blue);position:relative;}
+.title-block::before,.title-block::after{content:'';position:absolute;width:18px;height:18px;background:var(--black);border:3px solid var(--blue);border-radius:50%;}
+.title-block::before{top:-10px;left:28px;}.title-block::after{bottom:-10px;right:28px;}
+.t-sports{font-family:'Press Start 2P',monospace;font-size:clamp(26px,6vw,54px);color:var(--yellow);text-shadow:4px 4px 0 #a0800f,0 0 30px var(--yellow);display:block;}
+.t-tournament{font-family:'Press Start 2P',monospace;font-size:clamp(12px,2.5vw,20px);color:var(--white);letter-spacing:4px;margin:6px 0;}
+.t-year{font-family:'Press Start 2P',monospace;font-size:clamp(18px,3.5vw,32px);color:var(--cyan);text-shadow:0 0 20px var(--cyan);}
+.about-block{margin:16px 0;padding:16px 20px;border:2px solid var(--blue);border-radius:10px;background:rgba(0,0,80,.25);position:relative;}
+.about-block::before{content:'◆ ABOUT ◆';font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--black);padding:0 8px;white-space:nowrap;}
+.about-text{font-size:15px;line-height:2;color:rgba(255,255,255,.85);text-align:center;}
+.about-hl{color:var(--yellow);font-weight:900;}
+.about-sports-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0;font-size:14px;color:rgba(255,255,255,.75);}
+.about-date{margin-top:10px;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);}
+.about-date span{color:var(--yellow);}
+.sports-icons{display:flex;justify-content:center;gap:12px;margin:12px 0;flex-wrap:wrap;}
+.s-icon{width:56px;display:flex;flex-direction:column;align-items:center;gap:4px;border:2px solid var(--blue);border-radius:8px;background:rgba(0,0,80,.4);padding:8px 4px 6px;transition:all .3s;cursor:pointer;}
+.s-icon span{font-size:22px;}.s-icon small{font-family:'Press Start 2P',monospace;font-size:5px;color:var(--cyan);}
+.s-icon:hover{border-color:var(--yellow);transform:scale(1.15);box-shadow:0 0 14px var(--yellow);}
+.btn-start{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--black);background:var(--yellow);border:none;padding:15px 34px;cursor:pointer;border-radius:4px;margin-top:16px;box-shadow:4px 4px 0 #a0800f,0 0 20px var(--yellow);animation:btnPulse 2s infinite;transition:all .1s;}
+.btn-start::before{content:'▶ ';}
+.btn-start:hover{background:var(--white);transform:translate(-2px,-2px);box-shadow:6px 6px 0 #a0800f;}
+.pacman-runner{position:absolute;bottom:16px;animation:runAcross 12s linear infinite;display:flex;align-items:center;gap:10px;}
+.pacman-icon{width:30px;height:30px;background:var(--yellow);border-radius:50%;clip-path:polygon(0% 15%,100% 0%,100% 100%,0% 85%);animation:chomp .3s infinite;filter:drop-shadow(0 0 8px var(--yellow));}
+
+/* ====== PAGE 2 — MEMBERSHIP ====== */
+#page2{background:var(--black);align-items:center;justify-content:center;padding:32px 18px;}
+.p2-wrap{width:100%;max-width:560px;text-align:center;}
+.form-container{padding:28px 24px;border:3px solid var(--blue);border-radius:12px;background:rgba(0,0,40,.6);box-shadow:0 0 35px rgba(0,0,255,.3);position:relative;}
+.form-group{margin-bottom:18px;text-align:right;}
+.form-label{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--cyan);display:block;margin-bottom:8px;text-shadow:0 0 7px var(--cyan);}
+.form-input,.form-select{width:100%;background:rgba(0,0,60,.8);border:2px solid var(--blue);border-radius:4px;padding:12px 13px;color:var(--yellow);font-family:'Tajawal',sans-serif;font-size:15px;transition:all .3s;outline:none;direction:rtl;}
+.form-input::placeholder{color:rgba(255,215,0,.3);}
+.form-input:focus,.form-select:focus{border-color:var(--yellow);box-shadow:0 0 12px rgba(255,215,0,.4);background:rgba(0,0,80,.8);}
+.form-select option{background:#000030;color:var(--yellow);}
+.form-input.error,.form-select.error{border-color:var(--red)!important;}
+.error-msg{font-size:11px;color:var(--red);margin-top:4px;display:none;}
+.error-msg.show{display:block;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;border:2px solid var(--blue);border-radius:4px;background:rgba(0,0,60,.8);cursor:pointer;transition:all .3s;}
+.toggle-row:hover{border-color:var(--yellow);}
+.toggle-row span{font-size:15px;color:var(--yellow);}
+.toggle-sw{width:46px;height:24px;background:var(--blue);border-radius:12px;position:relative;transition:background .3s;flex-shrink:0;}
+.toggle-sw::after{content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:3px;right:3px;transition:transform .3s;}
+.toggle-sw.on{background:var(--yellow);}.toggle-sw.on::after{transform:translateX(-22px);}
+.ieee-field{display:none;margin-top:12px;}.ieee-field.show{display:block;}
+.non-member-box{display:none;margin-top:15px;padding:18px 16px;border:2px solid var(--red);border-radius:8px;background:rgba(255,0,0,.06);text-align:center;animation:fadeSlide .4s ease;}
+.non-member-box.show{display:block;}
+.nm-icon{font-size:28px;margin-bottom:7px;}
+.nm-title{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--red);margin-bottom:10px;line-height:1.8;}
+.nm-text{font-size:14px;color:rgba(255,255,255,.8);line-height:1.9;margin-bottom:14px;}
+.nm-wa{display:inline-flex;align-items:center;gap:7px;background:var(--green);color:#000;font-family:'Press Start 2P',monospace;font-size:8px;padding:11px 18px;border-radius:6px;text-decoration:none;box-shadow:3px 3px 0 #1a9e4a;transition:all .15s;}
+.nm-wa:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #1a9e4a;}
+.nm-num{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--cyan);margin-top:7px;letter-spacing:2px;}
+.btn-next{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--black);background:var(--yellow);border:none;padding:13px 22px;cursor:pointer;border-radius:4px;margin-top:16px;box-shadow:3px 3px 0 #a0800f;transition:all .1s;width:100%;}
+.btn-next:hover{background:var(--white);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #a0800f;}
+
+/* ====== PAGE 3 — SPORT SELECTION ====== */
+#page3{background:var(--black);padding:28px 18px;}
+.sports-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-top:20px;}
+.sport-card{border:3px solid var(--blue);border-radius:12px;background:rgba(0,0,40,.6);overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
+.sport-card:hover{border-color:var(--yellow);transform:translateY(-4px) scale(1.02);box-shadow:0 0 28px rgba(255,215,0,.4);}
+.sport-card.selected{border-color:var(--yellow);box-shadow:0 0 38px rgba(255,215,0,.6);background:rgba(255,215,0,.04);}
+.sel-badge{position:absolute;top:10px;left:10px;background:var(--yellow);color:var(--black);font-family:'Press Start 2P',monospace;font-size:7px;padding:5px 7px;border-radius:4px;opacity:0;transition:opacity .3s;}
+.sport-card.selected .sel-badge{opacity:1;}
+.sc-header{padding:20px;text-align:center;}
+.sc-emoji{font-size:46px;display:block;margin-bottom:9px;transition:transform .3s;}
+.sport-card:hover .sc-emoji{transform:scale(1.25) rotate(4deg);}
+.sc-name-ar{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--yellow);text-shadow:0 0 8px var(--yellow);margin-bottom:4px;}
+.sc-name-en{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);}
+.sc-body{padding:0 16px 16px;border-top:2px solid rgba(0,0,255,.3);padding-top:12px;}
+.sc-details{display:flex;justify-content:space-around;gap:8px;}
+.sc-detail{text-align:center;flex:1;}
+.sc-detail .dl{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);display:block;margin-bottom:3px;}
+.sc-detail .dv{font-size:12px;color:var(--white);font-weight:700;}
+.sc-note{text-align:center;margin-top:8px;font-family:'Press Start 2P',monospace;font-size:6px;color:var(--orange);border-top:1px solid rgba(255,184,82,.2);padding-top:7px;}
+
+/* ====== PAGE 4 — FORM + SIDE PANEL (VERSION B UNIQUE) ====== */
+#page4{background:var(--black);padding:28px 18px;}
+.p4-layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;}
+
+/* SIDE PANEL */
+.side-panel{position:sticky;top:80px;}
+.side-card{border:2px solid var(--blue);border-radius:10px;background:rgba(0,0,50,.5);box-shadow:0 0 20px rgba(0,0,255,.2);overflow:hidden;}
+.side-card-header{padding:14px 16px;background:rgba(0,0,80,.4);border-bottom:2px solid var(--blue);display:flex;align-items:center;gap:10px;}
+.side-sport-emoji{font-size:28px;}
+.side-sport-name{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--yellow);}
+.side-sport-en{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);margin-top:3px;}
+.side-type-badge{display:inline-block;padding:3px 8px;border-radius:3px;font-family:'Press Start 2P',monospace;font-size:6px;margin-top:6px;}
+.side-type-team{background:rgba(255,100,0,.15);border:1px solid #ff6400;color:#ff8c00;}
+.side-type-solo{background:rgba(0,255,255,.08);border:1px solid var(--cyan);color:var(--cyan);}
+.side-rules{padding:14px 16px;}
+.side-rule-title{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);margin-bottom:10px;}
+.side-rule-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid rgba(0,0,255,.15);font-size:13px;line-height:1.6;color:rgba(255,255,255,.82);}
+.side-rule-item:last-child{border-bottom:none;padding-bottom:0;}
+.side-rule-item .ri{font-size:15px;flex-shrink:0;margin-top:1px;}
+.side-rule-item strong{color:var(--yellow);}
+.side-reminder{margin:12px 16px;padding:10px 13px;border:1px solid rgba(255,215,0,.3);border-radius:6px;background:rgba(255,215,0,.04);font-family:'Press Start 2P',monospace;font-size:7px;color:var(--yellow);line-height:1.9;text-align:center;}
+
+/* FORM SIDE */
+.p4-form{width:100%;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.terms-box{padding:12px;border:1px solid rgba(0,100,255,.3);border-radius:4px;background:rgba(0,0,80,.3);margin-bottom:12px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.8;text-align:right;}
+.captain-section{padding:13px 15px;border:2px solid var(--yellow);border-radius:6px;background:rgba(255,215,0,.05);margin-bottom:15px;}
+.captain-toggle-row{display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.captain-toggle-row span{font-size:15px;color:var(--yellow);font-weight:700;}
+
+/* ====== PAGE 5 — SUCCESS ====== */
+#page5{background:var(--black);align-items:center;justify-content:center;padding:28px 18px;}
+.success-content{text-align:center;max-width:560px;}
+.trophy-anim{font-size:72px;margin-bottom:16px;animation:trophyBounce 1s ease-in-out infinite;filter:drop-shadow(0 0 20px var(--yellow));}
+.success-title{font-family:'Press Start 2P',monospace;font-size:clamp(15px,3.5vw,24px);color:var(--yellow);text-shadow:0 0 25px var(--yellow);margin-bottom:12px;animation:successPulse 2s infinite;}
+.success-sub{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-bottom:24px;line-height:2;}
+.summary-card{padding:20px;border:2px solid var(--yellow);border-radius:8px;background:rgba(255,215,0,.04);text-align:right;margin-bottom:20px;box-shadow:0 0 16px rgba(255,215,0,.22);}
+.sum-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,255,.2);font-size:14px;}
+.sum-row:last-child{border-bottom:none;}
+.sum-row .sl{color:var(--cyan);font-weight:700;}.sum-row .sv{color:var(--yellow);}
+.confetti-c{position:fixed;inset:0;pointer-events:none;z-index:100;}
+
+/* ANIMATIONS */
+@keyframes dotPulse{from{opacity:1;transform:scale(1);}to{opacity:.3;transform:scale(.6);}}
+@keyframes flicker{0%,95%,100%{opacity:1;}96%{opacity:.5;}98%{opacity:.3;}99%{opacity:1;}}
+@keyframes btnPulse{0%,100%{box-shadow:4px 4px 0 #a0800f,0 0 20px var(--yellow);}50%{box-shadow:4px 4px 0 #a0800f,0 0 40px var(--yellow);}}
+@keyframes ghostFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes runAcross{from{left:-100px;}to{left:calc(100% + 100px);}}
+@keyframes chomp{0%,100%{clip-path:polygon(0% 15%,100% 0%,100% 100%,0% 85%);}50%{clip-path:polygon(0% 50%,100% 0%,100% 50%,0% 50%);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes trophyBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-13px) scale(1.1);}}
+@keyframes successPulse{0%,100%{text-shadow:0 0 18px var(--yellow);}50%{text-shadow:0 0 45px var(--yellow),0 0 70px orange;}}
+@keyframes confettiFall{from{transform:translateY(0) rotate(0deg);opacity:1;}to{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes panelSlideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+  .p4-layout{grid-template-columns:1fr;}
+  .side-panel{position:static;margin-bottom:20px;}
+}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}.sports-grid{grid-template-columns:1fr;}.form-container{padding:20px 15px;}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="scanlines"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-text">INSERT COIN</div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+  <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-top:14px;">IEEE TTU STUDENT BRANCH</div>
+</div>
+
+<!-- ===== PAGE 1 — HERO ===== -->
+<div class="page active" id="page1">
+  <div class="maze-bg"></div>
+  <nav class="nav-bar">
+    <div class="nav-brand">⚡ IEEE TTU</div>
+    <div class="nav-steps"><div class="nav-step active"></div><div class="nav-step"></div><div class="nav-step"></div><div class="nav-step"></div></div>
+    <div style="width:70px"></div>
+  </nav>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:26px 16px;position:relative;z-index:2;">
+    <div class="p1-content">
+      <div class="ieee-logo">◆ IEEE TTU STUDENT BRANCH ◆</div>
+      <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="title-block">
+        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
+        <span class="t-sports">SPORTS</span>
+        <div class="t-tournament">· TOURNAMENT ·</div>
+        <div class="t-year">2026</div>
+      </div>
+      <div class="ghosts-row">
+        <div class="ghost" style="color:#ff0000;"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#00ffff;"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#ff69b4;"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#ffa500;"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+      </div>
+      <div class="about-block">
+        <div class="about-text">بطولة رياضية طلابية تجمع فروع <span class="about-hl">IEEE</span> من مختلف الجامعات الأردنية، في أجواء تنافسية مليئة بالحماس والعمل الجماعي.</div>
+        <div class="about-sports-list"><span>⚽ كرة القدم</span><span>🏀 كرة السلة</span><span>🏓 تنس الطاولة</span><span>🏸 الريشة الطائرة</span><span>♟ الشطرنج</span></div>
+        <div class="about-date">📅 السبت <span>25 / 7 / 2026</span> · جامعة الطفيلة التقنية</div>
+      </div>
+      <div class="sports-icons">
+        <div class="s-icon"><span>🏸</span><small>ريشة</small></div>
+        <div class="s-icon"><span>⚽</span><small>قدم</small></div>
+        <div class="s-icon"><span>🏀</span><small>سلة</small></div>
+        <div class="s-icon"><span>♟️</span><small>شطرنج</small></div>
+        <div class="s-icon"><span>🏓</span><small>تنس</small></div>
+      </div>
+      <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <button class="btn-start" onclick="goTo(2)">سجّل الآن</button>
+      <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,255,255,.22);margin-top:12px;">TTU · IEEE · 2026 · SPORTS TOURNAMENT</div>
+    </div>
+  </div>
+  <div class="pacman-runner"><div class="pacman-icon"></div><div style="display:flex;gap:12px;"><div class="dot" style="width:9px;height:9px;"></div><div class="dot" style="width:9px;height:9px;animation-delay:.2s"></div><div class="dot" style="width:9px;height:9px;animation-delay:.4s"></div></div></div>
+</div>
+
+<!-- ===== PAGE 2 — MEMBERSHIP ===== -->
+<div class="page" id="page2">
+  <nav class="nav-bar">
+    <button class="btn-nav" onclick="goTo(1)">◀ رجوع</button>
+    <div class="nav-steps"><div class="nav-step done"></div><div class="nav-step active"></div><div class="nav-step"></div><div class="nav-step"></div></div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 1 / 3</div>
+  </nav>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 16px;">
+    <div class="p2-wrap">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="font-size:34px;margin-bottom:7px;filter:drop-shadow(0 0 12px var(--yellow));">🎮</div>
+        <div class="page-title">عضوية IEEE</div>
+        <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="page-subtitle">MEMBERSHIP VERIFICATION</div>
+      </div>
+      <div class="form-container">
+        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
+        <div class="form-group">
+          <label class="form-label">⚡ الجامعة</label>
+          <select class="form-select" id="university">
+            <option value="">-- اختر جامعتك --</option>
+            <option>جامعة الطفيلة التقنية</option><option>جامعة الأردن</option>
+            <option>الجامعة الأردنية للعلوم والتكنولوجيا</option><option>جامعة مؤتة</option>
+            <option>جامعة اليرموك</option><option>جامعة البلقاء التطبيقية</option>
+            <option>جامعة الزيتونة</option><option>جامعة العلوم التطبيقية</option>
+            <option>الجامعة الهاشمية</option><option>جامعة آل البيت</option>
+            <option>جامعة الحسين بن طلال</option><option>جامعة الإسراء</option>
+            <option>جامعة جرش</option><option>جامعة عمان الأهلية</option><option>أخرى</option>
+          </select>
+          <div class="error-msg" id="uniError">الرجاء اختيار جامعتك</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">🎓 الرقم الجامعي</label>
+          <input type="text" class="form-input" id="studentId" placeholder="أدخل رقمك الجامعي">
+          <div class="error-msg" id="sidError">الرجاء إدخال الرقم الجامعي</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">⚡ هل أنت عضو IEEE؟</label>
+          <div class="toggle-row" onclick="toggleIEEE()">
+            <span id="toggleLabel">نعم، أنا عضو IEEE</span>
+            <div class="toggle-sw on" id="toggleSw"></div>
+          </div>
+        </div>
+        <div class="ieee-field show" id="ieeeField">
+          <div class="form-group">
+            <label class="form-label">🔑 رقم عضوية IEEE</label>
+            <input type="text" class="form-input" id="ieeeId" placeholder="أدخل رقم عضويتك IEEE">
+          </div>
+        </div>
+        <div class="non-member-box" id="nonMemberBox">
+          <div class="nm-icon">⚠️</div>
+          <div class="nm-title">هذا التسجيل مخصص لأعضاء IEEE فقط</div>
+          <div class="nm-text">إذا أردت المشاركة، تواصل معنا عبر واتساب وسنساعدك.</div>
+          <a class="nm-wa" href="https://wa.me/962792064812" target="_blank">💬 تواصل معنا على واتساب</a>
+          <div class="nm-num" dir="ltr">0792064812</div>
+        </div>
+        <button class="btn-next" onclick="validateP2()">التالي ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 3 — SPORT SELECTION ===== -->
+<div class="page" id="page3">
+  <nav class="nav-bar">
+    <button class="btn-nav" onclick="goTo(2)">◀ رجوع</button>
+    <div class="nav-steps"><div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step active"></div><div class="nav-step"></div></div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 2 / 3</div>
+  </nav>
+  <div style="padding:24px 16px;">
+    <div style="max-width:1020px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:8px;">
+        <div class="page-title">اختر رياضتك</div>
+        <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="page-subtitle">SELECT YOUR SPORT</div>
+      </div>
+      <div class="sports-grid" id="sportsGrid">
+        <div class="sport-card" onclick="selectSport('badminton',this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header"><span class="sc-emoji">🏸</span><div class="sc-name-ar">ريشة</div><div class="sc-name-en">BADMINTON</div></div>
+          <div class="sc-body"><div class="sc-details"><div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div><div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨👩 مختلط</div></div></div></div>
+        </div>
+        <div class="sport-card" onclick="selectSport('football',this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header"><span class="sc-emoji">⚽</span><div class="sc-name-ar">كرة القدم</div><div class="sc-name-en">FOOTBALL</div></div>
+          <div class="sc-body"><div class="sc-details"><div class="sc-detail"><span class="dl">النظام</span><div class="dv">خماسي 5v5</div></div><div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div></div><div class="sc-note">🏅 فريق · الحد الأقصى 8 لاعبين</div></div>
+        </div>
+        <div class="sport-card" onclick="selectSport('basketball',this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header"><span class="sc-emoji">🏀</span><div class="sc-name-ar">كرة السلة</div><div class="sc-name-en">BASKETBALL</div></div>
+          <div class="sc-body"><div class="sc-details"><div class="sc-detail"><span class="dl">النظام</span><div class="dv">3 vs 3</div></div><div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div></div><div class="sc-note">🏅 فريق · 3 لاعبين داخل الملعب</div></div>
+        </div>
+        <div class="sport-card" onclick="selectSport('chess',this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header"><span class="sc-emoji">♟️</span><div class="sc-name-ar">شطرنج</div><div class="sc-name-en">CHESS</div></div>
+          <div class="sc-body"><div class="sc-details"><div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div><div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨👩 مختلط</div></div></div><div class="sc-note">⚠ الحد الأقصى 3 من كل جامعة</div></div>
+        </div>
+        <div class="sport-card" onclick="selectSport('tabletennis',this)">
+          <div class="sel-badge">✓ محدد</div>
+          <div class="sc-header"><span class="sc-emoji">🏓</span><div class="sc-name-ar">تنس الطاولة</div><div class="sc-name-en">TABLE TENNIS</div></div>
+          <div class="sc-body"><div class="sc-details"><div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div><div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div></div></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-next" style="max-width:360px;" onclick="validateP3()">التالي ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 4 — FORM + SIDE PANEL ===== -->
+<div class="page" id="page4">
+  <nav class="nav-bar">
+    <button class="btn-nav" onclick="goTo(3)">◀ رجوع</button>
+    <div class="nav-steps"><div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step active"></div></div>
+    <div class="nav-brand" style="font-size:7px;">خطوة 3 / 3</div>
+  </nav>
+  <div style="padding:24px 16px;">
+    <div class="p4-layout">
+
+      <!-- SIDE PANEL (right side in RTL) -->
+      <div class="side-panel" id="sidePanel" style="animation:panelSlideIn .4s ease;">
+        <div style="text-align:center;margin-bottom:14px;">
+          <div class="page-title" style="font-size:11px;">📋 شروط الرياضة</div>
+          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--cyan);">SPORT RULES</div>
+        </div>
+        <div class="side-card" id="sideCard">
+          <!-- Filled by JS -->
+        </div>
+        <div class="side-reminder" id="sideReminder">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="p4-form">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div class="page-title">معلوماتك الشخصية</div>
+          <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <div class="page-subtitle">PLAYER PROFILE</div>
+        </div>
+        <div class="form-container">
+          <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
+          <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
+          <!-- Team section -->
+          <div id="teamSection" style="display:none;">
+            <div class="captain-section">
+              <div class="captain-toggle-row" onclick="toggleCaptain()">
+                <span>⭐ أنا كابتن الفريق</span>
+                <div class="toggle-sw" id="captainSw"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">🏅 اسم الفريق</label>
+              <input type="text" class="form-input" id="teamName" placeholder="أدخل اسم فريقك">
+              <div class="error-msg" id="teamNameError">الرجاء إدخال اسم الفريق</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">👤 الاسم الأول</label>
+              <input type="text" class="form-input" id="firstName" placeholder="الاسم الأول">
+              <div class="error-msg" id="fnError">مطلوب</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">👤 اسم العائلة</label>
+              <input type="text" class="form-input" id="lastName" placeholder="اسم العائلة">
+              <div class="error-msg" id="lnError">مطلوب</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">📧 البريد الإلكتروني</label>
+            <input type="email" class="form-input" id="email" placeholder="your@email.com" dir="ltr">
+            <div class="error-msg" id="emailError">بريد إلكتروني غير صحيح</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">📱 رقم الهاتف</label>
+            <input type="tel" class="form-input" id="phone" placeholder="07xxxxxxxx" dir="ltr">
+            <div class="error-msg" id="phoneError">رقم هاتف غير صحيح</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">🎓 السنة الدراسية</label>
+              <select class="form-select" id="year">
+                <option value="">اختر...</option>
+                <option>السنة الأولى</option><option>السنة الثانية</option>
+                <option>السنة الثالثة</option><option>السنة الرابعة</option><option>السنة الخامسة</option>
+              </select>
+              <div class="error-msg" id="yearError">مطلوب</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">⚡ الجنس</label>
+              <select class="form-select" id="gender">
+                <option value="">اختر...</option>
+                <option>ذكر</option><option>أنثى</option>
+              </select>
+              <div class="error-msg" id="genderError">مطلوب</div>
+            </div>
+          </div>
+          <div class="terms-box">بالتسجيل، تؤكد صحة المعلومات المدخلة وتوافق على شروط وأحكام البطولة.</div>
+          <button class="btn-next" onclick="validateP4()" style="background:var(--cyan);color:var(--black);">🏆 أكمل التسجيل</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE 5 — SUCCESS ===== -->
+<div class="page" id="page5">
+  <div class="confetti-c" id="confetti"></div>
+  <nav class="nav-bar">
+    <div class="nav-brand">⚡ IEEE TTU</div>
+    <div class="nav-steps"><div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step done"></div></div>
+    <div style="width:70px"></div>
+  </nav>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:26px 16px;">
+    <div class="success-content">
+      <div class="trophy-anim">🏆</div>
+      <div class="success-title">تم التسجيل!</div>
+      <div class="success-sub">PLAYER REGISTERED SUCCESSFULLY<br><span style="color:var(--yellow);">GET READY TO PLAY!</span></div>
+      <div class="summary-card" id="summaryCard"></div>
+      <div class="ghosts-row">
+        <div class="ghost" style="color:#ff0000;"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#00ffff;animation-delay:.4s"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#ff69b4;animation-delay:.8s"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+        <div class="ghost" style="color:#ffa500;animation-delay:1.2s"><svg viewBox="0 0 50 55" fill="currentColor"><rect x="10" y="5" width="30" height="30" rx="15"/><rect x="5" y="20" width="40" height="25"/><rect x="5" y="45" width="8" height="8"/><rect x="21" y="45" width="8" height="8"/><rect x="37" y="45" width="8" height="8"/><rect x="16" y="20" width="8" height="10" fill="white"/><rect x="17" y="21" width="4" height="6" fill="#333"/><rect x="26" y="20" width="8" height="10" fill="white"/><rect x="27" y="21" width="4" height="6" fill="#333"/></svg></div>
+      </div>
+      <button class="btn-next" onclick="resetAll()" style="background:transparent;border:2px solid var(--blue);color:var(--cyan);">تسجيل مشارك آخر ▶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
+
+// LOADER
+let lp=0;const lf=document.getElementById('loaderFill');
+const li=setInterval(()=>{lp+=Math.random()*15;if(lp>=100){lp=100;lf.style.width='100%';clearInterval(li);setTimeout(()=>{document.getElementById('loader').classList.add('hidden');setTimeout(()=>document.getElementById('loader').remove(),500);},300);}lf.style.width=lp+'%';},80);
+
+// STATE
+let selectedSport=null,isIEEEMember=true,isCaptain=false;
+
+const sportData={
+  badminton:{emoji:'🏸',ar:'ريشة',en:'BADMINTON',type:'solo',
+    rules:[
+      {icon:'👤',text:'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل'},
+      {icon:'👨👩',text:'مسموح للذكور والإناث'},
+      {icon:'📋',text:'نظام إقصائي مباشر'},
+    ],reminder:'كل شخص يسجل لحاله فقط ✓'},
+  football:{emoji:'⚽',ar:'كرة القدم',en:'FOOTBALL',type:'team',
+    rules:[
+      {icon:'👥',text:'كل لاعب يسجل <strong>بشكل منفصل</strong> ويكتب اسم فريقه'},
+      {icon:'⭐',text:'يجب تحديد <strong>كابتن الفريق</strong> عند التسجيل'},
+      {icon:'🔢',text:'داخل الملعب: <strong>5 لاعبين</strong> · الحد الأقصى: <strong>8 لاعبين</strong>'},
+      {icon:'👨',text:'مخصص للذكور فقط'},
+      {icon:'🏫',text:'جميع الأعضاء من <strong>نفس الجامعة</strong>'},
+    ],reminder:'⭐ لا تنس تحديد إذا كنت الكابتن'},
+  basketball:{emoji:'🏀',ar:'كرة السلة',en:'BASKETBALL',type:'team',
+    rules:[
+      {icon:'👥',text:'كل لاعب يسجل <strong>بشكل منفصل</strong> ويكتب اسم فريقه'},
+      {icon:'⭐',text:'يجب تحديد <strong>كابتن الفريق</strong> عند التسجيل'},
+      {icon:'🔢',text:'داخل الملعب: <strong>3 لاعبين</strong>'},
+      {icon:'👨',text:'مخصص للذكور فقط'},
+      {icon:'🏫',text:'جميع الأعضاء من <strong>نفس الجامعة</strong>'},
+    ],reminder:'⭐ لا تنس تحديد إذا كنت الكابتن'},
+  chess:{emoji:'♟️',ar:'شطرنج',en:'CHESS',type:'solo',
+    rules:[
+      {icon:'👤',text:'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل'},
+      {icon:'👨👩',text:'مسموح للذكور والإناث'},
+      {icon:'⚠️',text:'الحد الأقصى: <strong>3 مشاركين</strong> من كل جامعة'},
+    ],reminder:'⚠️ تأكد أن جامعتك لم تتجاوز الحد'},
+  tabletennis:{emoji:'🏓',ar:'تنس الطاولة',en:'TABLE TENNIS',type:'solo',
+    rules:[
+      {icon:'👤',text:'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل'},
+      {icon:'👨',text:'مخصص للذكور فقط'},
+      {icon:'📋',text:'نظام إقصائي مباشر'},
+    ],reminder:'كل شخص يسجل لحاله فقط ✓'},
+};
+
+const sportNames={badminton:'ريشة 🏸',football:'كرة القدم ⚽',basketball:'كرة السلة 🏀',chess:'شطرنج ♟️',tabletennis:'تنس الطاولة 🏓'};
+
+function goTo(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toggleIEEE(){
+  isIEEEMember=!isIEEEMember;
+  document.getElementById('toggleSw').classList.toggle('on',isIEEEMember);
+  document.getElementById('toggleLabel').textContent=isIEEEMember?'نعم، أنا عضو IEEE':'لا، لست عضوًا';
+  document.getElementById('ieeeField').classList.toggle('show',isIEEEMember);
+  document.getElementById('nonMemberBox').classList.toggle('show',!isIEEEMember);
+}
+
+function selectSport(sport,el){
+  document.querySelectorAll('.sport-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected'); selectedSport=sport;
+  el.style.outline='3px solid var(--yellow)';
+  setTimeout(()=>el.style.outline='',200);
+}
+
+function toggleCaptain(){
+  isCaptain=!isCaptain;
+  document.getElementById('captainSw').classList.toggle('on',isCaptain);
+}
+
+function buildSidePanel(){
+  const d=sportData[selectedSport];
+  const typeBadge=d.type==='team'
+    ?'<span class="side-type-badge side-type-team">🏅 رياضة جماعية</span>'
+    :'<span class="side-type-badge side-type-solo">👤 رياضة فردية</span>';
+  const items=d.rules.map(r=>`<div class="side-rule-item"><span class="ri">${r.icon}</span><span>${r.text}</span></div>`).join('');
+  document.getElementById('sideCard').innerHTML=`
+    <div class="side-card-header">
+      <span class="side-sport-emoji">${d.emoji}</span>
+      <div><div class="side-sport-name">${d.ar}</div><div class="side-sport-en">${d.en}</div>${typeBadge}</div>
+    </div>
+    <div class="side-rules">
+      <div class="side-rule-title">📋 شروط التسجيل</div>
+      ${items}
+    </div>
+  `;
+  document.getElementById('sideReminder').innerHTML=`💡 ${d.reminder}`;
+}
+
+function updateTeamSection(){
+  const isTeam=selectedSport==='football'||selectedSport==='basketball';
+  document.getElementById('teamSection').style.display=isTeam?'block':'none';
+}
+
+function validateP2(){
+  if(!isIEEEMember){document.getElementById('nonMemberBox').classList.add('show');return;}
+  const uni=document.getElementById('university').value;
+  const sid=document.getElementById('studentId').value.trim();
+  let ok=true;
+  if(!uni){document.getElementById('uniError').classList.add('show');document.getElementById('university').classList.add('error');ok=false;}
+  else{document.getElementById('uniError').classList.remove('show');document.getElementById('university').classList.remove('error');}
+  if(!sid){document.getElementById('sidError').classList.add('show');document.getElementById('studentId').classList.add('error');ok=false;}
+  else{document.getElementById('sidError').classList.remove('show');document.getElementById('studentId').classList.remove('error');}
+  if(ok) goTo(3);
+}
+
+function validateP3(){
+  if(!selectedSport){
+    document.getElementById('sportsGrid').style.outline='3px solid red';
+    setTimeout(()=>document.getElementById('sportsGrid').style.outline='',1000);
+    return;
+  }
+  buildSidePanel(); updateTeamSection(); goTo(4);
+}
+
+function validateP4(){
+  const checks=[
+    {id:'firstName',err:'fnError',fn:v=>v.trim()!==''},
+    {id:'lastName',err:'lnError',fn:v=>v.trim()!==''},
+    {id:'email',err:'emailError',fn:v=>v.includes('@')&&v.trim()!==''},
+    {id:'phone',err:'phoneError',fn:v=>v.trim().length>=7},
+    {id:'year',err:'yearError',fn:v=>v!==''},
+    {id:'gender',err:'genderError',fn:v=>v!==''},
+  ];
+  const isTeam=selectedSport==='football'||selectedSport==='basketball';
+  if(isTeam) checks.push({id:'teamName',err:'teamNameError',fn:v=>v.trim()!==''});
+  let ok=true;
+  checks.forEach(({id,err,fn})=>{
+    const v=document.getElementById(id).value;
+    const pass=fn(v);
+    document.getElementById(err).classList.toggle('show',!pass);
+    document.getElementById(id).classList.toggle('error',!pass);
+    if(!pass) ok=false;
+  });
+  if(ok) submitForm();
+}
+
+function submitForm(){
+  const g=id=>document.getElementById(id).value;
+  const isTeam=selectedSport==='football'||selectedSport==='basketball';
+  const teamRow=isTeam?`<div class="sum-row"><span class="sl">اسم الفريق</span><span class="sv">${g('teamName')}</span></div><div class="sum-row"><span class="sl">الكابتن</span><span class="sv">${isCaptain?'⭐ نعم':'لا'}</span></div>`:'';
+  document.getElementById('summaryCard').innerHTML=`
+    <div class="sum-row"><span class="sl">الاسم</span><span class="sv">${g('firstName')} ${g('lastName')}</span></div>
+    <div class="sum-row"><span class="sl">الجامعة</span><span class="sv">${g('university')}</span></div>
+    <div class="sum-row"><span class="sl">الرقم الجامعي</span><span class="sv">${g('studentId')}</span></div>
+    <div class="sum-row"><span class="sl">الرياضة</span><span class="sv">${sportNames[selectedSport]}</span></div>
+    ${teamRow}
+    <div class="sum-row"><span class="sl">رقم IEEE</span><span class="sv">${g('ieeeId')||'—'}</span></div>
+    <div class="sum-row"><span class="sl">البريد</span><span class="sv" dir="ltr">${g('email')}</span></div>
+    <div class="sum-row"><span class="sl">الهاتف</span><span class="sv" dir="ltr">${g('phone')}</span></div>
+    <div class="sum-row"><span class="sl">السنة</span><span class="sv">${g('year')}</span></div>
+  `;
+  goTo(5); launchConfetti();
+}
+
+function resetAll(){
+  ['university','studentId','ieeeId','firstName','lastName','email','phone','year','gender','teamName'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  selectedSport=null; isIEEEMember=true; isCaptain=false;
+  document.getElementById('toggleSw').classList.add('on');
+  document.getElementById('toggleLabel').textContent='نعم، أنا عضو IEEE';
+  document.getElementById('ieeeField').classList.add('show');
+  document.getElementById('nonMemberBox').classList.remove('show');
+  document.getElementById('captainSw').classList.remove('on');
+  document.querySelectorAll('.sport-card').forEach(c=>c.classList.remove('selected'));
+  goTo(1);
+}
+
+function launchConfetti(){
+  const c=document.getElementById('confetti');
+  const cols=['#FFD700','#00FFFF','#FF69B4','#FF0000','#FFA500','#fff'];
+  for(let i=0;i<60;i++) setTimeout(()=>{
+    const p=document.createElement('div');const s=Math.random()*10+6;
+    p.style.cssText=`position:absolute;width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}%;top:-10px;border-radius:${Math.random()>.5?'50%':'0'};animation:confettiFall ${Math.random()*2+1.5}s linear forwards;transform:rotate(${Math.random()*360}deg);`;
+    c.appendChild(p);setTimeout(()=>p.remove(),4000);
+  },i*60);
+}
+</script>
+</body>
+</html>
