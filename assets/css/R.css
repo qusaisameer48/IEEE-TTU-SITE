@@ -21,9 +21,11 @@ body {
   font-family: 'Tajawal', sans-serif;
   color: var(--white);
   min-height: 100vh;
-  overflow-x: hidden;
-  cursor: none;
+   cursor: none;
+    overflow-x: hidden;
+
 }
+
 
 /* ===== CURSOR ===== */
 .cursor {
