@@ -28,15 +28,77 @@ body {
 
 
 /* ===== CURSOR ===== */
+/* ===== CURSOR ===== */
 .cursor {
-  width: 22px; height: 22px;
+  width: 28px; height: 28px;
   background: var(--yellow);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9999;
-  clip-path: polygon(0% 15%, 100% 0%, 100% 100%, 0% 85%);
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 0 6px var(--yellow));
+  clip-path: polygon(
+    50% 50%,
+    100% 28%,
+    93% 8%,
+    75% 0%,
+    50% 0%,
+    25% 0%,
+    7%  8%,
+    0%  28%,
+    0%  50%,
+    0%  72%,
+    7%  92%,
+    25% 100%,
+    50% 100%,
+    75% 100%,
+    93% 92%,
+    100% 72%
+  );
+  animation: cursorChomp .85s infinite;
+}
+
+@keyframes cursorChomp {
+  0%, 100% {
+    clip-path: polygon(
+      50% 50%,
+      100% 28%,
+      93% 8%,
+      75% 0%,
+      50% 0%,
+      25% 0%,
+      7%  8%,
+      0%  28%,
+      0%  50%,
+      0%  72%,
+      7%  92%,
+      25% 100%,
+      50% 100%,
+      75% 100%,
+      93% 92%,
+      100% 72%
+    );
+  }
+  50% {
+    clip-path: polygon(
+      50% 50%,
+      100% 50%,
+      93% 8%,
+      75% 0%,
+      50% 0%,
+      25% 0%,
+      7%  8%,
+      0%  28%,
+      0%  50%,
+      0%  72%,
+      7%  92%,
+      25% 100%,
+      50% 100%,
+      75% 100%,
+      93% 92%,
+      100% 50%
+    );
+  }
 }
 
 /* ===== SCANLINES ===== */
