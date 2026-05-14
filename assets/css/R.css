@@ -339,6 +339,20 @@ body {
 .sum-row .sv { color: var(--yellow); }
 .confetti-c { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ===== ANIMATIONS ===== */
 @keyframes dotPulse { from { opacity: 1; transform: scale(1); } to { opacity: .3; transform: scale(.6); } }
 @keyframes flicker { 0%,95%,100% { opacity: 1; } 96% { opacity: .5; } 98% { opacity: .3; } 99% { opacity: 1; } }
