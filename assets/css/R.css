@@ -358,3 +358,11 @@ body {
   .sports-grid { grid-template-columns: 1fr; }
   .form-container { padding: 22px 16px; }
 }
+
+
+
+
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor { display: none; }
+}
