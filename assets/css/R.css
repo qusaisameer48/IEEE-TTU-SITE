@@ -218,8 +218,8 @@ body {
 .about-date span { color: var(--yellow); }
 .sports-icons { display: flex; justify-content: center; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
 .s-icon { width: 58px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 2px solid var(--blue); border-radius: 8px; background: rgba(0,0,80,.4); padding: 9px 4px 7px; transition: all .3s; cursor: pointer; }
-.s-icon span { font-size: 22px; }
-.s-icon small { font-family: 'Press Start 2P', monospace; font-size: 5px; color: var(--cyan); }
+.s-icon span { font-size: 30px; }
+.s-icon small { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--cyan); }
 .s-icon:hover { border-color: var(--yellow); transform: scale(1.15); box-shadow: 0 0 14px var(--yellow); }
 .btn-start { font-family: 'Press Start 2P', monospace; font-size: 13px; color: var(--black); background: var(--yellow); border: none; padding: 16px 36px; cursor: pointer; border-radius: 4px; margin-top: 18px; box-shadow: 4px 4px 0 #a0800f, 0 0 20px var(--yellow); animation: btnPulse 2s infinite; transition: all .1s; }
 .btn-start::before { content: '▶ '; }
@@ -278,13 +278,13 @@ body {
 .sc-header { padding: 22px; text-align: center; }
 .sc-emoji { font-size: 48px; display: block; margin-bottom: 10px; transition: transform .3s; }
 .sport-card:hover .sc-emoji { transform: scale(1.25) rotate(4deg); }
-.sc-name-ar { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--yellow); text-shadow: 0 0 8px var(--yellow); margin-bottom: 4px; }
-.sc-name-en { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--cyan); }
+.sc-name-ar { font-family: 'Press Start 2P', monospace; font-size: 13px; padding: 5px; color: var(--yellow); text-shadow: 0 0 8px var(--yellow); margin-bottom: 4px; }
+.sc-name-en { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--cyan); }
 .sc-body { padding: 0 18px 18px; border-top: 2px solid rgba(0,0,255,.3); padding-top: 13px; }
 .sc-details { display: flex; justify-content: space-around; gap: 8px; }
 .sc-detail { text-align: center; flex: 1; }
-.sc-detail .dl { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--cyan); display: block; margin-bottom: 3px; }
-.sc-detail .dv { font-size: 12px; color: var(--white); font-weight: 700; }
+.sc-detail .dl { font-family: 'Press Start 2P', monospace; font-size: 12px; color: var(--cyan); display: block; margin-bottom: 3px; }
+.sc-detail .dv { font-size: 14px; color: var(--white); font-weight: 700; }
 .sc-note { text-align: center; margin-top: 8px; font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--orange); border-top: 1px solid rgba(255,184,82,.2); padding-top: 7px; }
 
 /* ===== PAGE 3.5 — SPORT RULES ===== */
@@ -303,7 +303,7 @@ body {
 .rule-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,.88); }
 .rule-item .ri { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
 .rule-item strong { color: var(--yellow); }
-.rules-team-type { display: inline-block; padding: 4px 10px; border-radius: 4px; font-family: 'Press Start 2P', monospace; font-size: 7px; margin-bottom: 10px; }
+.rules-team-type { display: inline-block; padding: 4px 10px; border-radius: 4px; font-family: 'Press Start 2P', monospace; font-size: 12px; margin-bottom: 10px; }
 .type-team { background: rgba(255,100,0,.15); border: 1px solid #ff6400; color: #ff8c00; }
 .type-solo { background: rgba(0,255,255,.08); border: 1px solid var(--cyan); color: var(--cyan); }
 .captain-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,215,0,.1); border: 1px solid var(--yellow); border-radius: 6px; padding: 8px 14px; font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--yellow); margin-top: 8px; }

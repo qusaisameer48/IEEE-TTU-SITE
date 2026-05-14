@@ -14,9 +14,13 @@
 
 <!-- LOADER -->
 <div class="loader" id="loader">
-  <div class="loader-text">INSERT COIN</div>
+  <div class="loader-brand">◆ IEEE TTU STUDENT BRANCH ◆</div>
+  <div style="font-size:48px;margin:18px 0;filter:drop-shadow(0 0 14px #FFD700);">🕹️</div>
+  <div class="loader-text">LOADING GAME DATA...</div>
   <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
-  <div class="loader-brand">IEEE TTU STUDENT BRANCH</div>
+  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.3);margin-top:18px;animation:blink .8s infinite;">
+    © 2026 IEEE TTU · ALL RIGHTS RESERVED
+  </div>
 </div>
 
 <!-- ============================================================
@@ -24,24 +28,17 @@
      ============================================================ -->
 <div class="page active" id="page1">
   <div class="maze-bg"></div>
-<nav class="nav-bar">
-
-  <!-- يسار -->
-  <div class="nav-steps">
-    <div class="nav-step active"></div>
-    <div class="nav-step"></div>
-    <div class="nav-step"></div>
-    <div class="nav-step"></div>
-    <div class="nav-step"></div>
-  </div>
-
-  <!-- وسط ← هون الاسم -->
-  <div class="nav-brand">⚡ IEEE TTU</div>
-
-  <!-- يمين -->
-  <div style="width:70px"></div>
-
- </nav>
+  <nav class="nav-bar">
+    <div class="nav-steps">
+      <div class="nav-step active"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
+      <div class="nav-step"></div>
+    </div>
+    <div class="nav-brand">⚡ IEEE TTU</div>
+    <div style="width:70px"></div>
+  </nav>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;position:relative;z-index:2;">
     <div class="p1-content">
@@ -104,30 +101,25 @@
           بطولة رياضية طلابية تجمع فروع <span class="about-hl">IEEE</span>
           من مختلف الجامعات الأردنية، في أجواء تنافسية مليئة بالحماس والعمل الجماعي.
         </div>
-        <div class="about-sports-list">
-    
-        </div>
-        <div class="about-date">📅  <span>July 2026</span> </div>
+        <div class="about-sports-list"></div>
+        <div class="about-date">📅 <span>July 2026</span></div>
       </div>
 
       <div class="sports-icons">
-        <div class="s-icon"><span>🏸</span><small>ريشة</small></div>
-        <div class="s-icon"><span>⚽</span><small>قدم</small></div>
-        <div class="s-icon"><span>🏀</span><small>سلة</small></div>
-        <div class="s-icon"><span>♟️</span><small>شطرنج</small></div>
-        <div class="s-icon"><span>🏓</span><small>تنس</small></div>
+        <div class="s-icon" onclick="AC.resume(); SFX.select();"><span>🏸</span><small>ريشة</small></div>
+        <div class="s-icon" onclick="AC.resume(); SFX.select();"><span>⚽</span><small>قدم</small></div>
+        <div class="s-icon" onclick="AC.resume(); SFX.select();"><span>🏀</span><small>سلة</small></div>
+        <div class="s-icon" onclick="AC.resume(); SFX.select();"><span>♟️</span><small>شطرنج</small></div>
+        <div class="s-icon" onclick="AC.resume(); SFX.select();"><span>🏓</span><small>تنس</small></div>
       </div>
 
       <div class="dots-row">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
 
-      <button class="btn-start" onclick="goTo(2)">سجّل الآن</button>
-     </div>
+      <button class="btn-start" onclick="AC.resume(); SFX.wakka(); goTo(2);">سجّل الآن</button>
+    </div>
   </div>
-
-  <!-- Pac-Man runner -->
- 
 </div>
 
 <!-- ============================================================
@@ -140,14 +132,14 @@
       <div class="nav-step done"></div><div class="nav-step active"></div>
       <div class="nav-step"></div><div class="nav-step"></div><div class="nav-step"></div>
     </div>
-    <br> 
-   </nav>
+    <br>
+  </nav>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
     <div class="p2-content">
       <div style="text-align:center;margin-bottom:22px;">
         <div style="font-size:36px;margin-bottom:8px;filter:drop-shadow(0 0 12px var(--yellow));">🎮</div>
-        <div class="page-title">عضوية IEEE</div>
+        <div class="page-title">Player ID</div>
         <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       </div>
 
@@ -155,9 +147,11 @@
         <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
         <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
 
+        <!-- الجامعة -->
         <div class="form-group">
           <label class="form-label">⚡ الجامعة</label>
-          <select class="form-select" id="university">
+          <select class="form-select" id="university"
+                  onchange="AC.resume(); SFX.select();">
             <option value="">-- اختر جامعتك --</option>
             <option>جامعة الطفيلة التقنية</option>
             <option>جامعة الأردن</option>
@@ -178,12 +172,16 @@
           <div class="error-msg" id="uniError">الرجاء اختيار جامعتك</div>
         </div>
 
+        <!-- الرقم الجامعي -->
         <div class="form-group">
           <label class="form-label">🎓 الرقم الجامعي</label>
-          <input type="text" class="form-input" id="studentId" placeholder="أدخل رقمك الجامعي">
+          <input type="text" class="form-input" id="studentId"
+                 placeholder="أدخل رقمك الجامعي"
+                 oninput="AC.resume(); SFX.click();">
           <div class="error-msg" id="sidError">الرجاء إدخال الرقم الجامعي</div>
         </div>
 
+        <!-- IEEE toggle -->
         <div class="form-group">
           <label class="form-label">⚡ هل أنت عضو IEEE؟</label>
           <div class="toggle-row" onclick="toggleIEEE()">
@@ -192,18 +190,23 @@
           </div>
         </div>
 
+        <!-- رقم عضوية IEEE -->
         <div class="ieee-field show" id="ieeeField">
           <div class="form-group">
             <label class="form-label">🔑 رقم عضوية IEEE</label>
-            <input type="text" class="form-input" id="ieeeId" placeholder="أدخل رقم عضويتك IEEE">
+            <input type="text" class="form-input" id="ieeeId"
+                   placeholder="أدخل رقم عضويتك IEEE"
+                   oninput="AC.resume(); SFX.click();">
           </div>
         </div>
 
+        <!-- رسالة غير الأعضاء -->
         <div class="non-member-box" id="nonMemberBox">
           <div class="nm-icon">⚠️</div>
           <div class="nm-title">هذا التسجيل مخصص لأعضاء IEEE فقط</div>
           <div class="nm-text">إذا أردت المشاركة، تواصل معنا عبر واتساب وسنساعدك في الخطوات اللازمة للانضمام.</div>
-          <a class="nm-wa" href="https://wa.me/962792064812" target="_blank">💬 تواصل معنا على واتساب</a>
+          <a class="nm-wa" href="https://wa.me/962792064812" target="_blank"
+             onclick="AC.resume(); SFX.click();">💬 تواصل معنا على واتساب</a>
           <div class="nm-num" dir="ltr">0792064812</div>
         </div>
 
@@ -223,7 +226,7 @@
       <div class="nav-step done"></div><div class="nav-step done"></div>
       <div class="nav-step active"></div><div class="nav-step"></div><div class="nav-step"></div>
     </div>
-   </nav>
+  </nav>
 
   <div style="padding:26px 18px;">
     <div style="max-width:1050px;margin:0 auto;">
@@ -244,8 +247,8 @@
           </div>
           <div class="sc-body">
             <div class="sc-details">
-              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
-              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+              <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv">SOLO MATCH</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS</span><div class="dv">MALE 👦</div></div>
             </div>
           </div>
         </div>
@@ -259,10 +262,10 @@
           </div>
           <div class="sc-body">
             <div class="sc-details">
-              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">خماسي</div></div>
-              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+              <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv">TEAM BATTLE</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS </span><div class="dv">MALE 👦</div></div>
             </div>
-           </div>
+          </div>
         </div>
 
         <div class="sport-card" onclick="selectSport('basketball', this)">
@@ -274,10 +277,10 @@
           </div>
           <div class="sc-body">
             <div class="sc-details">
-              <div class="sc-detail"><span class="dl">النظام</span><div class="dv" dir="ltr">3 X 3</div></div>
-              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+              <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv" dir="ltr">3 X 3</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS</span><div class="dv">MALE 👦</div></div>
             </div>
-           </div>
+          </div>
         </div>
 
         <div class="sport-card" onclick="selectSport('chess', this)">
@@ -289,10 +292,10 @@
           </div>
           <div class="sc-body">
             <div class="sc-details">
-              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
-              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور / 👩 إناث</div></div>
+              <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv">SWISS SYSTEM</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS</span><div class="dv">MALE 👦 / FEMALE 👩</div></div>
             </div>
-           </div>
+          </div>
         </div>
 
         <div class="sport-card" onclick="selectSport('tabletennis', this)">
@@ -304,8 +307,8 @@
           </div>
           <div class="sc-body">
             <div class="sc-details">
-              <div class="sc-detail"><span class="dl">النظام</span><div class="dv">فردي</div></div>
-              <div class="sc-detail"><span class="dl">المشاركة</span><div class="dv">👨 ذكور</div></div>
+              <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv" dir="ltr">1 X 1</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS</span><div class="dv">MALE 👦</div></div>
             </div>
           </div>
         </div>
@@ -329,7 +332,7 @@
       <div class="nav-step done"></div><div class="nav-step done"></div>
       <div class="nav-step done"></div><div class="nav-step active"></div><div class="nav-step"></div>
     </div>
-   </nav>
+  </nav>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:26px 18px;">
     <div class="rules-container">
@@ -355,86 +358,136 @@
 <div class="page" id="page4">
   <nav class="nav-bar">
     <button class="btn-nav" onclick="goTo(35)">◀ رجوع</button>
+
     <div class="nav-steps">
-      <div class="nav-step done"></div><div class="nav-step done"></div>
-      <div class="nav-step done"></div><div class="nav-step done"></div><div class="nav-step active"></div>
+      <div class="nav-step done"></div>
+      <div class="nav-step done"></div>
+      <div class="nav-step done"></div>
+      <div class="nav-step done"></div>
+      <div class="nav-step active"></div>
     </div>
-   </nav>
+  </nav>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
+
     <div style="width:100%;max-width:620px;">
+
       <div style="text-align:center;margin-bottom:22px;">
         <div class="page-title">معلوماتك الشخصية</div>
-        <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+
+        <div class="dots-row">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+
         <div class="page-subtitle">PLAYER PROFILE</div>
       </div>
 
       <div class="form-container">
-        <div class="pixel-corner tl"></div><div class="pixel-corner tr"></div>
-        <div class="pixel-corner bl"></div><div class="pixel-corner br"></div>
 
-        <!-- Team section (shown for football/basketball) -->
+        <div class="pixel-corner tl"></div>
+        <div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div>
+        <div class="pixel-corner br"></div>
+
+        <!-- Team section -->
         <div id="teamSection" style="display:none;">
+
           <div class="captain-section">
             <div class="captain-toggle-row" onclick="toggleCaptain()">
               <span>⭐ أنا كابتن الفريق</span>
               <div class="toggle-sw" id="captainSw"></div>
             </div>
           </div>
+
           <div class="form-group">
             <label class="form-label">🏅 اسم الفريق</label>
-            <input type="text" class="form-input" id="teamName" placeholder="أدخل اسم فريقك">
-            <div class="error-msg" id="teamNameError">الرجاء إدخال اسم الفريق</div>
+
+            <input
+              type="text"
+              class="form-input"
+              id="teamName"
+              placeholder="أدخل اسم فريقك"
+              oninput="AC.resume(); SFX.click();"
+            >
+
+            <div class="error-msg" id="teamNameError">
+              الرجاء إدخال اسم الفريق
+            </div>
           </div>
+
         </div>
 
+        <!-- First + Last Name -->
         <div class="form-row">
+
           <div class="form-group">
             <label class="form-label">👤 الاسم الأول</label>
-            <input type="text" class="form-input" id="firstName" placeholder="الاسم الأول">
+
+            <input
+              type="text"
+              class="form-input"
+              id="firstName"
+              placeholder="الاسم الأول"
+              oninput="AC.resume(); SFX.click();"
+            >
+
             <div class="error-msg" id="fnError">مطلوب</div>
           </div>
+
           <div class="form-group">
             <label class="form-label">👤 اسم العائلة</label>
-            <input type="text" class="form-input" id="lastName" placeholder="اسم العائلة">
+
+            <input
+              type="text"
+              class="form-input"
+              id="lastName"
+              placeholder="اسم العائلة"
+              oninput="AC.resume(); SFX.click();"
+            >
+
             <div class="error-msg" id="lnError">مطلوب</div>
           </div>
+
         </div>
 
-        <div class="form-group">
-          <label class="form-label">📧 البريد الإلكتروني</label>
-          <input type="email" class="form-input" id="email" placeholder="your@email.com" dir="ltr">
-          <div class="error-msg" id="emailError">بريد إلكتروني غير صحيح</div>
-        </div>
+     
 
+        <!-- Phone -->
         <div class="form-group">
+
           <label class="form-label">📱 رقم الهاتف</label>
-          <input type="tel" class="form-input" id="phone" placeholder="07xxxxxxxx" dir="ltr">
-          <div class="error-msg" id="phoneError">رقم هاتف غير صحيح</div>
+
+          <input
+            type="tel"
+            class="form-input"
+            id="phone"
+            placeholder="07xxxxxxxx"
+            dir="ltr"
+            oninput="AC.resume(); SFX.click();"
+          >
+
+          <div class="error-msg" id="phoneError">
+            رقم هاتف غير صحيح
+          </div>
+
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">🎓 السنة الدراسية</label>
-            <select class="form-select" id="year">
-              <option value="">اختر...</option>
-              <option>السنة الأولى</option><option>السنة الثانية</option>
-              <option>السنة الثالثة</option><option>السنة الرابعة</option><option>السنة الخامسة</option>
-            </select>
-            <div class="error-msg" id="yearError">مطلوب</div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">⚡ الجنس</label>
-            <select class="form-select" id="gender">
-              <option value="">اختر...</option>
-              <option>ذكر</option><option>أنثى</option>
-            </select>
-            <div class="error-msg" id="genderError">مطلوب</div>
-          </div>
+        <!-- Terms -->
+        <div class="terms-box">
+          بالتسجيل، تؤكد صحة المعلومات المدخلة وتوافق على شروط وأحكام البطولة.
         </div>
 
-        <div class="terms-box">بالتسجيل، تؤكد صحة المعلومات المدخلة وتوافق على شروط وأحكام البطولة.</div>
-        <button class="btn-next" onclick="validateP4()" style="background:var(--cyan);color:var(--black);">🏆 أكمل التسجيل</button>
+        <!-- Submit -->
+        <button
+          class="btn-next"
+          onclick="validateP4()"
+          style="background:var(--cyan);color:var(--black);"
+        >
+          🏆 أكمل التسجيل
+        </button>
+
       </div>
     </div>
   </div>

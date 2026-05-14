@@ -1,7 +1,5 @@
 // ===== IEEE SPORTS TOURNAMENT 2026 — VERSION A — SCRIPT =====
 
-
-
 // ===== AUDIO ENGINE =====
 const AC = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -19,58 +17,51 @@ function playTone(freq, type = 'square', duration = 0.08, vol = 0.3) {
 }
 
 const SFX = {
-  // كبسة زر عادية
   click: () => playTone(440, 'square', 0.06, 0.2),
-
-  // wakka wakka — صوت Pac-Man
   wakka: () => {
     playTone(600, 'square', 0.07, 0.25);
     setTimeout(() => playTone(400, 'square', 0.07, 0.25), 80);
   },
-
-  // اختيار رياضة
   select: () => {
     playTone(300, 'square', 0.05, 0.2);
     setTimeout(() => playTone(500, 'square', 0.05, 0.2), 60);
     setTimeout(() => playTone(700, 'square', 0.08, 0.2), 120);
   },
-
-  // تيك checkbox
   tick: () => playTone(800, 'sine', 0.05, 0.15),
-
-  // انتقال صفحة
   next: () => {
     playTone(350, 'square', 0.06, 0.2);
     setTimeout(() => playTone(500, 'square', 0.06, 0.2), 70);
     setTimeout(() => playTone(650, 'square', 0.08, 0.2), 140);
   },
-
-  // خطأ
   error: () => {
     playTone(200, 'sawtooth', 0.1, 0.3);
     setTimeout(() => playTone(150, 'sawtooth', 0.1, 0.3), 120);
   },
-
-  // انتصار 🏆
   win: () => {
     const notes = [523, 659, 784, 1047];
     notes.forEach((f, i) => setTimeout(() => playTone(f, 'square', 0.15, 0.3), i * 130));
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ===== STARTUP SOUND =====
+function playStartupJingle() {
+  const melody = [
+    { f: 220, t: 0,    d: 0.12 },
+    { f: 277, t: 130,  d: 0.12 },
+    { f: 330, t: 260,  d: 0.12 },
+    { f: 440, t: 390,  d: 0.18 },
+    { f: 392, t: 540,  d: 0.10 },
+    { f: 440, t: 650,  d: 0.10 },
+    { f: 523, t: 760,  d: 0.25 },
+  ];
+  melody.forEach(({ f, t, d }) => {
+    setTimeout(() => playTone(f, 'square', d, 0.22), t);
+  });
+  setTimeout(() => {
+    playTone(1047, 'sine', 0.06, 0.3);
+    setTimeout(() => playTone(784, 'sine', 0.12, 0.3), 70);
+  }, 1050);
+}
 
 // ===== CURSOR =====
 const cursor = document.getElementById('cursor');
@@ -80,50 +71,71 @@ document.addEventListener('mousemove', e => {
 });
 
 // ===== LOADER =====
+const loaderMessages = [
+  'LOADING GAME DATA...',
+  'SPAWNING PLAYERS...',
+  'CALIBRATING TURRETS...',
+  'PRESS START!',
+];
+let msgIdx = 0;
+const loaderTextEl = document.querySelector('.loader-text');
+
 let lp = 0;
 const lf = document.getElementById('loaderFill');
 const li = setInterval(() => {
   lp += Math.random() * 15;
+
+  const newIdx = Math.min(Math.floor(lp / 26), 3);
+  if (newIdx !== msgIdx) {
+    msgIdx = newIdx;
+    loaderTextEl.textContent = loaderMessages[msgIdx];
+    playTone([300, 400, 500, 600][msgIdx], 'square', 0.05, 0.15);
+  }
+
   if (lp >= 100) {
     lp = 100;
     lf.style.width = '100%';
     clearInterval(li);
+    loaderTextEl.textContent = 'PRESS START!';
+    playStartupJingle();
     setTimeout(() => {
       document.getElementById('loader').classList.add('hidden');
       setTimeout(() => document.getElementById('loader').remove(), 500);
-    }, 300);
+    }, 1400);
   }
   lf.style.width = lp + '%';
 }, 80);
 
 // ===== STATE =====
-let selectedSport  = null;
-let isIEEEMember   = true;
-let isCaptain      = false;
+let selectedSport   = null;
+let isIEEEMember    = true;
+let isCaptain       = false;
 let understoodRules = false;
-let isSubmitting = false;
+let isSubmitting    = false;
 
 // ===== SPORT DATA =====
 const sportData = {
+
   badminton: {
     emoji: '🏸', ar: 'ريشة', en: 'BADMINTON', type: 'solo',
     rules: [
       { icon: '👤', text: 'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل' },
-      { icon: '👨👩', text: 'مسموح للذكور والإناث' },
-      { icon: '📋', text: 'نظام المباريات: إقصائي مباشر' },
-      { icon: '🏸', text: 'يُلعب بريشة بدمنتون رسمية ومضرب قياسي' },
+      { icon: '👨', text: 'مخصص للذكور فقط' },
+      { icon: '📋', text: 'نظام المباريات: خروج المغلوب' },
     ]
   },
+
   football: {
     emoji: '⚽', ar: 'كرة القدم', en: 'FOOTBALL', type: 'team',
     rules: [
       { icon: '👥', text: 'كل لاعب يسجل <strong>بشكل منفصل</strong> ويكتب اسم فريقه' },
       { icon: '⭐', text: 'يجب تحديد <strong>كابتن الفريق</strong> عند التسجيل' },
-      { icon: '🔢', text: 'داخل الملعب: <strong>5 لاعبين</strong> · الحد الأقصى للفريق: <strong>8 لاعبين</strong>' },
+      { icon: '🔢', text: 'يجب أن يتكوّن الفريق من <strong>8 لاعبين</strong> فقط' },
       { icon: '👨', text: 'مخصص للذكور فقط' },
-      { icon: '🏫', text: 'يجب أن يكون جميع أعضاء الفريق من <strong>نفس الجامعة</strong>' },
+      { icon: '🏫', text: 'جميع أعضاء الفريق من <strong>نفس الجامعة</strong>' },
     ]
   },
+
   basketball: {
     emoji: '🏀', ar: 'كرة السلة', en: 'BASKETBALL', type: 'team',
     rules: [
@@ -131,27 +143,31 @@ const sportData = {
       { icon: '⭐', text: 'يجب تحديد <strong>كابتن الفريق</strong> عند التسجيل' },
       { icon: '🔢', text: 'عدد اللاعبين داخل الملعب: <strong>3 لاعبين</strong>' },
       { icon: '👨', text: 'مخصص للذكور فقط' },
-      { icon: '🏫', text: 'يجب أن يكون جميع أعضاء الفريق من <strong>نفس الجامعة</strong>' },
+      { icon: '🏫', text: 'جميع أعضاء الفريق من <strong>نفس الجامعة</strong>' },
     ]
   },
+
   chess: {
     emoji: '♟️', ar: 'شطرنج', en: 'CHESS', type: 'solo',
     rules: [
       { icon: '👤', text: 'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل' },
       { icon: '👨👩', text: 'مسموح للذكور والإناث' },
-      { icon: '⚠️', text: 'الحد الأقصى: <strong>3 مشاركين فقط</strong> من كل جامعة' },
-      { icon: '🏆', text: 'نظام المباريات: دوري داخلي ثم إقصائي' },
+      { icon: '⚠️', text: 'الحد الأقصى: <strong>3 مشاركين</strong> من كل جامعة' },
+      { icon: '📋', text: 'نظام المباريات: خروج المغلوب' },
+      { icon: '🏫', text: 'جميع أعضاء الفريق من <strong>نفس الجامعة</strong>' },
+
     ]
   },
+
   tabletennis: {
     emoji: '🏓', ar: 'تنس الطاولة', en: 'TABLE TENNIS', type: 'solo',
     rules: [
       { icon: '👤', text: 'التسجيل <strong>فردي</strong> — كل مشارك يسجل بياناته بشكل مستقل' },
       { icon: '👨', text: 'مخصص للذكور فقط' },
-      { icon: '📋', text: 'نظام المباريات: إقصائي مباشر' },
-      { icon: '🏓', text: 'يُلعب بمضرب ومريشة بينغ بونغ رسمية' },
+      { icon: '📋', text: 'نظام المباريات: خروج المغلوب' },
     ]
   }
+
 };
 
 const sportNames = {
@@ -185,7 +201,7 @@ function toggleIEEE() {
 
 // ===== SPORT SELECTION =====
 function selectSport(sport, el) {
-    SFX.select();
+  SFX.select();
   document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   selectedSport = sport;
@@ -196,7 +212,7 @@ function selectSport(sport, el) {
 // ===== CAPTAIN TOGGLE =====
 function toggleCaptain() {
   AC.resume();
-  SFX.tick(); // ← كان ناقص
+  SFX.tick();
   isCaptain = !isCaptain;
   document.getElementById('captainSw').classList.toggle('on', isCaptain);
 }
@@ -204,7 +220,7 @@ function toggleCaptain() {
 // ===== UNDERSTOOD CHECKBOX =====
 function toggleUnderstood() {
   AC.resume();
-  SFX.tick(); // ← كان ناقص
+  SFX.tick();
   understoodRules = !understoodRules;
   document.getElementById('checkBox').classList.toggle('checked', understoodRules);
   document.getElementById('checkBox').textContent = understoodRules ? '✓' : '';
@@ -229,29 +245,44 @@ function buildRules() {
     : '<span class="rules-team-type type-solo">👤 رياضة فردية</span>';
 
   const items = d.rules
-    .map(r => `<div class="rule-item"><span class="ri">${r.icon}</span><span>${r.text}</span></div>`)
+    .map(r => `
+      <div class="rule-item">
+        <span class="ri">${r.icon}</span>
+        <span>${r.text}</span>
+      </div>
+    `)
     .join('');
 
   document.getElementById('rulesCard').innerHTML = `
     <div class="rules-section">
-      <div class="rules-section-title">⚡ نوع الرياضة</div>
+      <div class="rules-section-title" style="font-size:15px;">
+        ⚡ نوع الرياضة
+      </div>
+
       ${typeLabel}
-      ${d.type === 'team' ? '<div class="captain-badge">⭐ يلزم تحديد كابتن الفريق عند التسجيل</div>' : ''}
     </div>
+
     <div class="rules-section">
-      <div class="rules-section-title">📋 شروط التسجيل</div>
-      <div class="rules-items">${items}</div>
+      <div class="rules-section-title">
+        📋 شروط التسجيل
+      </div>
+
+      <div class="rules-items">
+        ${items}
+      </div>
     </div>
   `;
 
-  // Reset checkbox each time
   understoodRules = false;
+
   document.getElementById('checkBox').classList.remove('checked');
   document.getElementById('checkBox').textContent = '';
+
   const btn = document.getElementById('rulesGoBtn');
+
   btn.disabled = true;
   btn.style.opacity = '0.5';
-  btn.style.cursor  = 'not-allowed';
+  btn.style.cursor = 'not-allowed';
 }
 
 // ===== SHOW / HIDE TEAM SECTION =====
@@ -292,9 +323,9 @@ function validateP2() {
   }
 
   if (!ok) {
-    SFX.error(); // ← بس لما في خطأ فعلي
+    SFX.error();
   } else {
-    goTo(3); // goTo فيها SFX.next() أصلاً
+    goTo(3);
   }
 }
 
@@ -302,69 +333,77 @@ function validateP2() {
 function validateP3() {
   AC.resume();
   if (!selectedSport) {
-    SFX.error(); // ← ناقص
+    SFX.error();
     document.getElementById('sportsGrid').style.outline = '3px solid red';
     setTimeout(() => document.getElementById('sportsGrid').style.outline = '', 1000);
     return;
   }
   buildRules();
-  goTo(35); // goTo فيها SFX.next()
+  goTo(35);
 }
-
 
 // ===== VALIDATE UNDERSTOOD =====
 function validateUnderstood() {
   AC.resume();
   if (!understoodRules) {
-    SFX.error(); // ← لو حاول يكبس بدون ما يشيك
+    SFX.error();
     return;
   }
   updateTeamSection();
-  goTo(4); // goTo فيها SFX.next()
+  goTo(4);
 }
 
-// ===== VALIDATE PAGE 4 =====
+ // ===== VALIDATE PAGE 4 =====
 function validateP4() {
   AC.resume();
+
   const checks = [
-    { id: 'firstName', err: 'fnError',     fn: v => v.trim() !== '' },
-    { id: 'lastName',  err: 'lnError',     fn: v => v.trim() !== '' },
-    { id: 'email',     err: 'emailError',  fn: v => v.includes('@') && v.trim() !== '' },
-    { id: 'phone',     err: 'phoneError',  fn: v => v.trim().length >= 7 },
-    { id: 'year',      err: 'yearError',   fn: v => v !== '' },
-    { id: 'gender',    err: 'genderError', fn: v => v !== '' },
+    { id: 'firstName', err: 'fnError',    fn: v => v.trim() !== '' },
+    { id: 'lastName',  err: 'lnError',    fn: v => v.trim() !== '' },
+     { id: 'phone',     err: 'phoneError', fn: v => v.trim().length >= 7 },
   ];
 
   const isTeam = selectedSport === 'football' || selectedSport === 'basketball';
-  if (isTeam) checks.push({ id: 'teamName', err: 'teamNameError', fn: v => v.trim() !== '' });
+
+  if (isTeam) {
+    checks.push({
+      id: 'teamName',
+      err: 'teamNameError',
+      fn: v => v.trim() !== ''
+    });
+  }
 
   let ok = true;
+
   checks.forEach(({ id, err, fn }) => {
     const val  = document.getElementById(id).value;
     const pass = fn(val);
+
     document.getElementById(err).classList.toggle('show', !pass);
     document.getElementById(id).classList.toggle('error', !pass);
+
     if (!pass) ok = false;
   });
 
   if (!ok) {
-    SFX.error(); // ← ناقص
+    SFX.error();
     return;
   }
+
   submitForm();
 }
-
-
+ 
 // ===== SUBMIT =====
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCCCPDhruUno4accpabHUPSYxjLgCPp6Ih5WfTechk4Gd62ZLFpm5ZkbpSeX2Q5wKL/exec'; // ← حط URL هون
-
-
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCCCPDhruUno4accpabHUPSYxjLgCPp6Ih5WfTechk4Gd62ZLFpm5ZkbpSeX2Q5wKL/exec';
 
 async function submitForm() {
+
   if (isSubmitting) return;
+
   isSubmitting = true;
 
   const g = id => document.getElementById(id).value;
+
   const isTeam = selectedSport === 'football' || selectedSport === 'basketball';
 
   const payload = {
@@ -376,49 +415,97 @@ async function submitForm() {
     sport:      sportNames[selectedSport],
     teamName:   isTeam ? g('teamName') : '—',
     isCaptain:  isTeam ? (isCaptain ? 'نعم' : 'لا') : '—',
-    email:      g('email'),
-    phone:      g('phone'),
-    year:       g('year'),
-    gender:     g('gender'),
+     phone:      g('phone'),
   };
 
   fetch(SHEET_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(payload)
   }).catch(err => console.error('خطأ في الحفظ:', err));
 
   isSubmitting = false;
 
   const teamRow = isTeam
-    ? `<div class="sum-row"><span class="sl">اسم الفريق</span><span class="sv">${payload.teamName}</span></div>
-       <div class="sum-row"><span class="sl">الكابتن</span><span class="sv">${payload.isCaptain}</span></div>`
+    ? `
+      <div class="sum-row">
+        <span class="sl">اسم الفريق</span>
+        <span class="sv">${payload.teamName}</span>
+      </div>
+
+      <div class="sum-row">
+        <span class="sl">الكابتن</span>
+        <span class="sv">${payload.isCaptain}</span>
+      </div>
+    `
     : '';
 
   document.getElementById('summaryCard').innerHTML = `
-    <div class="sum-row"><span class="sl">الاسم</span><span class="sv">${payload.firstName} ${payload.lastName}</span></div>
-    <div class="sum-row"><span class="sl">الجامعة</span><span class="sv">${payload.university}</span></div>
-    <div class="sum-row"><span class="sl">الرقم الجامعي</span><span class="sv">${payload.studentId}</span></div>
-    <div class="sum-row"><span class="sl">الرياضة</span><span class="sv">${payload.sport}</span></div>
+    <div class="sum-row">
+      <span class="sl">الاسم</span>
+      <span class="sv">${payload.firstName} ${payload.lastName}</span>
+    </div>
+
+    <div class="sum-row">
+      <span class="sl">الجامعة</span>
+      <span class="sv">${payload.university}</span>
+    </div>
+
+    <div class="sum-row">
+      <span class="sl">الرقم الجامعي</span>
+      <span class="sv">${payload.studentId}</span>
+    </div>
+
+    <div class="sum-row">
+      <span class="sl">الرياضة</span>
+      <span class="sv">${payload.sport}</span>
+    </div>
+
     ${teamRow}
-    <div class="sum-row"><span class="sl">رقم IEEE</span><span class="sv">${payload.ieeeId}</span></div>
-    <div class="sum-row"><span class="sl">البريد</span><span class="sv" dir="ltr">${payload.email}</span></div>
-    <div class="sum-row"><span class="sl">الهاتف</span><span class="sv" dir="ltr">${payload.phone}</span></div>
-    <div class="sum-row"><span class="sl">السنة</span><span class="sv">${payload.year}</span></div>
+
+    <div class="sum-row">
+      <span class="sl">رقم IEEE</span>
+      <span class="sv">${payload.ieeeId}</span>
+    </div>
+ 
+    <div class="sum-row">
+      <span class="sl">الهاتف</span>
+      <span class="sv" dir="ltr">${payload.phone}</span>
+    </div>
   `;
 
-  SFX.win();  // ← ناقص
+  SFX.win();
+
   goTo(5);
+
   launchConfetti();
 }
 
 // ===== RESET =====
+// ===== RESET =====
 function resetAll() {
+
   AC.resume();
-  SFX.click(); // ← ناقص
-  const ids = ['university','studentId','ieeeId','firstName','lastName','email','phone','year','gender','teamName'];
-  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+
+  SFX.click();
+
+  const ids = [
+    'university',
+    'studentId',
+    'ieeeId',
+    'firstName',
+    'lastName',
+    'phone',
+    'teamName'
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 
   selectedSport   = null;
   isIEEEMember    = true;
@@ -427,11 +514,19 @@ function resetAll() {
   isSubmitting    = false;
 
   document.getElementById('toggleSw').classList.add('on');
-  document.getElementById('toggleLabel').textContent = 'نعم، أنا عضو IEEE';
+
+  document.getElementById('toggleLabel').textContent =
+    'نعم، أنا عضو IEEE';
+
   document.getElementById('ieeeField').classList.add('show');
+
   document.getElementById('nonMemberBox').classList.remove('show');
+
   document.getElementById('captainSw').classList.remove('on');
-  document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
+
+  document
+    .querySelectorAll('.sport-card')
+    .forEach(c => c.classList.remove('selected'));
 
   goTo(1);
 }
