@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IEEE Sports Tournament 2026</title>
-  <link rel="stylesheet" href="../assets/css/ieeesportsregistration.css">
+<link rel="stylesheet" href="../assets/css/ieeesportsregistration.css">
 </head>
 <body>
 
@@ -20,6 +20,19 @@
   <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
   <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.3);margin-top:18px;animation:blink .8s infinite;">
     © 2026 IEEE TTU · ALL RIGHTS RESERVED
+  </div>
+</div>
+
+<!-- FULL REGISTRATION POPUP (Badminton) -->
+<div class="full-popup" id="fullPopup">
+  <div class="full-popup-box">
+    <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+    <div class="full-popup-title">اكتمل التسجيل</div>
+    <div class="full-popup-text">
+      عذراً، اكتمل عدد المسجلين في رياضة<br>
+      <span style="color:var(--yellow);font-weight:900;">الريشة الطائرة 🏸</span>
+    </div>
+    <button class="full-popup-btn" onclick="closeFullPopup()">حسناً ◀</button>
   </div>
 </div>
 
@@ -150,36 +163,35 @@
         <!-- الجامعة -->
         <div class="form-group">
           <label class="form-label">⚡ الجامعة</label>
-          <select class="form-select" id="university"
-                  onchange="AC.resume(); SFX.select();">
+          <select class="form-select" id="university" onchange="AC.resume(); SFX.select();">
             <option value="">-- اختر جامعتك --</option>
-              <option>جامعة آل البيت</option>
-    <option>جامعة الإسراء</option>
-    <option>الجامعة الألمانية الأردنية</option>
-    <option>الجامعة الأمريكية في مادبا</option>
-    <option>الجامعة الأردنية</option>
-    <option>الجامعة الأردنية الألمانية</option>
-    <option>جامعة البتراء</option>
-    <option> جامعة البلقاء التطبيقية - السلط</option>
-    <option> جامعة البلقاء التطبيقية - كلية الهندسة</option>
-    <option> جامعة البلقاء التطبيقية - الحصن</option>
-    <option>جامعة الحسين التقنية</option>
-    <option>جامعة الحسين بن طلال</option>
-    <option>جامعة الزرقاء</option>
-    <option>جامعة الزيتونة الأردنية</option>
-    <option>جامعة العلوم الإسلامية العالمية</option>
-    <option>جامعة العلوم التطبيقية الخاصة</option>
-    <option>جامعة الشرق الأوسط</option>
-    <option>الجامعة الهاشمية</option>
-    <option>جامعة الطفيلة التقنية</option>
-    <option>جامعة العقبة للتكنولوجيا</option>
-    <option>جامعة عمان الأهلية</option>
-    <option>جامعة عمان العربية</option>
-    <option>جامعة فيلادلفيا</option>
-    <option>جامعة جرش</option>
-    <option>جامعة جدارا</option>
-    <option>جامعة مؤتة</option>
-    <option>جامعة اليرموك</option>
+            <option>جامعة آل البيت</option>
+            <option>جامعة الإسراء</option>
+            <option>الجامعة الألمانية الأردنية</option>
+            <option>الجامعة الأمريكية في مادبا</option>
+            <option>الجامعة الأردنية</option>
+            <option>الجامعة الأردنية الألمانية</option>
+            <option>جامعة البتراء</option>
+            <option>جامعة البلقاء التطبيقية - السلط</option>
+            <option>جامعة البلقاء التطبيقية - كلية الهندسة</option>
+            <option>جامعة البلقاء التطبيقية - الحصن</option>
+            <option>جامعة الحسين التقنية</option>
+            <option>جامعة الحسين بن طلال</option>
+            <option>جامعة الزرقاء</option>
+            <option>جامعة الزيتونة الأردنية</option>
+            <option>جامعة العلوم الإسلامية العالمية</option>
+            <option>جامعة العلوم التطبيقية الخاصة</option>
+            <option>جامعة الشرق الأوسط</option>
+            <option>الجامعة الهاشمية</option>
+            <option>جامعة الطفيلة التقنية</option>
+            <option>جامعة العقبة للتكنولوجيا</option>
+            <option>جامعة عمان الأهلية</option>
+            <option>جامعة عمان العربية</option>
+            <option>جامعة فيلادلفيا</option>
+            <option>جامعة جرش</option>
+            <option>جامعة جدارا</option>
+            <option>جامعة مؤتة</option>
+            <option>جامعة اليرموك</option>
             <option>أخرى</option>
           </select>
           <div class="error-msg" id="uniError">الرجاء اختيار جامعتك</div>
@@ -210,6 +222,7 @@
             <input type="text" class="form-input" id="ieeeId"
                    placeholder="أدخل رقم عضويتك IEEE"
                    oninput="AC.resume(); SFX.click();">
+            <div class="error-msg" id="ieeeIdError">رقم العضوية مطلوب</div>
           </div>
         </div>
 
@@ -220,7 +233,7 @@
           <div class="nm-text">إذا أردت المشاركة، تواصل معنا عبر واتساب وسنساعدك في الخطوات اللازمة للانضمام.</div>
           <a class="nm-wa" href="https://wa.me/962770461990" target="_blank"
              onclick="AC.resume(); SFX.click();">💬 تواصل معنا على واتساب</a>
-         </div>
+        </div>
 
         <button class="btn-next" onclick="validateP2()">التالي ▶</button>
       </div>
@@ -275,7 +288,7 @@
           <div class="sc-body">
             <div class="sc-details">
               <div class="sc-detail"><span class="dl">GAME MODE</span><div class="dv">TEAM BATTLE</div></div>
-              <div class="sc-detail"><span class="dl">PLAYERS </span><div class="dv">MALE 👦</div></div>
+              <div class="sc-detail"><span class="dl">PLAYERS</span><div class="dv">MALE 👦</div></div>
             </div>
           </div>
         </div>
@@ -370,7 +383,6 @@
 <div class="page" id="page4">
   <nav class="nav-bar">
     <button class="btn-nav" onclick="goTo(35)">◀ رجوع</button>
-
     <div class="nav-steps">
       <div class="nav-step done"></div>
       <div class="nav-step done"></div>
@@ -381,23 +393,15 @@
   </nav>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:28px 18px;">
-
     <div style="width:100%;max-width:620px;">
 
       <div style="text-align:center;margin-bottom:22px;">
         <div class="page-title">معلوماتك الشخصية</div>
-
-        <div class="dots-row">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-
+        <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
         <div class="page-subtitle">PLAYER PROFILE</div>
       </div>
 
       <div class="form-container">
-
         <div class="pixel-corner tl"></div>
         <div class="pixel-corner tr"></div>
         <div class="pixel-corner bl"></div>
@@ -405,85 +409,46 @@
 
         <!-- Team section -->
         <div id="teamSection" style="display:none;">
-
           <div class="captain-section">
             <div class="captain-toggle-row" onclick="toggleCaptain()">
               <span>⭐ أنا كابتن الفريق</span>
               <div class="toggle-sw" id="captainSw"></div>
             </div>
           </div>
-
           <div class="form-group">
             <label class="form-label">🏅 اسم الفريق</label>
-
-            <input
-              type="text"
-              class="form-input"
-              id="teamName"
-              placeholder="أدخل اسم فريقك"
-              oninput="AC.resume(); SFX.click();"
-            >
-
-            <div class="error-msg" id="teamNameError">
-              الرجاء إدخال اسم الفريق
-            </div>
+            <input type="text" class="form-input" id="teamName"
+                   placeholder="أدخل اسم فريقك"
+                   oninput="AC.resume(); SFX.click();">
+            <div class="error-msg" id="teamNameError">الرجاء إدخال اسم الفريق</div>
           </div>
-
         </div>
 
         <!-- First + Last Name -->
         <div class="form-row">
-
           <div class="form-group">
             <label class="form-label">👤 الاسم الأول</label>
-
-            <input
-              type="text"
-              class="form-input"
-              id="firstName"
-              placeholder="الاسم الأول"
-              oninput="AC.resume(); SFX.click();"
-            >
-
+            <input type="text" class="form-input" id="firstName"
+                   placeholder="الاسم الأول"
+                   oninput="AC.resume(); SFX.click();">
             <div class="error-msg" id="fnError">مطلوب</div>
           </div>
-
           <div class="form-group">
             <label class="form-label">👤 اسم العائلة</label>
-
-            <input
-              type="text"
-              class="form-input"
-              id="lastName"
-              placeholder="اسم العائلة"
-              oninput="AC.resume(); SFX.click();"
-            >
-
+            <input type="text" class="form-input" id="lastName"
+                   placeholder="اسم العائلة"
+                   oninput="AC.resume(); SFX.click();">
             <div class="error-msg" id="lnError">مطلوب</div>
           </div>
-
         </div>
-
-     
 
         <!-- Phone -->
         <div class="form-group">
-
           <label class="form-label">📱 رقم الهاتف</label>
-
-          <input
-            type="tel"
-            class="form-input"
-            id="phone"
-            placeholder="07xxxxxxxx"
-            dir="ltr"
-            oninput="AC.resume(); SFX.click();"
-          >
-
-          <div class="error-msg" id="phoneError">
-            رقم هاتف غير صحيح
-          </div>
-
+          <input type="tel" class="form-input" id="phone"
+                 placeholder="07xxxxxxxx" dir="ltr"
+                 oninput="AC.resume(); SFX.click();">
+          <div class="error-msg" id="phoneError">رقم هاتف غير صحيح</div>
         </div>
 
         <!-- Terms -->
@@ -492,14 +457,9 @@
         </div>
 
         <!-- Submit -->
-        <button
-          class="btn-next"
-          onclick="validateP4()"
-          style="background:var(--cyan);color:var(--black);"
-        >
+        <button class="btn-next" onclick="validateP4()" style="background:var(--cyan);color:var(--black);">
           🏆 أكمل التسجيل
         </button>
-
       </div>
     </div>
   </div>
@@ -553,5 +513,6 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+
 </body>
 </html>
