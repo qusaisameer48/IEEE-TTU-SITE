@@ -154,13 +154,16 @@ function toggleIEEE() {
   if (nb) nb.classList.toggle('show', !isIEEEMember);
 }
 
-// ===== SPORT SELECTION =====
 function selectSport(sport, el) {
-  // الريشة وتنس الطاولة مكتملين — popup مباشرة
-  if (sport === 'badminton' || sport === 'tabletennis') {
+  // رياضات مكتملة — popup مباشرة
+  const fullSports = {
+    badminton:   'الريشة الطائرة 🏸',
+    tabletennis: 'تنس الطاولة 🏓'
+  };
+  if (fullSports[sport]) {
     AC.resume();
     SFX.error();
-    showFullPopup();
+    showFullPopup(fullSports[sport]);
     return;
   }
  
@@ -172,7 +175,9 @@ function selectSport(sport, el) {
   setTimeout(() => el.style.outline = '', 200);
 }
 
-function showFullPopup() {
+function showFullPopup(sportName) {
+  const nameEl = document.getElementById('fullPopupSportName'); // لازم يكون فيه عنصر بهاد الـ id بالـ HTML
+  if (nameEl) nameEl.textContent = sportName;
   document.getElementById('fullPopup').classList.add('show');
 }
 
