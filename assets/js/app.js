@@ -158,7 +158,6 @@ function selectSport(sport, el) {
   // رياضات مكتملة — popup مباشرة
   const fullSports = {
     badminton:   'الريشة الطائرة 🏸',
-    tabletennis: 'تنس الطاولة 🏓'
   };
   if (fullSports[sport]) {
     AC.resume();
