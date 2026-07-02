@@ -156,14 +156,14 @@ function toggleIEEE() {
 
 // ===== SPORT SELECTION =====
 function selectSport(sport, el) {
-  // الريشة مكتملة — popup مباشرة
-  if (sport === 'badminton') {
+  // الريشة وتنس الطاولة مكتملين — popup مباشرة
+  if (sport === 'badminton' || sport === 'tabletennis') {
     AC.resume();
     SFX.error();
     showFullPopup();
     return;
   }
-
+ 
   SFX.select();
   document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
