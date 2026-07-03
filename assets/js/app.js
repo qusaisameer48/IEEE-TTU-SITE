@@ -153,19 +153,22 @@ function toggleIEEE() {
   const nb = document.getElementById('nonMemberBox');
   if (nb) nb.classList.toggle('show', !isIEEEMember);
 }
-
+// ===== SPORT SELECTION =====
 function selectSport(sport, el) {
-  // رياضات مكتملة — popup مباشرة
+  // الرياضات المقفلة فقط — أي رياضة تنحط هون رح تطلعلها popup "اكتمل التسجيل"
   const fullSports = {
-    badminton:   'الريشة الطائرة 🏸',
+    badminton: 'الريشة الطائرة 🏸'
+    // تنس الطاولة مش موجودة هون => التسجيل فيها مفتوح
   };
+
   if (fullSports[sport]) {
     AC.resume();
     SFX.error();
     showFullPopup(fullSports[sport]);
     return;
   }
- 
+
+  // لو وصلنا هون، معناها الرياضة مفتوحة (متل تنس الطاولة) وبتكمل تسجيل عادي
   SFX.select();
   document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
@@ -175,7 +178,7 @@ function selectSport(sport, el) {
 }
 
 function showFullPopup(sportName) {
-  const nameEl = document.getElementById('fullPopupSportName'); // لازم يكون فيه عنصر بهاد الـ id بالـ HTML
+  const nameEl = document.getElementById('fullPopupSportName');
   if (nameEl) nameEl.textContent = sportName;
   document.getElementById('fullPopup').classList.add('show');
 }
