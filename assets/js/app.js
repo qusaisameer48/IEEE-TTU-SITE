@@ -153,15 +153,17 @@ function toggleIEEE() {
   const nb = document.getElementById('nonMemberBox');
   if (nb) nb.classList.toggle('show', !isIEEEMember);
 }
+
 // ===== SPORT SELECTION =====
 function selectSport(sport, el) {
   // الرياضات المقفلة — كل شي ما عدا كرة السلة
   const fullSports = {
     badminton:   'الريشة الطائرة 🏸',
     football:    'كرة القدم ⚽',
+    basketball:  'كرة السلة 🏀',
     chess:       'الشطرنج ♟️',
     tabletennis: 'تنس الطاولة 🏓'
-    // كرة السلة مش موجودة هون => التسجيل فيها مفتوح فقط
+    // كل الرياضات مقفلة الآن
   };
 
   if (fullSports[sport]) {
