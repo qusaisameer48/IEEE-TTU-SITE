@@ -155,10 +155,13 @@ function toggleIEEE() {
 }
 // ===== SPORT SELECTION =====
 function selectSport(sport, el) {
-  // الرياضات المقفلة فقط — أي رياضة تنحط هون رح تطلعلها popup "اكتمل التسجيل"
+  // الرياضات المقفلة — كل شي ما عدا كرة السلة
   const fullSports = {
-    badminton: 'الريشة الطائرة 🏸'
-    // تنس الطاولة مش موجودة هون => التسجيل فيها مفتوح
+    badminton:   'الريشة الطائرة 🏸',
+    football:    'كرة القدم ⚽',
+    chess:       'الشطرنج ♟️',
+    tabletennis: 'تنس الطاولة 🏓'
+    // كرة السلة مش موجودة هون => التسجيل فيها مفتوح فقط
   };
 
   if (fullSports[sport]) {
@@ -168,7 +171,7 @@ function selectSport(sport, el) {
     return;
   }
 
-  // لو وصلنا هون، معناها الرياضة مفتوحة (متل تنس الطاولة) وبتكمل تسجيل عادي
+  // لو وصلنا هون، معناها كرة السلة (الرياضة المفتوحة الوحيدة)
   SFX.select();
   document.querySelectorAll('.sport-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
