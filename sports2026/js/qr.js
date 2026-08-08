@@ -1,20 +1,44 @@
-// Runs on qr.html — expects config.js, pacman.js, and the qrcodejs CDN
-// script to already be loaded (see qr.html <script> tags).
 (function () {
-  const CFG = window.SPORTS2026_CONFIG;
+  const qrBox = document.getElementById("qrBox");
+  const qrUrl = document.getElementById("qrUrl");
+  const btnPrint = document.getElementById("btnPrint");
+  const pacSlot = document.getElementById("pacSlot");
 
-  mountPacTrail(document.getElementById("pacSlot"), { tiny: true });
+  // رابط صفحة المشاركة
+  const shareUrl =
+    window.SPORTS2026_CONFIG?.SHARE_URL ||
+    new URL("./share.html", window.location.href).href;
 
-  document.getElementById("qrUrl").textContent = CFG.SHARE_URL;
+  // عرض الرابط
+  if (qrUrl) {
+    qrUrl.textContent = shareUrl;
+  }
 
-  new QRCode(document.getElementById("qrBox"), {
-    text: CFG.SHARE_URL,
-    width: 260,
-    height: 260,
-    colorDark: "#07070c",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M,
-  });
+  // إنشاء QR
+  if (qrBox && typeof QRCode !== "undefined") {
+    qrBox.innerHTML = "";
 
-  document.getElementById("btnPrint").addEventListener("click", () => window.print());
+    new QRCode(qrBox, {
+      text: shareUrl,
+      width: 260,
+      height: 260,
+      colorDark: "#07070c",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } else {
+    console.error("QRCode library not loaded");
+  }
+
+  // Pac-Man
+  if (pacSlot && typeof mountPacTrail === "function") {
+    mountPacTrail(pacSlot, { tiny: true });
+  }
+
+  // زر الطباعة
+  if (btnPrint) {
+    btnPrint.addEventListener("click", function () {
+      window.print();
+    });
+  }
 })();
