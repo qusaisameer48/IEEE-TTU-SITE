@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QR Code — IEEE Sports 2026</title>
+<meta name="theme-color" content="#07070c" />
+<link rel="stylesheet" href="css/styles.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+<main class="page">
+  <header>
+    <p class="eyebrow">IEEE TTU Student Branch</p>
+    <p class="brand">IEEE SPORTS 2026</p>
+  </header>
+
+  <div class="qr-card">
+    <p class="eyebrow" style="margin-bottom:2px;">Share Your Moment 📸</p>
+    <div id="pacSlot"></div>
+
+    <div class="qr-box" id="qrBox"></div>
+
+    <p class="qr-steps">Scan → Capture → Upload</p>
+    <p class="qr-url" id="qrUrl"></p>
+  </div>
+
+  <div class="stack no-print" style="margin-top:28px;">
+    <button type="button" class="cta cta--primary" id="btnPrint">🖨️ Print QR</button>
+    <a class="cta cta--ghost" href="share.html" style="text-decoration:none;">Open Share Page</a>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="js/pacman.js"></script>
+<script src="js/qr.js"></script>
+</body>
+</html>

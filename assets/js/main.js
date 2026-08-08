@@ -166,8 +166,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+   document.addEventListener("DOMContentLoaded", () => {
+    const dd = document.querySelector(".nav-dropdown");
+    const toggle = dd.querySelector(".nav-dropdown-toggle");
 
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dd.classList.toggle("is-open");
+    });
 
+    document.addEventListener("click", () => dd.classList.remove("is-open"));
+  });
+ 
 
 
 

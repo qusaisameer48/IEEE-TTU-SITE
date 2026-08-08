@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>IEEE Sports 2026 — Community Photo Wall</title>
+<meta name="theme-color" content="#07070c" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header class="gallery-header">
+  <p class="eyebrow">IEEE TTU Student Branch</p>
+  <h1>IEEE Sports 2026 Community Photo Wall</h1>
+  <span class="live-pill" id="livePill"><span class="lp-dot"></span> Live — refreshing automatically</span>
+</header>
+
+<main>
+  <div id="masonry" class="masonry" aria-live="polite"></div>
+  <p id="emptyState" class="gallery-empty hidden">
+    No photos yet — be the first to share a moment.<br />
+    <a class="link-cta" href="share.html" style="margin-top:10px;display:inline-block;">Share a photo →</a>
+  </p>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close no-print" id="lightboxClose" aria-label="Close">✕</button>
+  <img id="lightboxImg" alt="Full size photo" />
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="js/pacman.js"></script>
+<script type="module" src="js/gallery.js"></script>
+</body>
+</html>

@@ -1116,6 +1116,98 @@ html[data-theme="dark"] .header.scrolled .nav a::after{
 
 
 
+.nav-dropdown{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
 
+.nav-dropdown-toggle{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
+  /* نفس تنسيق باقي روابط الـ nav بالضبط */
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: inherit;
+}
 
+.nav-dropdown-toggle:hover{
+  opacity: .85;
+}
+
+.dd-arrow{
+  font-size: 11px;
+  transition: transform .2s ease;
+  display: inline-block;
+}
+
+.nav-dropdown.is-open .dd-arrow{
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu{
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;                 /* يتمركز تحت الزر بدل ما يطلع لبره */
+  min-width: 240px;
+  background: #0c4a8c;      /* درجة أغمق شوي من الهيدر لتمييز القائمة */
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.28);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 50;
+}
+
+/* السهم الصغير اللي بيربط الزر بالقائمة بصريًا */
+.nav-dropdown-menu::before{
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 24px;
+  width: 12px;
+  height: 12px;
+  background: #0c4a8c;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.nav-dropdown.is-open .nav-dropdown-menu{
+  display: flex;
+}
+
+.nav-dropdown-menu a{
+  padding: 12px 14px;
+  border-radius: 9px;
+  white-space: nowrap;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s ease, padding-right .15s ease;
+}
+
+.nav-dropdown-menu a:hover{
+  background: rgba(255,255,255,.14);
+}
+
+@media (max-width: 640px){
+  .nav-dropdown-menu{
+    position: static;
+    min-width: 100%;
+    margin-top: 8px;
+    right: auto;
+  }
+  .nav-dropdown-menu::before{
+    display: none;
+  }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Share Your Moment — IEEE Sports 2026</title>
+<meta name="description" content="Take a photo, upload it, and become part of the IEEE Sports 2026 memories." />
+<meta name="theme-color" content="#07070c" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<main class="page" id="page">
+
+  <!-- ============================ HEADER ============================ -->
+  <header>
+    <p class="eyebrow">IEEE TTU Student Branch</p>
+    <p class="brand">IEEE SPORTS 2026<small>COMMUNITY PHOTO WALL</small></p>
+  </header>
+
+  <div id="pacSlot"></div>
+
+  <!-- ============================ STEP 1: CAPTURE ============================ -->
+  <section id="step-capture">
+    <div class="hero">
+      <h1>Share Your <span class="em">Moment</span> 📸</h1>
+      <p>Take a photo, upload it, and become part of the IEEE Sports 2026 memories.</p>
+    </div>
+
+    <div class="stack">
+      <button type="button" class="cta cta--primary" id="btnTakePhoto">
+        <span class="ic">📷</span> Take a Photo
+      </button>
+      <button type="button" class="cta" id="btnChooseGallery">
+        <span class="ic">🖼️</span> Choose from Gallery
+      </button>
+    </div>
+
+    <!-- Hidden native inputs -->
+    <input type="file" id="inputCamera" accept="image/*" capture="environment" class="visually-hidden" />
+    <input type="file" id="inputGallery" accept="image/*" class="visually-hidden" />
+
+    <section id="recentSection" class="hidden">
+      <p class="section-label" style="margin-top:34px;">Recent Moments</p>
+      <div class="recent-strip" id="recentStrip"></div>
+    </section>
+
+    <div class="link-row">
+      <a class="link-cta" href="gallery.html">View Photo Wall →</a>
+    </div>
+  </section>
+
+  <!-- ============================ STEP 2: PREVIEW ============================ -->
+  <section id="step-preview" class="hidden">
+    <p class="section-label">Preview</p>
+    <div class="preview-frame">
+      <img id="previewImg" alt="Selected photo preview" />
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="consentCheck" />
+      <label for="consentCheck">
+        By uploading, you agree that the photo may be displayed as part of
+        IEEE Sports 2026 event coverage.
+      </label>
+    </div>
+
+    <!-- Honeypot field — invisible to real users, catches simple bots -->
+    <input type="text" id="hp_field" name="company" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+    <div class="progress-track" id="progressTrack">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <p class="progress-note hidden" id="progressNote">Uploading your moment…</p>
+
+    <div class="stack" style="margin-top:20px;">
+      <button type="button" class="cta cta--gold" id="btnUpload" disabled>Upload Photo</button>
+      <button type="button" class="cta cta--ghost" id="btnChooseAnother">Choose Another</button>
+    </div>
+  </section>
+
+  <!-- ============================ STEP 3: SUCCESS ============================ -->
+  <section id="step-success" class="hidden">
+    <div class="success">
+      <div class="badge">🎉</div>
+      <h2>Your moment has been added!</h2>
+      <p>Thank you for being part of IEEE Sports 2026.</p>
+    </div>
+    <div class="stack">
+      <a class="cta cta--primary" href="gallery.html" style="text-decoration:none;">View Photo Wall →</a>
+      <button type="button" class="cta" id="btnUploadAnother">Upload Another Photo</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="js/pacman.js"></script>
+<script type="module" src="js/share.js"></script>
+</body>
+</html>
