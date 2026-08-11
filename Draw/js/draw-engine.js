@@ -99,8 +99,13 @@
         if (step < Config.DRAW_STEPS) {
           setTimeout(tick, delay);
         } else {
-          finalize(which);
+          // IMPORTANT: clear the spinning lock BEFORE finalize() updates state.
+          // State.update() emits pacdraw:statechange synchronously, which causes
+          // the controller to re-render immediately. If spinning is still true
+          // during that render, the next action button stays disabled until a
+          // page refresh even though the draw already finished.
           spinning = false;
+          finalize(which);
           resolve(true);
         }
       }
