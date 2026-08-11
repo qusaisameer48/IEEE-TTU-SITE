@@ -151,6 +151,7 @@
     });
 
     $('#btn-resume-session').addEventListener('click', () => routeTo('controller'));
+    $('#btn-controller-home').addEventListener('click', () => routeTo('landing'));
     $('#btn-back-sports').addEventListener('click', () => {
       const state = State.get();
       if (state.phase === 'setup') {
