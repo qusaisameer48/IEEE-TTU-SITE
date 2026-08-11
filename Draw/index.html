@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>IEEE Sports Tournament 2026 — PAC-DRAW</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/controller.css">
+  <link rel="stylesheet" href="css/display.css">
+  <link rel="stylesheet" href="css/results.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <!-- =========================================================
+       LANDING / SPORT SELECT
+       ========================================================= -->
+  <section id="view-landing" class="app-view landing-view">
+    <header class="landing-brand" aria-label="IEEE Sports Tournament 2026">
+      <img class="brand-logo brand-logo-ieee" src="assets/ieee-logo.svg" alt="IEEE">
+      <div class="brand-divider" aria-hidden="true"></div>
+      <img class="brand-logo brand-logo-ttu" src="assets/ttu-logo.png" alt="Tafila Technical University">
+    </header>
+
+    <div class="ghost-marquee" aria-hidden="true"><div class="track" id="ghost-track"></div></div>
+
+    <p class="eyebrow pixel">IEEE SPORTS TOURNAMENT 2026</p>
+    <h1 class="landing-title pixel">PAC-DRAW<br>SYSTEM</h1>
+    <p class="landing-sub">Official Tournament Draw System</p>
+
+    <div id="active-session" class="active-session maze-box is-hidden">
+      <div>
+        <span class="status-dot online"></span>
+        <strong>هناك قرعة محفوظة على هذا الجهاز</strong>
+        <p id="active-session-text"></p>
+      </div>
+      <button id="btn-resume-session" class="btn btn-secondary">متابعة القرعة</button>
+    </div>
+
+    <div id="sport-grid" class="sport-grid" aria-label="اختيار الرياضة"></div>
+
+    <article class="sport-card disabled-card" aria-disabled="true">
+      <div class="sport-icon">♟️</div>
+      <div>
+        <h2>CHESS</h2>
+        <p>Swiss System</p>
+      </div>
+      <span class="disabled-pill">NO DRAW</span>
+    </article>
+
+    <p class="landing-note">اختر الرياضة، أدخل المشاركين، اقفل القائمة، ثم افتح شاشة العرض وابدأ القرعة الرسمية.</p>
+  </section>
+
+  <!-- =========================================================
+       CONTROLLER
+       ========================================================= -->
+  <section id="view-controller" class="app-view controller-view is-hidden">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <div class="topbar-kicker pixel">CONTROLLER</div>
+        <div id="ctrl-title" class="topbar-title">IEEE Sports Tournament 2026</div>
+      </div>
+      <div class="topbar-tools">
+        <div id="ctrl-status" class="status-pill" title="حالة شاشة العرض">
+          <span class="status-dot"></span>
+          <span class="status-text">شاشة العرض غير متصلة</span>
+        </div>
+        <button id="btn-open-display-top" class="icon-btn" title="فتح شاشة العرض">📺</button>
+        <button id="btn-controller-fullscreen" class="icon-btn" title="ملء الشاشة">⛶</button>
+        <button id="btn-controller-mute" class="icon-btn" title="الصوت">🔊</button>
+      </div>
+    </header>
+
+    <main class="controller-shell">
+      <!-- SETUP -->
+      <section id="controller-setup" class="controller-stage">
+        <div class="stage-heading">
+          <div>
+            <p id="setup-sport-kicker" class="eyebrow pixel"></p>
+            <h1 id="setup-round-title">إعداد المشاركين</h1>
+            <p id="setup-description" class="muted"></p>
+          </div>
+          <button id="btn-back-sports" class="btn btn-ghost">← الرياضات</button>
+        </div>
+
+        <div class="setup-panel maze-box">
+          <div class="panel-heading">
+            <div>
+              <span class="pixel tiny-label">PARTICIPANTS</span>
+              <h2 id="participant-count-label"></h2>
+            </div>
+            <span id="participant-kind-pill" class="pill"></span>
+          </div>
+          <div id="participant-inputs" class="participant-input-grid"></div>
+        </div>
+
+        <div id="validation-panel" class="validation-panel maze-box" aria-live="polite">
+          <span class="validation-icon">•</span>
+          <div>
+            <strong id="validation-title">جاهز للفحص</strong>
+            <p id="validation-message">أدخل جميع الأسماء ثم اضغط Check Participants.</p>
+          </div>
+        </div>
+
+        <div class="setup-actions">
+          <button id="btn-check-participants" class="btn btn-secondary">✓ CHECK PARTICIPANTS</button>
+          <button id="btn-lock-participants" class="btn btn-primary" disabled>🔒 LOCK PARTICIPANTS</button>
+        </div>
+      </section>
+
+      <!-- LOCKED / READY -->
+      <section id="controller-locked" class="controller-stage is-hidden">
+        <div class="locked-banner maze-box">
+          <div class="lock-icon">🔒</div>
+          <div>
+            <p class="eyebrow pixel">PARTICIPANT LIST LOCKED</p>
+            <h1>القائمة جاهزة للقرعة الرسمية</h1>
+            <p class="muted">لا يمكن تعديل الأسماء بعد الآن. أي تغيير يحتاج Reset كامل.</p>
+          </div>
+        </div>
+
+        <div class="ready-layout">
+          <div class="maze-box ready-card">
+            <div class="panel-heading">
+              <span class="pixel tiny-label">LOCKED PARTICIPANTS</span>
+              <span id="locked-count" class="pill"></span>
+            </div>
+            <div id="locked-participants" class="locked-roster"></div>
+          </div>
+
+          <div class="maze-box launch-card">
+            <p class="eyebrow pixel">LIVE DRAW CHECKLIST</p>
+            <div class="check-row"><span>✓</span><div><strong>Participants validated</strong><small>الأسماء مكتملة وغير مكررة</small></div></div>
+            <div class="check-row"><span>✓</span><div><strong>Participants locked</strong><small>لا يمكن تعديلها أثناء الجلسة</small></div></div>
+            <div id="display-check-row" class="check-row pending"><span>•</span><div><strong>Audience display</strong><small>افتح شاشة العرض قبل البدء</small></div></div>
+            <button id="btn-open-display" class="btn btn-secondary full">📺 OPEN AUDIENCE DISPLAY</button>
+            <button id="btn-start-live" class="btn btn-primary full">▶ START LIVE DRAW</button>
+            <button id="btn-reset-locked" class="btn btn-danger-soft full">RESET DRAW</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE -->
+      <section id="controller-live" class="controller-stage is-hidden">
+        <div class="match-counter maze-box">
+          <div>
+            <span class="pixel tiny-label">CURRENT MATCH</span>
+            <div><span id="ctrl-match-num" class="counter-number pixel">01</span> <span id="ctrl-match-total" class="muted">/ 04</span></div>
+          </div>
+          <div class="counter-copy">
+            <strong id="ctrl-phase-label">جاهز للسحب</strong>
+            <small id="ctrl-session-id"></small>
+          </div>
+        </div>
+
+        <div class="current-pair maze-box">
+          <div class="ctrl-slot">
+            <span class="slot-label pixel">SIDE A</span>
+            <strong id="ctrl-slot-a">?</strong>
+          </div>
+          <span class="ctrl-vs pixel">VS</span>
+          <div class="ctrl-slot">
+            <span class="slot-label pixel">SIDE B</span>
+            <strong id="ctrl-slot-b">?</strong>
+          </div>
+        </div>
+
+        <div class="ctrl-section-heading">
+          <span class="pixel tiny-label">PARTICIPANTS</span>
+          <span id="available-count" class="muted"></span>
+        </div>
+        <div id="ctrl-participant-grid" class="participant-status-grid"></div>
+
+        <div class="ctrl-actions">
+          <button id="btn-spin" class="btn btn-primary draw-btn">🟡 DRAW PARTICIPANT</button>
+          <button id="btn-next" class="btn btn-secondary" disabled>▶ NEXT MATCH</button>
+          <button id="btn-reset-live" class="btn btn-danger-soft">✕ RESET</button>
+        </div>
+
+        <div class="dot-corridor" aria-hidden="true"></div>
+
+        <div class="log-panel">
+          <div class="ctrl-section-heading">
+            <span class="pixel tiny-label">MATCH LOG</span>
+            <span class="muted">Locked results only</span>
+          </div>
+          <div id="ctrl-match-log" class="match-log"></div>
+        </div>
+      </section>
+
+      <!-- CONTROLLER COMPLETE -->
+      <section id="controller-complete" class="controller-stage is-hidden">
+        <div class="controller-complete-head">
+          <div>
+            <p class="eyebrow pixel">DRAW COMPLETE</p>
+            <h1 id="controller-results-title">Final Draw Results</h1>
+            <p id="controller-results-sub" class="muted"></p>
+          </div>
+          <div class="complete-actions">
+            <button id="btn-export-results" class="btn btn-primary">💾 EXPORT RESULTS</button>
+            <button id="btn-reset-complete" class="btn btn-danger-soft">↻ NEW DRAW / RESET</button>
+          </div>
+        </div>
+        <div id="controller-results-grid" class="results-grid"></div>
+        <div id="controller-audit" class="audit-strip maze-box"></div>
+      </section>
+    </main>
+  </section>
+
+  <!-- =========================================================
+       AUDIENCE DISPLAY
+       ========================================================= -->
+  <section id="view-display" class="app-view display-view is-hidden" dir="ltr">
+    <header class="display-header">
+      <div class="display-brand">
+        <div class="display-logo-pair">
+          <img src="assets/ieee-logo.svg" alt="IEEE">
+          <img src="assets/ttu-logo.png" alt="TTU">
+        </div>
+        <div>
+          <div class="display-ieee">IEEE STUDENT BRANCH · TAFILA TECHNICAL UNIVERSITY</div>
+          <div class="display-tour">IEEE Sports Tournament 2026</div>
+        </div>
+      </div>
+      <div class="display-round">
+        <span id="disp-sport-icon"></span>
+        <span id="disp-sport-name" class="pixel"></span>
+        <small id="disp-round-name"></small>
+      </div>
+    </header>
+
+    <main class="display-body">
+      <section id="display-waiting" class="display-state waiting-state">
+        <div class="waiting-pac pacman" aria-hidden="true"></div>
+        <p class="eyebrow pixel">OFFICIAL DRAW</p>
+        <h1 id="waiting-title">PAC-DRAW SYSTEM</h1>
+        <p id="waiting-sub">Waiting for controller...</p>
+        <div class="waiting-dots dot-corridor" aria-hidden="true"></div>
+      </section>
+
+      <section id="display-live" class="display-state live-state is-hidden">
+        <div id="disp-progress" class="match-progress pixel">MATCH 01 OF 04</div>
+        <div id="disp-action-label" class="draw-action-label">READY TO DRAW</div>
+
+        <div class="slots-row">
+          <div id="slot-a" class="slot-box slot-a">
+            <div class="slot-topline pixel">SIDE A</div>
+            <div class="slot-pac pacman" aria-hidden="true"></div>
+            <div id="slot-a-name" class="slot-name">?</div>
+            <div id="slot-a-state" class="slot-state">WAITING</div>
+          </div>
+          <div class="vs-badge pixel">VS</div>
+          <div id="slot-b" class="slot-box slot-b">
+            <div class="slot-topline pixel">SIDE B</div>
+            <div class="slot-pac pacman" aria-hidden="true"></div>
+            <div id="slot-b-name" class="slot-name">?</div>
+            <div id="slot-b-state" class="slot-state">WAITING</div>
+          </div>
+        </div>
+
+        <div id="pac-runner" class="pac-runner" aria-hidden="true"></div>
+
+        <div id="match-locked-banner" class="match-locked-banner pixel is-hidden">MATCH LOCKED ✓</div>
+        <div id="disp-match-list" class="display-match-list"></div>
+      </section>
+
+      <section id="display-results" class="display-state display-results is-hidden">
+        <p class="eyebrow pixel">DRAW COMPLETE</p>
+        <h1>FINAL DRAW RESULTS</h1>
+        <p id="display-results-sub" class="display-results-sub"></p>
+        <div id="display-results-grid" class="results-grid display-results-grid"></div>
+        <div id="display-results-footer" class="display-results-footer"></div>
+      </section>
+    </main>
+
+    <div class="display-hover-controls" dir="rtl">
+      <button id="btn-display-fullscreen" class="icon-btn" title="ملء الشاشة">⛶</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       RESET MODAL
+       ========================================================= -->
+  <div id="reset-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="reset-title">
+    <div class="modal-card maze-box">
+      <button class="modal-close" data-close-modal="reset-modal" aria-label="إغلاق">×</button>
+      <p class="eyebrow pixel danger-text">FULL RESET</p>
+      <h2 id="reset-title">إعادة ضبط القرعة بالكامل؟</h2>
+      <p>سيتم إنهاء الجلسة الحالية وإزالة النتائج النشطة. سيتم الاحتفاظ بنسخة محلية في سجل الجلسات لأغراض التوثيق.</p>
+      <div class="reset-phrase-box">اكتب: <strong id="reset-phrase"></strong></div>
+      <input id="reset-confirm-input" class="modal-input" autocomplete="off" spellcheck="false">
+      <button id="btn-confirm-reset" class="btn btn-danger full" disabled>RESET ENTIRE DRAW</button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       EXPORT MODAL
+       ========================================================= -->
+  <div id="export-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="export-title">
+    <div class="modal-card export-modal-card maze-box">
+      <button class="modal-close" data-close-modal="export-modal" aria-label="إغلاق">×</button>
+      <p class="eyebrow pixel">EXPORT RESULTS</p>
+      <h2 id="export-title">اختر صيغة التصدير</h2>
+      <div class="export-options">
+        <button class="export-option" data-export="story"><strong>Instagram Story</strong><span>1080 × 1920 PNG</span></button>
+        <button class="export-option" data-export="post"><strong>Instagram Post</strong><span>1080 × 1350 PNG</span></button>
+        <button class="export-option" data-export="screen"><strong>Landscape Screen</strong><span>1920 × 1080 PNG</span></button>
+        <button class="export-option" data-export="json"><strong>Draw Record</strong><span>JSON + audit trail</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/random.js"></script>
+  <script src="js/sync.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/draw-engine.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/display.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
