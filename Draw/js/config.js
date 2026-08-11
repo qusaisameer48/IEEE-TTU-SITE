@@ -4,15 +4,18 @@
   window.PacDraw = window.PacDraw || {};
 
   PacDraw.Config = Object.freeze({
-    APP_VERSION: '2.0.0',
-    STORAGE_KEY: 'ieee_sports_2026_pacdraw_state_v2',
-    HISTORY_KEY: 'ieee_sports_2026_pacdraw_history_v2',
-    CHANNEL_NAME: 'ieee-sports-2026-pacdraw-v2',
+    APP_VERSION: '3.0.0',
+    STORAGE_KEY: 'ieee_sports_2026_pacdraw_workspace_v3',
+    LEGACY_STORAGE_KEYS: Object.freeze([
+      'ieee_sports_2026_pacdraw_state_v2'
+    ]),
+    HISTORY_KEY: 'ieee_sports_2026_pacdraw_history_v3',
+    CHANNEL_NAME: 'ieee-sports-2026-pacdraw-v3',
     PEER_TIMEOUT_MS: 5500,
     DRAW_STEPS: 18,
     DRAW_START_DELAY_MS: 48,
     DRAW_DELAY_GROWTH_MS: 13,
-    MAX_HISTORY_SESSIONS: 12,
+    MAX_HISTORY_SESSIONS: 20,
     SPORTS: Object.freeze({
       football: Object.freeze({
         key: 'football',

@@ -34,18 +34,41 @@
     });
   }
 
+  function sessionStatus(session, sport) {
+    if (!session) return { label: 'NEW', cls: 'new', detail: 'ابدأ بإدخال الأسماء' };
+
+    const filled = session.participants.filter((participant) => String(participant.name || '').trim()).length;
+    if (session.phase === 'setup') {
+      if (!filled) return { label: 'NEW', cls: 'new', detail: 'ابدأ بإدخال الأسماء' };
+      return { label: 'DRAFT', cls: 'draft', detail: `${filled}/${sport.participants} أسماء محفوظة` };
+    }
+    if (session.phase === 'locked') return { label: 'READY', cls: 'ready', detail: 'جاهزة للبدء' };
+    if (session.phase === 'complete') return { label: 'COMPLETE', cls: 'complete', detail: 'النتائج محفوظة' };
+    return { label: 'LIVE', cls: 'live', detail: `${session.matches.length}/${sport.matches} مواجهات` };
+  }
+
   function buildSports() {
     const grid = $('#sport-grid');
-    grid.innerHTML = Object.values(Config.SPORTS).map((sport) => `
-      <button class="sport-card" data-sport="${sport.key}" style="--card-accent:${sport.accent}">
-        <div class="sport-icon">${sport.icon}</div>
-        <div class="sport-card-copy">
-          <h2>${sport.name}</h2>
-          <p>${sport.participants} ${sport.kindLabel} · ${sport.round}</p>
-        </div>
-        <span class="sport-arrow">→</span>
-      </button>
-    `).join('');
+    if (!grid) return;
+    const sessions = State.getSessions();
+    grid.innerHTML = Object.values(Config.SPORTS).map((sport) => {
+      const session = sessions[sport.key] || null;
+      const status = sessionStatus(session, sport);
+      return `
+        <button class="sport-card has-session-status" data-sport="${sport.key}" style="--card-accent:${sport.accent}">
+          <div class="sport-icon">${sport.icon}</div>
+          <div class="sport-card-copy">
+            <div class="sport-title-row">
+              <h2>${sport.name}</h2>
+              <span class="sport-session-badge ${status.cls}">${status.label}</span>
+            </div>
+            <p>${sport.participants} ${sport.kindLabel} · ${sport.round}</p>
+            <small class="sport-session-detail">${status.detail}</small>
+          </div>
+          <span class="sport-arrow">→</span>
+        </button>
+      `;
+    }).join('');
   }
 
   function showView(view) {
@@ -57,7 +80,10 @@
 
     if (view === 'controller') PacDraw.Controller.render();
     if (view === 'display') PacDraw.Display.render();
-    if (view === 'landing') renderLandingSession();
+    if (view === 'landing') {
+      buildSports();
+      renderLandingSession();
+    }
   }
 
   function routeTo(view, replace) {
@@ -70,29 +96,39 @@
   }
 
   function renderLandingSession() {
-    const state = State.get();
     const panel = $('#active-session');
     if (!panel) return;
-    const cfg = Config.SPORTS[state.selectedSport];
-    const resumable = cfg && state.phase !== 'empty';
-    panel.classList.toggle('is-hidden', !resumable);
-    if (resumable) {
-      $('#active-session-text').textContent = `${cfg.icon} ${cfg.name} · ${cfg.round} · الحالة: ${state.phase}`;
-    }
+    const sessions = State.getSessions();
+    const entries = Object.values(sessions);
+    const count = entries.length;
+    panel.classList.toggle('is-hidden', count === 0);
+    if (!count) return;
+
+    const ready = entries.filter((session) => session.phase === 'locked').length;
+    const live = entries.filter((session) => !['setup', 'locked', 'complete', 'empty'].includes(session.phase)).length;
+    const complete = entries.filter((session) => session.phase === 'complete').length;
+    const draft = entries.filter((session) => session.phase === 'setup' && session.participants.some((p) => String(p.name || '').trim())).length;
+
+    $('#saved-draw-count').textContent = String(count);
+    const parts = [];
+    if (ready) parts.push(`${ready} جاهزة`);
+    if (live) parts.push(`${live} جارية`);
+    if (draft) parts.push(`${draft} مسودة`);
+    if (complete) parts.push(`${complete} مكتملة`);
+    $('#active-session-text').textContent = `${parts.join(' · ') || 'محفوظة'} — اختر أي رياضة من البطاقات للمتابعة أو الإعداد.`;
   }
 
   function selectSport(sportKey) {
-    const state = State.get();
-    if (state.selectedSport && state.phase !== 'empty' && state.phase !== 'setup') {
-      renderLandingSession();
-      return;
-    }
+    // v3: every sport owns an independent saved draw. Switching sports never
+    // deletes or overwrites the names/results of another sport.
     State.selectSport(sportKey);
     PacDraw.Controller.resetInputCache();
     routeTo('controller');
   }
 
   function openDisplay() {
+    const state = State.get();
+    if (!state.selectedSport) return;
     const url = new URL(window.location.href);
     url.searchParams.set('view', 'display');
     window.open(url.toString(), 'ieee-pacdraw-display');
@@ -150,16 +186,8 @@
       if (button) selectSport(button.dataset.sport);
     });
 
-    $('#btn-resume-session').addEventListener('click', () => routeTo('controller'));
     $('#btn-controller-home').addEventListener('click', () => routeTo('landing'));
-    $('#btn-back-sports').addEventListener('click', () => {
-      const state = State.get();
-      if (state.phase === 'setup') {
-        State.hardReset('changed_sport_before_lock');
-        PacDraw.Controller.resetInputCache();
-        routeTo('landing');
-      }
-    });
+    $('#btn-back-sports').addEventListener('click', () => routeTo('landing'));
 
     ['btn-open-display-top', 'btn-open-display'].forEach((id) => {
       document.getElementById(id).addEventListener('click', openDisplay);
@@ -197,6 +225,13 @@
       PacDraw.Export.exportFormat(option.dataset.export);
     });
 
+    window.addEventListener('pacdraw:statechange', () => {
+      if (currentView === 'landing') {
+        buildSports();
+        renderLandingSession();
+      }
+    });
+
     window.addEventListener('popstate', () => initializeRoute(false));
   }
 
@@ -205,7 +240,7 @@
     const requested = params.get('view');
     const state = State.get();
     let view = requested === 'display' ? 'display' : requested === 'controller' ? 'controller' : 'landing';
-    if (view === 'controller' && !state.selectedSport) view = 'landing';
+    if ((view === 'controller' || view === 'display') && !state.selectedSport) view = 'landing';
 
     if (startSync) PacDraw.Sync.init(view === 'display' ? 'display' : 'controller');
     showView(view);

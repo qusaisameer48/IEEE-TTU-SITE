@@ -15,12 +15,12 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  function blankState() {
+  function blankSession(sportKey) {
     return {
       version: Config.APP_VERSION,
-      selectedSport: null,
+      selectedSport: sportKey || null,
       participants: [],
-      phase: 'empty',
+      phase: sportKey ? 'setup' : 'empty',
       lockedAt: null,
       sessionId: null,
       startedAt: null,
@@ -37,75 +37,205 @@
     };
   }
 
-  function normalize(raw) {
-    const base = blankState();
+  function createSportSession(sportKey) {
+    const sport = Config.SPORTS[sportKey];
+    if (!sport) return blankSession(null);
+    const next = blankSession(sportKey);
+    next.participants = Array.from({ length: sport.participants }, (_, index) => ({
+      id: sportKey.slice(0, 3).toUpperCase() + '-' + String(index + 1).padStart(2, '0'),
+      name: ''
+    }));
+    return next;
+  }
+
+  function normalizeSession(raw, forcedSportKey) {
+    const sportKey = forcedSportKey || (raw && raw.selectedSport) || null;
+    if (!Config.SPORTS[sportKey]) return blankSession(null);
+
+    const base = createSportSession(sportKey);
     if (!raw || typeof raw !== 'object') return base;
 
-    const next = Object.assign(base, raw);
-    if (!Config.SPORTS[next.selectedSport]) {
-      next.selectedSport = null;
-      next.participants = [];
-      next.phase = 'empty';
-    }
-    if (!VALID_PHASES.has(next.phase)) next.phase = next.selectedSport ? 'setup' : 'empty';
-    if (!Array.isArray(next.participants)) next.participants = [];
+    const next = Object.assign(base, raw, { selectedSport: sportKey, version: Config.APP_VERSION });
+    if (!VALID_PHASES.has(next.phase) || next.phase === 'empty') next.phase = 'setup';
+    if (!Array.isArray(next.participants)) next.participants = base.participants;
     if (!Array.isArray(next.drawOrder)) next.drawOrder = [];
     if (!Array.isArray(next.matches)) next.matches = [];
     if (!Array.isArray(next.audit)) next.audit = [];
     if (!Number.isInteger(next.drawCursor) || next.drawCursor < 0) next.drawCursor = 0;
+
+    const sport = Config.SPORTS[sportKey];
+    if (next.participants.length !== sport.participants && next.phase === 'setup') {
+      const existing = new Map(next.participants.map((p, i) => [i, p]));
+      next.participants = Array.from({ length: sport.participants }, (_, index) => {
+        const old = existing.get(index);
+        return old ? {
+          id: old.id || (sportKey.slice(0, 3).toUpperCase() + '-' + String(index + 1).padStart(2, '0')),
+          name: String(old.name || '')
+        } : base.participants[index];
+      });
+    }
     return next;
   }
 
-  let state = blankState();
+  function blankWorkspace() {
+    return {
+      version: Config.APP_VERSION,
+      activeSport: null,
+      sessions: {},
+      updatedAt: nowISO()
+    };
+  }
+
+  function normalizeWorkspace(raw) {
+    const workspace = blankWorkspace();
+    if (!raw || typeof raw !== 'object') return workspace;
+
+    // Automatic migration from the old single-draw v2 state.
+    if (raw.selectedSport && Config.SPORTS[raw.selectedSport]) {
+      workspace.activeSport = raw.selectedSport;
+      workspace.sessions[raw.selectedSport] = normalizeSession(raw, raw.selectedSport);
+      return workspace;
+    }
+
+    if (raw.sessions && typeof raw.sessions === 'object') {
+      Object.keys(Config.SPORTS).forEach((sportKey) => {
+        if (raw.sessions[sportKey]) {
+          workspace.sessions[sportKey] = normalizeSession(raw.sessions[sportKey], sportKey);
+        }
+      });
+    }
+
+    workspace.activeSport = Config.SPORTS[raw.activeSport] && workspace.sessions[raw.activeSport]
+      ? raw.activeSport
+      : null;
+    workspace.updatedAt = raw.updatedAt || nowISO();
+    return workspace;
+  }
+
+  let workspace = blankWorkspace();
+
+  function activeSessionRef() {
+    return workspace.activeSport ? workspace.sessions[workspace.activeSport] || null : null;
+  }
+
+  function get() {
+    const active = activeSessionRef();
+    return deepClone(active || blankSession(null));
+  }
+
+  function getSession(sportKey) {
+    const session = workspace.sessions[sportKey];
+    return session ? deepClone(session) : null;
+  }
+
+  function getSessions() {
+    const result = {};
+    Object.keys(Config.SPORTS).forEach((sportKey) => {
+      if (workspace.sessions[sportKey]) result[sportKey] = deepClone(workspace.sessions[sportKey]);
+    });
+    return result;
+  }
+
+  function getWorkspace() {
+    return deepClone(workspace);
+  }
 
   function persist() {
     try {
-      localStorage.setItem(Config.STORAGE_KEY, JSON.stringify(state));
+      workspace.version = Config.APP_VERSION;
+      workspace.updatedAt = nowISO();
+      localStorage.setItem(Config.STORAGE_KEY, JSON.stringify(workspace));
     } catch (error) {
-      console.warn('PAC-DRAW: could not persist state.', error);
+      console.warn('PAC-DRAW: could not persist workspace.', error);
     }
   }
 
   function emit(source, persistState) {
-    state.updatedAt = nowISO();
+    const active = activeSessionRef();
+    if (active) active.updatedAt = nowISO();
+    workspace.updatedAt = nowISO();
     if (persistState !== false) persist();
     window.dispatchEvent(new CustomEvent('pacdraw:statechange', {
-      detail: { state: deepClone(state), source: source || 'local' }
+      detail: {
+        state: get(),
+        workspace: getWorkspace(),
+        source: source || 'local'
+      }
     }));
   }
 
   function load() {
+    let raw = null;
     try {
-      const raw = localStorage.getItem(Config.STORAGE_KEY);
-      state = normalize(raw ? JSON.parse(raw) : null);
+      const current = localStorage.getItem(Config.STORAGE_KEY);
+      if (current) raw = JSON.parse(current);
+
+      if (!raw && Array.isArray(Config.LEGACY_STORAGE_KEYS)) {
+        for (const key of Config.LEGACY_STORAGE_KEYS) {
+          const legacy = localStorage.getItem(key);
+          if (!legacy) continue;
+          raw = JSON.parse(legacy);
+          break;
+        }
+      }
+      workspace = normalizeWorkspace(raw);
+      if (raw && !localStorage.getItem(Config.STORAGE_KEY)) persist();
     } catch (error) {
-      state = blankState();
+      workspace = blankWorkspace();
     }
-    return deepClone(state);
+    return get();
   }
 
-  function get() {
-    return deepClone(state);
+  function ensureSport(sportKey) {
+    if (!Config.SPORTS[sportKey]) throw new Error('Unknown sport: ' + sportKey);
+    if (!workspace.sessions[sportKey]) {
+      workspace.sessions[sportKey] = createSportSession(sportKey);
+      audit(workspace.sessions[sportKey], 'sport_selected', { sport: sportKey });
+    }
+    return workspace.sessions[sportKey];
+  }
+
+  function selectSport(sportKey) {
+    ensureSport(sportKey);
+    workspace.activeSport = sportKey;
+    emit('local', true);
+    return get();
   }
 
   function set(nextState, options) {
     options = options || {};
-    state = normalize(deepClone(nextState));
+    const sportKey = nextState && nextState.selectedSport;
+    if (!Config.SPORTS[sportKey]) return get();
+    workspace.sessions[sportKey] = normalizeSession(deepClone(nextState), sportKey);
+    workspace.activeSport = sportKey;
     emit(options.source || 'local', options.persist !== false);
     return get();
   }
 
   function update(mutator, options) {
     options = options || {};
-    const draft = deepClone(state);
+    const active = activeSessionRef();
+    if (!active) return get();
+    const draft = deepClone(active);
     mutator(draft);
-    state = normalize(draft);
+    workspace.sessions[workspace.activeSport] = normalizeSession(draft, workspace.activeSport);
     emit(options.source || 'local', options.persist !== false);
     return get();
   }
 
+  // BroadcastChannel sync sends only the currently active draw. This keeps
+  // the audience display focused on whichever draw the controller selected.
   function applyRemote(remoteState) {
-    state = normalize(deepClone(remoteState));
+    if (!remoteState || !Config.SPORTS[remoteState.selectedSport]) return;
+    const sportKey = remoteState.selectedSport;
+    workspace.sessions[sportKey] = normalizeSession(deepClone(remoteState), sportKey);
+    workspace.activeSport = sportKey;
+    emit('remote', false);
+  }
+
+  // localStorage fallback contains the full multi-draw workspace.
+  function applyPersisted(remoteWorkspace) {
+    workspace = normalizeWorkspace(deepClone(remoteWorkspace));
     emit('remote', false);
   }
 
@@ -117,23 +247,9 @@
     });
   }
 
-  function selectSport(sportKey) {
-    const sport = Config.SPORTS[sportKey];
-    if (!sport) throw new Error('Unknown sport: ' + sportKey);
-
-    const next = blankState();
-    next.selectedSport = sportKey;
-    next.phase = 'setup';
-    next.participants = Array.from({ length: sport.participants }, (_, index) => ({
-      id: sportKey.slice(0, 3).toUpperCase() + '-' + String(index + 1).padStart(2, '0'),
-      name: ''
-    }));
-    audit(next, 'sport_selected', { sport: sportKey });
-    return set(next);
-  }
-
   function setParticipantName(index, name) {
-    if (state.phase !== 'setup') return get();
+    const state = activeSessionRef();
+    if (!state || state.phase !== 'setup') return get();
     return update((draft) => {
       if (!draft.participants[index]) return;
       draft.participants[index].name = String(name || '').replace(/\s+/g, ' ').slice(0, 80);
@@ -141,9 +257,10 @@
   }
 
   function validateParticipants() {
-    const sport = Config.SPORTS[state.selectedSport];
+    const state = activeSessionRef();
+    const sport = state ? Config.SPORTS[state.selectedSport] : null;
     const errors = [];
-    if (!sport) return { valid: false, errors: ['لم يتم اختيار رياضة.'] };
+    if (!sport || !state) return { valid: false, errors: ['لم يتم اختيار رياضة.'] };
     if (state.participants.length !== sport.participants) {
       errors.push('عدد المشاركين لا يطابق إعداد الرياضة.');
     }
@@ -151,9 +268,7 @@
     const trimmed = state.participants.map((p) => String(p.name || '').trim());
     const emptyIndexes = [];
     trimmed.forEach((name, index) => { if (!name) emptyIndexes.push(index + 1); });
-    if (emptyIndexes.length) {
-      errors.push('يوجد أسماء فارغة: ' + emptyIndexes.join(', '));
-    }
+    if (emptyIndexes.length) errors.push('يوجد أسماء فارغة: ' + emptyIndexes.join(', '));
 
     const seen = new Map();
     const duplicates = new Set();
@@ -163,9 +278,7 @@
       if (seen.has(key)) duplicates.add(name);
       else seen.set(key, true);
     });
-    if (duplicates.size) {
-      errors.push('أسماء مكررة: ' + Array.from(duplicates).join('، '));
-    }
+    if (duplicates.size) errors.push('أسماء مكررة: ' + Array.from(duplicates).join('، '));
 
     return { valid: errors.length === 0, errors, names: trimmed };
   }
@@ -188,34 +301,47 @@
     return validation;
   }
 
-  function archiveCurrent(reason) {
-    if (!state.selectedSport || state.phase === 'empty') return;
+  function archiveSession(session, reason) {
+    if (!session || !session.selectedSport) return;
     try {
       const existing = JSON.parse(localStorage.getItem(Config.HISTORY_KEY) || '[]');
-      existing.unshift({ archivedAt: nowISO(), reason: reason || 'manual_reset', state: deepClone(state) });
+      existing.unshift({ archivedAt: nowISO(), reason: reason || 'manual_reset', state: deepClone(session) });
       localStorage.setItem(Config.HISTORY_KEY, JSON.stringify(existing.slice(0, Config.MAX_HISTORY_SESSIONS)));
     } catch (error) {
       console.warn('PAC-DRAW: could not archive state.', error);
     }
   }
 
+  function archiveCurrent(reason) {
+    archiveSession(activeSessionRef(), reason);
+  }
+
+  // Reset only the currently selected sport. Other prepared draws stay saved.
   function hardReset(reason) {
-    archiveCurrent(reason || 'manual_reset');
-    state = blankState();
+    const sportKey = workspace.activeSport;
+    const current = activeSessionRef();
+    if (current) archiveSession(current, reason || 'manual_reset');
+    if (sportKey) delete workspace.sessions[sportKey];
+    workspace.activeSport = null;
     emit('local', true);
     return get();
   }
 
   function participantById(id) {
-    return state.participants.find((participant) => participant.id === id) || null;
+    const state = activeSessionRef();
+    return state ? state.participants.find((participant) => participant.id === id) || null : null;
   }
 
   PacDraw.State = {
     load,
     get,
+    getSession,
+    getSessions,
+    getWorkspace,
     set,
     update,
     applyRemote,
+    applyPersisted,
     selectSport,
     setParticipantName,
     validateParticipants,

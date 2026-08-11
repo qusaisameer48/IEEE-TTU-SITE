@@ -73,7 +73,7 @@
 
     window.addEventListener('storage', (event) => {
       if (event.key !== Config.STORAGE_KEY || !event.newValue) return;
-      try { State.applyRemote(JSON.parse(event.newValue)); }
+      try { State.applyPersisted(JSON.parse(event.newValue)); }
       catch (_) { /* ignore malformed storage */ }
     });
 
