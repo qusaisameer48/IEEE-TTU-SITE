@@ -213,7 +213,7 @@
       row.classList.toggle('pending', !connected);
       row.classList.toggle('ready', connected);
       row.querySelector('span').textContent = connected ? '✓' : '•';
-      row.querySelector('small').textContent = connected ? 'صفحة المشاركين تستقبل القرعة مباشرة' : 'سيتم الاتصال عند بدء القرعة';
+      row.querySelector('small').textContent = connected ? 'صفحة المشاركين تستقبل القرعة مباشرة' : 'اضغط CONNECT LIVE DISPLAY قبل بدء القرعة';
     }
   }
 
@@ -248,10 +248,26 @@
       if (!result.valid) runValidation();
     });
 
-    $('#btn-start-live').addEventListener('click', () => {
-      if (PacDraw.RemoteLive && !PacDraw.RemoteLive.ensureToken(true)) return;
+    const connectBtn = $('#btn-connect-live-display');
+    if (connectBtn) {
+      connectBtn.addEventListener('click', async () => {
+        connectBtn.disabled = true;
+        const original = connectBtn.textContent;
+        connectBtn.textContent = 'CONNECTING...';
+        const ok = PacDraw.RemoteLive ? await PacDraw.RemoteLive.connectAndTest() : false;
+        connectBtn.disabled = false;
+        connectBtn.textContent = ok ? '✓ LIVE DISPLAY CONNECTED' : original;
+        renderConnection(ok);
+      });
+    }
+
+    $('#btn-start-live').addEventListener('click', async () => {
+      if (PacDraw.RemoteLive) {
+        const ok = await PacDraw.RemoteLive.connectAndTest();
+        if (!ok) return;
+      }
       const started = Engine.startLiveDraw();
-      if (started && PacDraw.RemoteLive) PacDraw.RemoteLive.pushNow(State.get(), false);
+      if (started && PacDraw.RemoteLive) await PacDraw.RemoteLive.pushNow(State.get(), false);
     });
     $('#btn-spin').addEventListener('click', () => Engine.handleSpin());
     $('#btn-next').addEventListener('click', () => Engine.advanceMatch());

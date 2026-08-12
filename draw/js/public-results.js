@@ -10,15 +10,14 @@
   });
 
   const $ = (selector) => document.querySelector(selector);
+  let client = null;
+  let channel = null;
   let rowsBySport = {};
   let selectedSport = null;
-  let loading = false;
   let lastError = '';
   let lastRenderedFingerprint = '';
-
-  function endpoint(path) {
-    return String(PublicConfig.SUPABASE_URL || '').replace(/\/$/, '') + path;
-  }
+  let realtimeReady = false;
+  let initialReadDone = false;
 
   function esc(value) {
     return String(value == null ? '' : value)
@@ -36,6 +35,30 @@
     return participant ? String(participant.name || '') : '';
   }
 
+  function timeoutFetch(input, init) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    const merged = Object.assign({}, init || {}, { signal: controller.signal });
+    return fetch(input, merged).finally(() => clearTimeout(timer));
+  }
+
+  function getClient() {
+    if (client) return client;
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+      throw new Error('Supabase client library did not load');
+    }
+    client = window.supabase.createClient(
+      PublicConfig.SUPABASE_URL,
+      PublicConfig.SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+        global: { fetch: timeoutFetch },
+        realtime: { params: { eventsPerSecond: 20 } }
+      }
+    );
+    return client;
+  }
+
   function setBadge(selector, mode, text, title) {
     const badge = $(selector);
     if (!badge) return;
@@ -45,17 +68,23 @@
     badge.title = title || '';
   }
 
-  function setConnectionState(mode, detail) {
-    if (mode === 'error') {
-      setBadge('#public-sync-status', 'offline', 'CONNECTION ERROR', detail || lastError);
-      setBadge('#remote-live-status', 'offline', 'CONNECTION ERROR', detail || lastError);
-    } else if (mode === 'loading') {
+  function renderConnectionBadge() {
+    if (lastError && !initialReadDone) {
+      setBadge('#public-sync-status', 'offline', 'CONNECTION ERROR', lastError);
+      setBadge('#remote-live-status', 'offline', 'CONNECTION ERROR', lastError);
+      return;
+    }
+    if (!initialReadDone) {
       setBadge('#public-sync-status', 'loading', 'CONNECTING…');
       setBadge('#remote-live-status', 'loading', 'CONNECTING…');
-    } else {
-      setBadge('#public-sync-status', 'online', 'LIVE DISPLAY READY');
-      setBadge('#remote-live-status', 'online', 'LIVE');
+      return;
     }
+    setBadge('#public-sync-status', 'online', realtimeReady ? 'LIVE LINK ✓' : 'LIVE DISPLAY READY');
+    if (!selectedSport) return;
+    const status = sportStatus(selectedSport);
+    if (status.cls === 'live') setBadge('#remote-live-status', 'live', 'LIVE NOW ●');
+    else if (status.cls === 'ready') setBadge('#remote-live-status', 'online', 'DRAW COMPLETE ✓');
+    else setBadge('#remote-live-status', 'online', 'WAITING FOR DRAW');
   }
 
   function normalizeRemoteState(row) {
@@ -67,46 +96,69 @@
     return state;
   }
 
+  function upsertRow(row) {
+    if (!row || !SPORTS[row.sport]) return;
+    rowsBySport[row.sport] = row;
+    lastError = '';
+    initialReadDone = true;
+    render();
+  }
+
   async function fetchLiveStates() {
-    if (loading) return;
-    loading = true;
-    if (!Object.keys(rowsBySport).length) setConnectionState('loading');
-
     try {
-      const select = 'sport,state,updated_at';
-      const url = endpoint(
-        '/rest/v1/' + encodeURIComponent(PublicConfig.LIVE_STATE_TABLE) +
-        '?select=' + encodeURIComponent(select) +
-        '&order=sport.asc'
-      );
+      const sb = getClient();
+      const { data, error } = await sb
+        .from(PublicConfig.LIVE_STATE_TABLE)
+        .select('sport,state,updated_at')
+        .order('sport', { ascending: true });
 
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'apikey': PublicConfig.SUPABASE_PUBLISHABLE_KEY,
-          'Accept': 'application/json'
-        },
-        cache: 'no-store'
-      });
-
-      const raw = await response.text();
-      if (!response.ok) throw new Error('HTTP ' + response.status + (raw ? ' — ' + raw : ''));
-
-      const rows = raw ? JSON.parse(raw) : [];
+      if (error) throw error;
       const next = {};
-      (Array.isArray(rows) ? rows : []).forEach((row) => {
+      (Array.isArray(data) ? data : []).forEach((row) => {
         if (SPORTS[row.sport]) next[row.sport] = row;
       });
       rowsBySport = next;
       lastError = '';
-      setConnectionState('online');
+      initialReadDone = true;
       render();
     } catch (error) {
       lastError = error.message || String(error);
+      initialReadDone = false;
       console.error('Could not load live draw state:', error);
-      setConnectionState('error', lastError);
-    } finally {
-      loading = false;
+      renderConnectionBadge();
+    }
+  }
+
+  function subscribeRealtime() {
+    try {
+      const sb = getClient();
+      if (channel) sb.removeChannel(channel);
+      channel = sb
+        .channel('ieee-sports-public-live-v9')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: PublicConfig.LIVE_STATE_TABLE },
+          (payload) => {
+            if (payload.eventType === 'DELETE') {
+              const oldRow = payload.old || {};
+              if (oldRow.sport) delete rowsBySport[oldRow.sport];
+              render();
+              return;
+            }
+            upsertRow(payload.new);
+          }
+        )
+        .subscribe((status) => {
+          realtimeReady = status === 'SUBSCRIBED';
+          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+            console.warn('Realtime channel status:', status);
+          }
+          renderConnectionBadge();
+        });
+    } catch (error) {
+      console.warn('Realtime unavailable; polling fallback remains active:', error);
+      realtimeReady = false;
+      renderConnectionBadge();
     }
   }
 
@@ -153,8 +205,10 @@
   function renderWaiting(cfg, state) {
     setDisplayState('display-waiting');
     $('#waiting-title').textContent = `${cfg.icon} ${cfg.name}`;
-    if (!state) {
-      $('#waiting-sub').textContent = `${cfg.round} · WAITING FOR THE ORGANIZER TO START`;
+    if (!initialReadDone) {
+      $('#waiting-sub').textContent = 'CONNECTING TO LIVE DRAW...';
+    } else if (!state) {
+      $('#waiting-sub').textContent = `${cfg.round} · WAITING FOR THE ORGANIZER`;
     } else if (state.phase === 'locked') {
       $('#waiting-sub').textContent = `${cfg.round} · OFFICIAL DRAW STARTING SOON`;
     } else {
@@ -238,7 +292,7 @@
         </div>
       </article>
     `).join('');
-    $('#display-results-footer').textContent = `IEEE SPORTS TOURNAMENT 2026 · OFFICIAL DRAW`;
+    $('#display-results-footer').textContent = 'IEEE SPORTS TOURNAMENT 2026 · OFFICIAL DRAW';
   }
 
   function renderSelectedSport() {
@@ -251,22 +305,22 @@
     else if (state.phase === 'complete') renderResults(state, cfg);
     else renderLive(state, cfg);
 
-    const liveStatus = sportStatus(selectedSport);
-    if (lastError) setBadge('#remote-live-status', 'offline', 'CONNECTION ERROR', lastError);
-    else if (liveStatus.cls === 'live') setBadge('#remote-live-status', 'live', 'LIVE NOW ●');
-    else if (liveStatus.cls === 'ready') setBadge('#remote-live-status', 'online', 'DRAW COMPLETE ✓');
-    else setBadge('#remote-live-status', 'loading', 'WAITING');
+    renderConnectionBadge();
   }
 
   function render() {
     renderPicker();
     if (selectedSport) {
       const row = rowsBySport[selectedSport];
-      const fingerprint = JSON.stringify(row ? [row.updated_at, row.state && row.state.phase, row.state && row.state.previewParticipantId, row.state && row.state.slotAId, row.state && row.state.slotBId, row.state && row.state.matches] : []);
+      const fingerprint = JSON.stringify(row ? [row.updated_at, row.state && row.state.phase, row.state && row.state.previewParticipantId, row.state && row.state.slotAId, row.state && row.state.slotBId, row.state && row.state.matches] : ['none', initialReadDone, lastError]);
       if (fingerprint !== lastRenderedFingerprint) {
         lastRenderedFingerprint = fingerprint;
         renderSelectedSport();
+      } else {
+        renderConnectionBadge();
       }
+    } else {
+      renderConnectionBadge();
     }
   }
 
@@ -284,7 +338,7 @@
     $('#public-picker-view').classList.remove('is-hidden');
     $('#public-live-view').classList.add('is-hidden');
     if (push !== false) updateUrl(null, true);
-    renderPicker();
+    render();
   }
 
   function showSport(sportKey, push) {
@@ -294,8 +348,7 @@
     $('#public-picker-view').classList.add('is-hidden');
     $('#public-live-view').classList.remove('is-hidden');
     if (push !== false) updateUrl(sportKey, true);
-    renderSelectedSport();
-    fetchLiveStates();
+    render();
   }
 
   function toggleFullscreen() {
@@ -339,14 +392,28 @@
     });
   }
 
-  function init() {
+  async function init() {
     buildDots();
     bind();
+
     const requested = new URLSearchParams(window.location.search).get('sport');
     if (SPORTS[requested]) showSport(requested, false);
     else showPicker(false);
-    fetchLiveStates();
-    setInterval(fetchLiveStates, Math.max(400, Number(PublicConfig.LIVE_REFRESH_INTERVAL_MS) || 650));
+
+    try {
+      getClient();
+      await fetchLiveStates();
+      subscribeRealtime();
+    } catch (error) {
+      lastError = error.message || String(error);
+      initialReadDone = false;
+      renderConnectionBadge();
+    }
+
+    // Fallback: even if Realtime is blocked on a network, this keeps the display updating.
+    setInterval(() => {
+      if (!document.hidden) fetchLiveStates();
+    }, Math.max(1500, Number(PublicConfig.LIVE_REFRESH_INTERVAL_MS) || 2500));
   }
 
   document.addEventListener('DOMContentLoaded', init);
