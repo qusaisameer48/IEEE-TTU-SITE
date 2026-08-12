@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <title>IEEE Sports Tournament 2026 — PAC-DRAW</title>
-  <link rel="stylesheet" href="css/base.css?v=7.0">
-  <link rel="stylesheet" href="css/controller.css?v=7.0">
-  <link rel="stylesheet" href="css/display.css?v=7.0">
-  <link rel="stylesheet" href="css/results.css?v=7.0">
-  <link rel="stylesheet" href="css/animations.css?v=7.0"> 
-
+  <link rel="stylesheet" href="css/base.css?v=8.0">
+  <link rel="stylesheet" href="css/controller.css?v=8.0">
+  <link rel="stylesheet" href="css/display.css?v=8.0">
+  <link rel="stylesheet" href="css/results.css?v=8.0">
+  <link rel="stylesheet" href="css/animations.css?v=8.0">
 </head>
 <body>
   <!-- =========================================================
@@ -63,11 +62,11 @@
       </div>
       <div class="topbar-tools">
         <button id="btn-controller-home" class="icon-btn" title="العودة للقائمة الرئيسية" aria-label="العودة للقائمة الرئيسية">⌂</button>
-        <div id="ctrl-status" class="status-pill" title="حالة شاشة العرض">
+        <div id="ctrl-status" class="status-pill" title="حالة البث المباشر للمشاركين">
           <span class="status-dot"></span>
-          <span class="status-text">شاشة العرض غير متصلة</span>
+          <span class="status-text">البث للمشاركين غير متصل</span>
         </div>
-        <button id="btn-open-display-top" class="icon-btn" title="فتح شاشة العرض">📺</button>
+        <button id="btn-open-display-top" class="icon-btn" title="فتح شاشة المشاركين المباشرة">📺</button>
         <button id="btn-controller-fullscreen" class="icon-btn" title="ملء الشاشة">⛶</button>
         <button id="btn-controller-mute" class="icon-btn" title="الصوت">🔊</button>
       </div>
@@ -134,8 +133,8 @@
             <p class="eyebrow pixel">LIVE DRAW CHECKLIST</p>
             <div class="check-row"><span>✓</span><div><strong>Participants validated</strong><small>الأسماء مكتملة وغير مكررة</small></div></div>
             <div class="check-row"><span>✓</span><div><strong>Participants locked</strong><small>لا يمكن تعديلها أثناء الجلسة</small></div></div>
-            <div id="display-check-row" class="check-row pending"><span>•</span><div><strong>Audience display</strong><small>افتح شاشة العرض قبل البدء</small></div></div>
-            <button id="btn-open-display" class="btn btn-secondary full">📺 OPEN AUDIENCE DISPLAY</button>
+            <div id="display-check-row" class="check-row pending"><span>•</span><div><strong>Public live display</strong><small>يظهر السحب للمشاركين على أجهزتهم مباشرة</small></div></div>
+            <button id="btn-open-display" class="btn btn-secondary full">🌐 OPEN PUBLIC LIVE DISPLAY</button>
             <button id="btn-start-live" class="btn btn-primary full">▶ START LIVE DRAW</button>
             <button id="btn-reset-locked" class="btn btn-danger-soft full">RESET DRAW</button>
           </div>
@@ -199,7 +198,7 @@
             <p id="controller-results-sub" class="muted"></p>
           </div>
           <div class="complete-actions">
-            <button id="btn-publish-public" class="btn btn-secondary">🌐 PUBLISH TO WEBSITE</button>
+            <button id="btn-open-public-display-complete" class="btn btn-secondary">🌐 OPEN PUBLIC LIVE DISPLAY</button>
             <button id="btn-export-results" class="btn btn-primary">💾 EXPORT RESULTS</button>
             <button id="btn-reset-complete" class="btn btn-danger-soft">↻ NEW DRAW / RESET</button>
           </div>
@@ -313,17 +312,17 @@
     </div>
   </div>
 
-  <script src="js/config.js?v=7.0"></script>
-  <script src="js/public-config.js?v=7.0"></script>
-  <script src="js/state.js?v=7.0"></script>
-  <script src="js/publish.js?v=7.0"></script>
-  <script src="js/random.js?v=7.0"></script>
-  <script src="js/sync.js?v=7.0"></script>
-  <script src="js/audio.js?v=7.0"></script>
-  <script src="js/draw-engine.js?v=7.0"></script>
-  <script src="js/controller.js?v=7.0"></script>
-  <script src="js/display.js?v=7.0"></script>
-  <script src="js/export.js?v=7.0"></script>
-  <script src="js/app.js?v=7.0"></script>
+  <script src="js/config.js?v=8.0"></script>
+  <script src="js/public-config.js?v=8.0"></script>
+  <script src="js/state.js?v=8.0"></script>
+  <script src="js/remote-live.js?v=8.0"></script>
+  <script src="js/random.js?v=8.0"></script>
+  <script src="js/sync.js?v=8.0"></script>
+  <script src="js/audio.js?v=8.0"></script>
+  <script src="js/draw-engine.js?v=8.0"></script>
+  <script src="js/controller.js?v=8.0"></script>
+  <script src="js/display.js?v=8.0"></script>
+  <script src="js/export.js?v=8.0"></script>
+  <script src="js/app.js?v=8.0"></script>
 </body>
 </html>

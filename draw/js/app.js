@@ -129,9 +129,9 @@
   function openDisplay() {
     const state = State.get();
     if (!state.selectedSport) return;
-    const url = new URL(window.location.href);
-    url.searchParams.set('view', 'display');
-    window.open(url.toString(), 'ieee-pacdraw-display');
+    const url = new URL('results.html', window.location.href);
+    url.searchParams.set('sport', state.selectedSport);
+    window.open(url.toString(), 'ieee-pacdraw-public-live');
   }
 
   function toggleFullscreen(element) {
@@ -248,6 +248,7 @@
 
   function init() {
     State.load();
+    if (PacDraw.RemoteLive) PacDraw.RemoteLive.init();
     buildDecor();
     buildSports();
     PacDraw.Controller.bind();

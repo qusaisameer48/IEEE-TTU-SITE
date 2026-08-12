@@ -90,3 +90,31 @@ button{font:inherit}
   border-color:rgba(52,231,164,.55);
   background:rgba(52,231,164,.08)
 }
+
+/* ============================================================
+   v8 — cross-device LIVE audience display
+   ============================================================ */
+.public-availability.live{
+  color:#ffde00;
+  border-color:rgba(255,222,0,.7);
+  background:rgba(255,222,0,.08);
+  box-shadow:0 0 18px rgba(255,222,0,.08)
+}
+.public-sync-badge.live{
+  color:#ffde00;
+  border-color:rgba(255,222,0,.72);
+  background:rgba(255,222,0,.08)
+}
+.public-remote-display{min-height:100vh;width:100%;}
+.public-live-tools{display:flex;align-items:center;gap:16px;}
+.public-live-back{
+  background:#0b0b2b;border:2px solid var(--maze);color:#fff;border-radius:12px;
+  padding:10px 14px;cursor:pointer;font-weight:900;white-space:nowrap
+}
+.public-live-back:hover{border-color:var(--pac-yellow)}
+.public-display-controls{opacity:.35}
+.public-remote-display:hover .public-display-controls{opacity:1}
+@media(max-width:900px){
+  .public-live-tools{gap:8px}.public-live-back{padding:8px 10px;font-size:11px}
+  #remote-live-status{display:none}
+}

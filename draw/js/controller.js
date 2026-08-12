@@ -104,7 +104,7 @@
         <span class="locked-check">LOCKED ✓</span>
       </div>
     `).join('');
-    renderConnection(PacDraw.Sync.isPeerConnected());
+    renderConnection(PacDraw.RemoteLive ? PacDraw.RemoteLive.getStatus().status === 'online' : false);
   }
 
   function participantStatus(state, participant) {
@@ -194,12 +194,6 @@
     $('#controller-results-title').textContent = `${cfg.name} — ${cfg.round}`;
     $('#controller-results-sub').textContent = `${state.matches.length} matches locked · Session ${state.sessionId || ''}`;
     $('#controller-results-grid').innerHTML = resultsCards(state);
-    const publishButton = $('#btn-publish-public');
-    if (publishButton) {
-      const published = state.publicPublishedSessionId && state.publicPublishedSessionId === state.sessionId;
-      publishButton.disabled = !!published;
-      publishButton.textContent = published ? '🌐 PUBLISHED TO WEBSITE ✓' : '🌐 PUBLISH TO WEBSITE';
-    }
     $('#controller-audit').innerHTML = `
       <span><strong>Random:</strong> ${esc(state.randomAlgorithm || '')}</span>
       <span><strong>Started:</strong> ${esc(state.startedAt || '')}</span>
@@ -212,14 +206,14 @@
     const status = $('#ctrl-status');
     if (!status) return;
     status.classList.toggle('connected', connected);
-    status.querySelector('.status-text').textContent = connected ? 'شاشة العرض متصلة ✓' : 'شاشة العرض غير متصلة';
+    status.querySelector('.status-text').textContent = connected ? 'البث للمشاركين متصل ✓' : 'البث للمشاركين غير متصل';
 
     const row = $('#display-check-row');
     if (row) {
       row.classList.toggle('pending', !connected);
       row.classList.toggle('ready', connected);
       row.querySelector('span').textContent = connected ? '✓' : '•';
-      row.querySelector('small').textContent = connected ? 'الشاشة جاهزة لاستقبال القرعة' : 'افتح شاشة العرض قبل البدء';
+      row.querySelector('small').textContent = connected ? 'صفحة المشاركين تستقبل القرعة مباشرة' : 'سيتم الاتصال عند بدء القرعة';
     }
   }
 
@@ -254,37 +248,23 @@
       if (!result.valid) runValidation();
     });
 
-    $('#btn-start-live').addEventListener('click', () => Engine.startLiveDraw());
+    $('#btn-start-live').addEventListener('click', () => {
+      if (PacDraw.RemoteLive && !PacDraw.RemoteLive.ensureToken(true)) return;
+      const started = Engine.startLiveDraw();
+      if (started && PacDraw.RemoteLive) PacDraw.RemoteLive.pushNow(State.get(), false);
+    });
     $('#btn-spin').addEventListener('click', () => Engine.handleSpin());
     $('#btn-next').addEventListener('click', () => Engine.advanceMatch());
-    $('#btn-publish-public').addEventListener('click', async () => {
-      if (PacDraw.Publish && typeof PacDraw.Publish.publishCompletedDraw === 'function') {
-        const button = $('#btn-publish-public');
-        button.disabled = true;
-        button.textContent = '🌐 PUBLISHING…';
-        const result = await PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true, force: true });
-        if (!result || !result.ok) {
-          button.disabled = false;
-          button.textContent = '🌐 PUBLISH TO WEBSITE';
-        }
-      }
-    });
-
-    window.addEventListener('pacdraw:publishstatus', (event) => {
-      const button = $('#btn-publish-public');
-      if (!button || !event.detail) return;
-      if (event.detail.status === 'publishing') {
-        button.disabled = true;
-        button.textContent = '🌐 PUBLISHING…';
-      } else if (event.detail.status === 'error') {
-        button.disabled = false;
-        button.textContent = '🌐 PUBLISH TO WEBSITE';
-      }
+    $('#btn-open-public-display-complete').addEventListener('click', () => {
+      const state = State.get();
+      if (!state.selectedSport) return;
+      window.open('results.html?sport=' + encodeURIComponent(state.selectedSport), 'ieee-pacdraw-public-live');
     });
 
     window.addEventListener('pacdraw:statechange', () => render());
-    window.addEventListener('pacdraw:connection', (event) => {
-      if (event.detail && event.detail.peer === 'display') renderConnection(event.detail.connected);
+    window.addEventListener('pacdraw:remote-live-status', (event) => {
+      if (!event.detail) return;
+      renderConnection(event.detail.status === 'online' || event.detail.status === 'syncing');
     });
   }
 
