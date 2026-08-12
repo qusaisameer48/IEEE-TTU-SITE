@@ -191,14 +191,8 @@
 
     if (current.matches.length >= sport.matches) {
       Audio.complete();
-      // Publish the finished draw to the public read-only results page.
-      // The first publish in a browser session asks the organizer for the
-      // private publish token; later completed draws publish automatically.
-      setTimeout(() => {
-        if (PacDraw.Publish && typeof PacDraw.Publish.publishCompletedDraw === 'function') {
-          PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true });
-        }
-      }, 250);
+      // v7: publishing is deliberately MANUAL.
+      // The organizer reviews the final draw, then presses PUBLISH TO WEBSITE.
     }
     return true;
   }

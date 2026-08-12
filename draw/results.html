@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <title>Official Draw Results — IEEE Sports Tournament 2026</title>
-  <link rel="stylesheet" href="css/public-results.css?v=6.0">
+  <link rel="stylesheet" href="css/public-results.css?v=7.0">
 </head>
 <body>
   <div class="public-page">
@@ -20,7 +20,7 @@
           <strong>IEEE Sports Tournament 2026</strong>
         </div>
       </div>
-      <div id="public-sync-status" class="public-sync-badge pixel">LIVE RESULTS</div>
+      <div id="public-sync-status" class="public-sync-badge pixel loading">LOADING…</div>
     </header>
 
     <main class="public-main">
@@ -37,6 +37,7 @@
         <div class="public-results-toolbar">
           <button id="btn-public-back" class="public-back">← ALL SPORTS</button>
         </div>
+
         <div class="public-sport-head">
           <span id="public-sport-icon" class="big-icon"></span>
           <h1 id="public-sport-name"></h1>
@@ -45,8 +46,8 @@
 
         <div id="public-pending" class="public-pending is-hidden">
           <div class="pac" aria-hidden="true"></div>
-          <h2>DRAW NOT AVAILABLE YET</h2>
-          <p>The official draw will appear here automatically after it is completed by the organizers.</p>
+          <h2>DRAW NOT PUBLISHED YET</h2>
+          <p>Once the organizers publish the completed draw, the official matchups will appear here automatically.</p>
         </div>
 
         <div id="public-match-results" class="public-match-results is-hidden"></div>
@@ -56,7 +57,7 @@
     <footer class="public-footer">IEEE SPORTS TOURNAMENT 2026 · OFFICIAL DRAW RESULTS</footer>
   </div>
 
-  <script src="js/public-config.js?v=6.0"></script>
-  <script src="js/public-results.js?v=6.0"></script>
+  <script src="js/public-config.js?v=7.0"></script>
+  <script src="js/public-results.js?v=7.0"></script>
 </body>
 </html>

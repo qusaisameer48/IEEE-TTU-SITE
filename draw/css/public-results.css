@@ -78,3 +78,15 @@ button{font:inherit}
   .public-pair{gap:9px}.public-pair strong{font-size:18px}.public-hero h1{font-size:40px}
 }
 @media(max-width:480px){.public-header{padding:12px}.public-logos img:last-child{display:none}.public-sync-badge{padding:7px}.public-brand{gap:10px}.public-hero p{font-size:14px}}
+
+/* v7 connection states */
+.public-sync-badge.loading{
+  color:#ffde00;
+  border-color:rgba(255,222,0,.5);
+  background:rgba(255,222,0,.06)
+}
+.public-sync-badge.online{
+  color:var(--public-green);
+  border-color:rgba(52,231,164,.55);
+  background:rgba(52,231,164,.08)
+}

@@ -257,9 +257,28 @@
     $('#btn-start-live').addEventListener('click', () => Engine.startLiveDraw());
     $('#btn-spin').addEventListener('click', () => Engine.handleSpin());
     $('#btn-next').addEventListener('click', () => Engine.advanceMatch());
-    $('#btn-publish-public').addEventListener('click', () => {
+    $('#btn-publish-public').addEventListener('click', async () => {
       if (PacDraw.Publish && typeof PacDraw.Publish.publishCompletedDraw === 'function') {
-        PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true, force: true });
+        const button = $('#btn-publish-public');
+        button.disabled = true;
+        button.textContent = '🌐 PUBLISHING…';
+        const result = await PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true, force: true });
+        if (!result || !result.ok) {
+          button.disabled = false;
+          button.textContent = '🌐 PUBLISH TO WEBSITE';
+        }
+      }
+    });
+
+    window.addEventListener('pacdraw:publishstatus', (event) => {
+      const button = $('#btn-publish-public');
+      if (!button || !event.detail) return;
+      if (event.detail.status === 'publishing') {
+        button.disabled = true;
+        button.textContent = '🌐 PUBLISHING…';
+      } else if (event.detail.status === 'error') {
+        button.disabled = false;
+        button.textContent = '🌐 PUBLISH TO WEBSITE';
       }
     });
 

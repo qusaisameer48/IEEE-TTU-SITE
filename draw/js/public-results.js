@@ -2,17 +2,19 @@
   'use strict';
 
   const PublicConfig = PacDrawPublic.Config;
+
   const SPORTS = Object.freeze({
-    football: { key: 'football', icon: '⚽', name: 'FOOTBALL', round: 'QUARTER FINALS', count: 4, accent: '#00E1FF' },
-    basketball: { key: 'basketball', icon: '🏀', name: 'BASKETBALL', round: 'SEMI FINALS', count: 2, accent: '#FF9D2E' },
-    tabletennis: { key: 'tabletennis', icon: '🏓', name: 'TABLE TENNIS', round: 'ROUND OF 16', count: 8, accent: '#FF4B4B' },
-    badminton: { key: 'badminton', icon: '🏸', name: 'BADMINTON', round: 'QUARTER FINALS', count: 4, accent: '#B47CFF' }
+    football:    { key: 'football',    icon: '⚽', name: 'FOOTBALL',     round: 'QUARTER FINALS', count: 4, accent: '#00E1FF' },
+    basketball:  { key: 'basketball',  icon: '🏀', name: 'BASKETBALL',   round: 'SEMI FINALS',    count: 2, accent: '#FF9D2E' },
+    tabletennis: { key: 'tabletennis', icon: '🏓', name: 'TABLE TENNIS', round: 'ROUND OF 16',    count: 8, accent: '#FF4B4B' },
+    badminton:   { key: 'badminton',   icon: '🏸', name: 'BADMINTON',    round: 'QUARTER FINALS', count: 4, accent: '#B47CFF' }
   });
 
   const $ = (selector) => document.querySelector(selector);
   let rowsBySport = {};
   let selectedSport = null;
   let loading = false;
+  let lastError = '';
 
   function esc(value) {
     return String(value == null ? '' : value)
@@ -27,44 +29,75 @@
     return String(PublicConfig.SUPABASE_URL || '').replace(/\/$/, '') + path;
   }
 
+  function setConnectionState(state, detail) {
+    const badge = $('#public-sync-status');
+    if (!badge) return;
+
+    badge.classList.remove('offline', 'online', 'loading');
+
+    if (state === 'loading') {
+      badge.classList.add('loading');
+      badge.textContent = 'LOADING…';
+      return;
+    }
+
+    if (state === 'offline') {
+      badge.classList.add('offline');
+      badge.textContent = 'CONNECTION ERROR';
+      badge.title = detail || lastError || 'Could not connect to results service';
+      return;
+    }
+
+    badge.classList.add('online');
+    badge.textContent = 'OFFICIAL RESULTS';
+    badge.title = 'Connected to the official draw results database';
+  }
+
   async function fetchResults() {
     if (loading) return;
     loading = true;
+    if (!Object.keys(rowsBySport).length) setConnectionState('loading');
+
     try {
-      const select = 'sport,sport_name,round,session_id,matches,completed_at,published_at';
-      const response = await fetch(
-        endpoint('/rest/v1/' + encodeURIComponent(PublicConfig.RESULTS_TABLE) + '?select=' + encodeURIComponent(select)),
-        {
-          headers: {
-            'apikey': PublicConfig.SUPABASE_PUBLISHABLE_KEY,
-            'Accept': 'application/json'
-          },
-          cache: 'no-store'
-        }
+      const select = 'sport,matches,published_at';
+      const url = endpoint(
+        '/rest/v1/' + encodeURIComponent(PublicConfig.RESULTS_TABLE) +
+        '?select=' + encodeURIComponent(select) +
+        '&order=sport.asc'
       );
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      const rows = await response.json();
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'apikey': PublicConfig.SUPABASE_PUBLISHABLE_KEY,
+          'Accept': 'application/json'
+        },
+        cache: 'no-store'
+      });
+
+      const raw = await response.text();
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status + (raw ? ' — ' + raw : ''));
+      }
+
+      const rows = raw ? JSON.parse(raw) : [];
       const next = {};
       (Array.isArray(rows) ? rows : []).forEach((row) => {
         if (SPORTS[row.sport]) next[row.sport] = row;
       });
+
       rowsBySport = next;
-      setConnectionState(true);
+      lastError = '';
+      setConnectionState('online');
       render();
     } catch (error) {
-      console.error('Could not load public draw results.', error);
-      setConnectionState(false);
+      lastError = error.message || String(error);
+      console.error('Could not load official draw results:', error);
+      setConnectionState('offline', lastError);
       render();
     } finally {
       loading = false;
     }
-  }
-
-  function setConnectionState(online) {
-    const badge = $('#public-sync-status');
-    if (!badge) return;
-    badge.classList.toggle('offline', !online);
-    badge.textContent = online ? 'LIVE RESULTS' : 'RECONNECTING…';
   }
 
   function updateUrl(sportKey) {
@@ -92,15 +125,23 @@
 
   function renderPicker() {
     const grid = $('#public-sport-grid');
+    if (!grid) return;
+
     grid.innerHTML = Object.values(SPORTS).map((sport) => {
-      const available = !!rowsBySport[sport.key];
+      const row = rowsBySport[sport.key];
+      const available = !!row && normalizedMatches(row).length === sport.count;
+
       return `
-        <button class="public-sport-card ${available ? 'available' : 'pending'}" data-sport="${sport.key}" style="--sport-accent:${sport.accent}">
+        <button class="public-sport-card ${available ? 'available' : 'pending'}"
+                data-sport="${sport.key}"
+                style="--sport-accent:${sport.accent}">
           <span class="public-sport-icon">${sport.icon}</span>
           <span class="public-sport-copy">
             <strong>${sport.name}</strong>
             <small>${sport.round}</small>
-            <span class="public-availability ${available ? 'ready' : ''}">${available ? 'DRAW AVAILABLE ✓' : 'DRAW PENDING'}</span>
+            <span class="public-availability ${available ? 'ready' : ''}">
+              ${available ? 'DRAW AVAILABLE ✓' : 'DRAW PENDING'}
+            </span>
           </span>
           <span class="public-card-arrow">→</span>
         </button>
@@ -110,17 +151,21 @@
 
   function normalizedMatches(row) {
     if (!row || !Array.isArray(row.matches)) return [];
+
     return row.matches.map((match, index) => ({
-      number: Number(match.number) || (index + 1),
-      a: String(match.a || match.aName || ''),
-      b: String(match.b || match.bName || '')
+      number: Number(match.number) || index + 1,
+      a: String(match.a || match.aName || '').trim(),
+      b: String(match.b || match.bName || '').trim()
     })).filter((match) => match.a && match.b);
   }
 
   function renderSport() {
     const sport = SPORTS[selectedSport];
     if (!sport) return;
+
     const row = rowsBySport[selectedSport] || null;
+    const matches = normalizedMatches(row);
+    const available = !!row && matches.length === sport.count;
 
     document.documentElement.style.setProperty('--public-sport-accent', sport.accent);
     $('#public-sport-icon').textContent = sport.icon;
@@ -129,14 +174,14 @@
 
     const pending = $('#public-pending');
     const results = $('#public-match-results');
-    if (!row) {
+
+    if (!available) {
       pending.classList.remove('is-hidden');
       results.classList.add('is-hidden');
       results.innerHTML = '';
       return;
     }
 
-    const matches = normalizedMatches(row);
     pending.classList.add('is-hidden');
     results.classList.remove('is-hidden');
     results.innerHTML = matches.map((match) => `
@@ -161,15 +206,18 @@
       const card = event.target.closest('[data-sport]');
       if (card) showSport(card.dataset.sport, true);
     });
+
     $('#btn-public-back').addEventListener('click', () => {
       updateUrl(null);
       showPicker();
     });
+
     window.addEventListener('popstate', () => {
       const key = new URLSearchParams(window.location.search).get('sport');
       if (SPORTS[key]) showSport(key, false);
       else showPicker();
     });
+
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) fetchResults();
     });
@@ -177,11 +225,13 @@
 
   function init() {
     bind();
+
     const requested = new URLSearchParams(window.location.search).get('sport');
     if (SPORTS[requested]) showSport(requested, false);
     else showPicker();
+
     fetchResults();
-    setInterval(fetchResults, Math.max(5000, Number(PublicConfig.REFRESH_INTERVAL_MS) || 12000));
+    setInterval(fetchResults, Math.max(5000, Number(PublicConfig.REFRESH_INTERVAL_MS) || 10000));
   }
 
   document.addEventListener('DOMContentLoaded', init);
