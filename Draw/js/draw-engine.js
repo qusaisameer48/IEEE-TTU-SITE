@@ -38,6 +38,7 @@
       draft.sessionId = createSessionId(draft.selectedSport);
       draft.startedAt = State.nowISO();
       draft.completedAt = null;
+      draft.resultsCompletedAt = null;
       draft.drawOrder = drawOrder;
       draft.drawCursor = 0;
       draft.matches = [];
@@ -144,7 +145,10 @@
           bId: selectedId,
           aName: a ? a.name : draft.slotAId,
           bName: b ? b.name : selectedId,
-          lockedAt: State.nowISO()
+          lockedAt: State.nowISO(),
+          winnerId: null,
+          winnerName: null,
+          resultUpdatedAt: null
         };
         draft.matches.push(match);
         draft.phase = 'confirmed';

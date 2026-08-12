@@ -108,20 +108,47 @@
     $('#match-locked-banner').classList.toggle('is-hidden', state.phase !== 'confirmed');
   }
 
+  function displayResultSide(match, side) {
+    const id = side === 'a' ? match.aId : match.bId;
+    const name = side === 'a' ? match.aName : match.bName;
+    const isWinner = match.winnerId === id;
+    const isLoser = !!match.winnerId && !isWinner;
+    return `
+      <div class="display-result-side ${isWinner ? 'winner' : ''} ${isLoser ? 'loser' : ''}">
+        <strong>${esc(name)}</strong>
+        <span>${isWinner ? '🏆 WINNER' : isLoser ? '—' : 'WAITING'}</span>
+      </div>
+    `;
+  }
+
   function renderResults(state, cfg) {
     setDisplayState('display-results');
+    const decided = state.matches.filter((match) => !!match.winnerId).length;
+    const allDecided = state.matches.length > 0 && decided === state.matches.length;
+    const hasAnyResult = decided > 0;
+
+    $('#display-results-kicker').textContent = allDecided ? 'ALL RESULTS RECORDED' : hasAnyResult ? 'LIVE MATCH RESULTS' : 'DRAW COMPLETE';
+    $('#display-results-title').textContent = hasAnyResult ? 'MATCH RESULTS' : 'FINAL DRAW RESULTS';
     $('#display-results-sub').textContent = `${cfg.icon} ${cfg.name} · ${cfg.round}`;
+    $('#display-results-progress').textContent = allDecided
+      ? `${decided} / ${state.matches.length} RESULTS · COMPLETE ✓`
+      : `${decided} / ${state.matches.length} RESULTS RECORDED`;
+    $('#display-results-progress').classList.toggle('complete', allDecided);
+
     $('#display-results-grid').innerHTML = state.matches.map((match) => `
-      <article class="result-card display-result-card">
-        <div class="result-number pixel">MATCH ${formatNumber(match.number)}</div>
-        <div class="result-pair">
-          <strong>${esc(match.aName)}</strong>
+      <article class="result-card display-result-card ${match.winnerId ? 'has-winner' : 'pending-result'}">
+        <div class="display-result-topline">
+          <div class="result-number pixel">MATCH ${formatNumber(match.number)}</div>
+          <span class="display-result-status ${match.winnerId ? 'decided' : 'pending'}">${match.winnerId ? 'FINAL ✓' : 'PENDING'}</span>
+        </div>
+        <div class="display-result-pair">
+          ${displayResultSide(match, 'a')}
           <span class="result-vs pixel">VS</span>
-          <strong>${esc(match.bName)}</strong>
+          ${displayResultSide(match, 'b')}
         </div>
       </article>
     `).join('');
-    $('#display-results-footer').textContent = `${state.sessionId || ''} · IEEE SPORTS TOURNAMENT 2026`;
+    $('#display-results-footer').textContent = `${state.sessionId || ''} · Results update live from the controller · IEEE SPORTS TOURNAMENT 2026`;
   }
 
   function render() {
