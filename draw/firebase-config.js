@@ -11,7 +11,7 @@
 
 // 1) Paste your Firebase project's config object here
 //    (Firebase Console → Project settings → General → Your apps → Web app → SDK setup)
-const firebaseConfig = {
+const FIREBASE_CONFIG = {
   apiKey: "AIzaSyBCm0XIV_GH3IMKd3FZXuo1IPbek7IiJE4",
   authDomain: "ieee-sports-draw-2026.firebaseapp.com",
   databaseURL: "https://ieee-sports-draw-2026-default-rtdb.firebaseio.com",
