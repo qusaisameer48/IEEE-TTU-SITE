@@ -1,0 +1,80 @@
+:root{
+  --public-bg:#000;
+  --public-surface:#0A0A1E;
+  --public-surface-2:#10102d;
+  --public-maze:#2525e8;
+  --public-yellow:#FFDE00;
+  --public-text:#fff;
+  --public-muted:#9FA8DA;
+  --public-green:#34E7A4;
+  --public-sport-accent:#00E1FF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:var(--public-bg);color:var(--public-text)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  background-image:
+    linear-gradient(rgba(37,37,232,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,37,232,.08) 1px,transparent 1px),
+    radial-gradient(circle,rgba(255,222,0,.06) 1.4px,transparent 1.5px);
+  background-size:84px 84px,84px 84px,26px 26px;
+}
+button{font:inherit}
+.pixel{font-family:"Courier New",monospace;font-weight:900;letter-spacing:.08em}
+.is-hidden{display:none!important}
+.public-page{min-height:100vh;display:flex;flex-direction:column}
+.public-header{
+  min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:16px clamp(18px,4vw,54px);background:#070718;border-bottom:3px solid var(--public-maze)
+}
+.public-brand{display:flex;align-items:center;gap:20px;min-width:0}
+.public-logos{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.public-logos img{height:52px;max-width:145px;object-fit:contain;background:#fff;padding:4px}
+.public-brand-copy small{display:block;color:var(--public-muted);letter-spacing:.15em;font-size:11px;margin-bottom:5px}
+.public-brand-copy strong{font-size:20px}
+.public-sync-badge{border:1px solid rgba(52,231,164,.55);color:var(--public-green);background:rgba(52,231,164,.08);padding:8px 12px;border-radius:999px;font-size:10px;white-space:nowrap}
+.public-sync-badge.offline{color:#ff7676;border-color:#ff7676;background:rgba(255,60,60,.08)}
+.public-main{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:clamp(34px,6vw,72px) 0 58px;flex:1}
+.public-hero{text-align:center;margin-bottom:34px}
+.public-kicker{color:var(--public-yellow);font-size:11px;margin-bottom:12px}
+.public-hero h1{font-size:clamp(34px,6vw,68px);line-height:1;letter-spacing:-.035em;margin-bottom:14px}
+.public-hero p{color:var(--public-muted);font-size:16px}
+.public-sport-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1000px;margin:0 auto}
+.public-sport-card{
+  position:relative;min-height:156px;display:flex;align-items:center;gap:22px;text-align:left;color:var(--public-text);
+  background:linear-gradient(135deg,var(--public-surface),#0b0b28);border:2px solid var(--public-maze);border-radius:22px;
+  padding:24px;cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;overflow:hidden
+}
+.public-sport-card::after{content:"";position:absolute;inset:auto -50px -75px auto;width:170px;height:170px;border-radius:50%;background:var(--sport-accent);filter:blur(60px);opacity:.08;pointer-events:none}
+.public-sport-card:hover{transform:translateY(-3px);border-color:var(--sport-accent);box-shadow:0 12px 45px rgba(0,0,0,.35)}
+.public-sport-icon{font-size:46px;flex:0 0 auto}
+.public-sport-copy{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;flex:1}
+.public-sport-copy strong{font-size:21px;letter-spacing:.02em}
+.public-sport-copy small{color:var(--public-muted);font-size:13px}
+.public-availability{margin-top:10px;font-family:"Courier New",monospace;font-weight:900;font-size:10px;color:#777a98;border:1px solid #343455;border-radius:999px;padding:6px 9px}
+.public-availability.ready{color:var(--public-green);border-color:rgba(52,231,164,.5);background:rgba(52,231,164,.06)}
+.public-card-arrow{font-size:26px;color:var(--public-yellow)}
+.public-results-toolbar{display:flex;justify-content:flex-start;margin-bottom:22px}
+.public-back{background:#0b0b2b;border:2px solid var(--public-maze);color:#fff;border-radius:12px;padding:11px 16px;cursor:pointer;font-weight:800}
+.public-back:hover{border-color:var(--public-yellow)}
+.public-sport-head{text-align:center;margin-bottom:34px}
+.public-sport-head .big-icon{font-size:46px;display:block;margin-bottom:8px}
+.public-sport-head h1{font-size:clamp(35px,6vw,64px);line-height:1.05;margin-bottom:10px}
+.public-sport-head p{color:var(--public-sport-accent);font-family:"Courier New",monospace;font-weight:900;letter-spacing:.08em}
+.public-pending{max-width:760px;margin:42px auto 0;padding:48px 24px;text-align:center;border:2px solid var(--public-maze);border-radius:22px;background:rgba(10,10,30,.92)}
+.public-pending .pac{width:54px;height:54px;border-radius:50%;background:var(--public-yellow);margin:0 auto 22px;clip-path:polygon(100% 70%,48% 50%,100% 30%,100% 0,0 0,0 100%,100% 100%)}
+.public-pending h2{font-size:25px;margin-bottom:10px}
+.public-pending p{color:var(--public-muted);line-height:1.7}
+.public-match-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.public-match-card{background:rgba(10,10,30,.95);border:2px solid var(--public-maze);border-radius:20px;padding:22px;min-height:136px;display:flex;flex-direction:column;justify-content:center}
+.public-match-number{color:var(--public-yellow);font-size:10px;margin-bottom:19px}
+.public-pair{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;text-align:center}
+.public-pair strong{font-size:clamp(18px,2.2vw,26px);overflow-wrap:anywhere}
+.public-vs{font-size:11px;color:var(--public-muted)}
+.public-footer{text-align:center;color:#65698d;font-size:11px;padding:15px 20px 25px;letter-spacing:.08em}
+@media(max-width:760px){
+  .public-header{align-items:flex-start}.public-brand-copy small{display:none}.public-brand-copy strong{font-size:15px}.public-logos img{height:42px;max-width:105px}.public-sync-badge{font-size:8px}
+  .public-sport-grid,.public-match-results{grid-template-columns:1fr}.public-main{width:min(100% - 22px,1180px);padding-top:34px}.public-sport-card{min-height:130px;padding:19px}.public-sport-icon{font-size:38px}
+  .public-pair{gap:9px}.public-pair strong{font-size:18px}.public-hero h1{font-size:40px}
+}
+@media(max-width:480px){.public-header{padding:12px}.public-logos img:last-child{display:none}.public-sync-badge{padding:7px}.public-brand{gap:10px}.public-hero p{font-size:14px}}

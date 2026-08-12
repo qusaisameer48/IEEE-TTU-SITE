@@ -25,7 +25,6 @@
       sessionId: null,
       startedAt: null,
       completedAt: null,
-      resultsCompletedAt: null,
       drawOrder: [],
       drawCursor: 0,
       previewParticipantId: null,
@@ -61,12 +60,6 @@
     if (!Array.isArray(next.participants)) next.participants = base.participants;
     if (!Array.isArray(next.drawOrder)) next.drawOrder = [];
     if (!Array.isArray(next.matches)) next.matches = [];
-    next.matches = next.matches.map((match, index) => Object.assign({
-      number: index + 1,
-      winnerId: null,
-      winnerName: null,
-      resultUpdatedAt: null
-    }, match || {}));
     if (!Array.isArray(next.audit)) next.audit = [];
     if (!Number.isInteger(next.drawCursor) || next.drawCursor < 0) next.drawCursor = 0;
 
@@ -308,71 +301,6 @@
     return validation;
   }
 
-  function setMatchWinner(matchNumber, winnerId) {
-    const state = activeSessionRef();
-    if (!state || state.phase !== 'complete') return { ok: false, reason: 'draw_not_complete' };
-
-    const match = state.matches.find((item) => item.number === Number(matchNumber));
-    if (!match) return { ok: false, reason: 'match_not_found' };
-    if (![match.aId, match.bId].includes(winnerId)) return { ok: false, reason: 'invalid_winner' };
-
-    const participant = state.participants.find((item) => item.id === winnerId);
-    const previousWinnerId = match.winnerId || null;
-    const previousWinnerName = match.winnerName || null;
-
-    update((draft) => {
-      const target = draft.matches.find((item) => item.number === Number(matchNumber));
-      if (!target) return;
-      target.winnerId = winnerId;
-      target.winnerName = participant ? participant.name : (winnerId === target.aId ? target.aName : target.bName);
-      target.resultUpdatedAt = nowISO();
-
-      const allDecided = draft.matches.length > 0 && draft.matches.every((item) => !!item.winnerId);
-      draft.resultsCompletedAt = allDecided ? (draft.resultsCompletedAt || nowISO()) : null;
-      audit(draft, previousWinnerId ? 'match_winner_changed' : 'match_winner_recorded', {
-        matchNumber: target.number,
-        previousWinnerId,
-        previousWinnerName,
-        winnerId: target.winnerId,
-        winnerName: target.winnerName
-      });
-    });
-
-    return { ok: true };
-  }
-
-  function clearMatchWinner(matchNumber) {
-    const state = activeSessionRef();
-    if (!state || state.phase !== 'complete') return { ok: false, reason: 'draw_not_complete' };
-    const match = state.matches.find((item) => item.number === Number(matchNumber));
-    if (!match || !match.winnerId) return { ok: false, reason: 'winner_not_set' };
-
-    update((draft) => {
-      const target = draft.matches.find((item) => item.number === Number(matchNumber));
-      if (!target) return;
-      const previousWinnerId = target.winnerId;
-      const previousWinnerName = target.winnerName;
-      target.winnerId = null;
-      target.winnerName = null;
-      target.resultUpdatedAt = nowISO();
-      draft.resultsCompletedAt = null;
-      audit(draft, 'match_winner_cleared', {
-        matchNumber: target.number,
-        previousWinnerId,
-        previousWinnerName
-      });
-    });
-
-    return { ok: true };
-  }
-
-  function resultsProgress() {
-    const state = activeSessionRef();
-    if (!state) return { decided: 0, total: 0, complete: false };
-    const decided = state.matches.filter((match) => !!match.winnerId).length;
-    return { decided, total: state.matches.length, complete: state.matches.length > 0 && decided === state.matches.length };
-  }
-
   function archiveSession(session, reason) {
     if (!session || !session.selectedSport) return;
     try {
@@ -418,9 +346,6 @@
     setParticipantName,
     validateParticipants,
     lockParticipants,
-    setMatchWinner,
-    clearMatchWinner,
-    resultsProgress,
     hardReset,
     archiveCurrent,
     participantById,

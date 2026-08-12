@@ -38,7 +38,6 @@
       draft.sessionId = createSessionId(draft.selectedSport);
       draft.startedAt = State.nowISO();
       draft.completedAt = null;
-      draft.resultsCompletedAt = null;
       draft.drawOrder = drawOrder;
       draft.drawCursor = 0;
       draft.matches = [];
@@ -145,10 +144,7 @@
           bId: selectedId,
           aName: a ? a.name : draft.slotAId,
           bName: b ? b.name : selectedId,
-          lockedAt: State.nowISO(),
-          winnerId: null,
-          winnerName: null,
-          resultUpdatedAt: null
+          lockedAt: State.nowISO()
         };
         draft.matches.push(match);
         draft.phase = 'confirmed';
@@ -193,7 +189,17 @@
       }
     });
 
-    if (current.matches.length >= sport.matches) Audio.complete();
+    if (current.matches.length >= sport.matches) {
+      Audio.complete();
+      // Publish the finished draw to the public read-only results page.
+      // The first publish in a browser session asks the organizer for the
+      // private publish token; later completed draws publish automatically.
+      setTimeout(() => {
+        if (PacDraw.Publish && typeof PacDraw.Publish.publishCompletedDraw === 'function') {
+          PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true });
+        }
+      }, 250);
+    }
     return true;
   }
 

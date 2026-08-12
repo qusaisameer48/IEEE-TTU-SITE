@@ -42,7 +42,6 @@
       drawOrder: state.drawOrder,
       startedAt: state.startedAt,
       completedAt: state.completedAt,
-      resultsCompletedAt: state.resultsCompletedAt,
       randomAlgorithm: state.randomAlgorithm,
       audit: state.audit
     };
@@ -129,11 +128,9 @@
     ctx.font = `800 ${Math.round(W * 0.024)}px monospace`;
     ctx.fillText('IEEE SPORTS TOURNAMENT 2026', W / 2, H * 0.085);
 
-    const decidedResults = state.matches.filter((match) => !!match.winnerId).length;
-    const hasMatchResults = decidedResults > 0;
     ctx.fillStyle = '#FFFFFF';
     ctx.font = `900 ${Math.round(W * 0.055)}px Arial, sans-serif`;
-    ctx.fillText(hasMatchResults ? 'MATCH RESULTS' : 'FINAL DRAW RESULTS', W / 2, H * 0.15);
+    ctx.fillText('FINAL DRAW RESULTS', W / 2, H * 0.15);
 
     ctx.fillStyle = cfg.accent || '#00E1FF';
     ctx.font = `900 ${Math.round(W * 0.038)}px Arial, sans-serif`;
@@ -179,38 +176,19 @@
 
       ctx.textAlign = 'center';
       const maxNameWidth = cardW * 0.78;
-      const aWinner = match.winnerId && match.winnerId === match.aId;
-      const bWinner = match.winnerId && match.winnerId === match.bId;
-
-      const nameFont = fitText(ctx, match.aName, maxNameWidth, Math.round(W * 0.022), Math.round(W * 0.013), 900);
+      const nameFont = fitText(ctx, match.aName, maxNameWidth, Math.round(W * 0.024), Math.round(W * 0.014), 900);
       ctx.font = `900 ${nameFont}px Arial, sans-serif`;
-      ctx.fillStyle = match.winnerId && !aWinner ? '#747A9B' : '#FFFFFF';
-      ctx.fillText(`${aWinner ? '🏆 ' : ''}${match.aName}`, x + cardW / 2, y + cardH * 0.44);
-
-      if (aWinner) {
-        ctx.fillStyle = '#44E6A4';
-        ctx.font = `900 ${Math.round(W * 0.0105)}px Arial, sans-serif`;
-        ctx.fillText('WINNER', x + cardW / 2, y + cardH * 0.56);
-      }
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(match.aName, x + cardW / 2, y + cardH * 0.48);
 
       ctx.fillStyle = '#FFDE00';
-      ctx.font = `900 ${Math.round(W * 0.013)}px monospace`;
-      ctx.fillText('VS', x + cardW / 2, y + cardH * 0.65);
+      ctx.font = `900 ${Math.round(W * 0.014)}px monospace`;
+      ctx.fillText('VS', x + cardW / 2, y + cardH * 0.64);
 
-      const nameFontB = fitText(ctx, match.bName, maxNameWidth, Math.round(W * 0.022), Math.round(W * 0.013), 900);
+      const nameFontB = fitText(ctx, match.bName, maxNameWidth, Math.round(W * 0.024), Math.round(W * 0.014), 900);
       ctx.font = `900 ${nameFontB}px Arial, sans-serif`;
-      ctx.fillStyle = match.winnerId && !bWinner ? '#747A9B' : '#FFFFFF';
-      ctx.fillText(`${bWinner ? '🏆 ' : ''}${match.bName}`, x + cardW / 2, y + cardH * 0.80);
-
-      if (bWinner) {
-        ctx.fillStyle = '#44E6A4';
-        ctx.font = `900 ${Math.round(W * 0.0105)}px Arial, sans-serif`;
-        ctx.fillText('WINNER', x + cardW / 2, y + cardH * 0.91);
-      } else if (!match.winnerId) {
-        ctx.fillStyle = '#9FA8DA';
-        ctx.font = `700 ${Math.round(W * 0.0095)}px Arial, sans-serif`;
-        ctx.fillText('RESULT PENDING', x + cardW / 2, y + cardH * 0.93);
-      }
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText(match.bName, x + cardW / 2, y + cardH * 0.84);
     });
 
     ctx.textAlign = 'center';

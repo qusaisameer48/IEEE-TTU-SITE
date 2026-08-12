@@ -4,7 +4,7 @@
   window.PacDraw = window.PacDraw || {};
 
   PacDraw.Config = Object.freeze({
-    APP_VERSION: '4.0.0',
+    APP_VERSION: '3.1.0',
     STORAGE_KEY: 'ieee_sports_2026_pacdraw_workspace_v3',
     LEGACY_STORAGE_KEYS: Object.freeze([
       'ieee_sports_2026_pacdraw_state_v2'

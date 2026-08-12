@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>Official Draw Results — IEEE Sports Tournament 2026</title>
+  <link rel="stylesheet" href="css/public-results.css?v=6.0">
+</head>
+<body>
+  <div class="public-page">
+    <header class="public-header">
+      <div class="public-brand">
+        <div class="public-logos">
+          <img src="assets/ieee-logo.svg" alt="IEEE">
+          <img src="assets/ttu-logo.png" alt="Tafila Technical University">
+        </div>
+        <div class="public-brand-copy">
+          <small>IEEE STUDENT BRANCH · TAFILA TECHNICAL UNIVERSITY</small>
+          <strong>IEEE Sports Tournament 2026</strong>
+        </div>
+      </div>
+      <div id="public-sync-status" class="public-sync-badge pixel">LIVE RESULTS</div>
+    </header>
+
+    <main class="public-main">
+      <section id="public-picker">
+        <div class="public-hero">
+          <div class="public-kicker pixel">OFFICIAL TOURNAMENT DRAW</div>
+          <h1>DRAW RESULTS</h1>
+          <p>Choose a sport to view the official draw.</p>
+        </div>
+        <div id="public-sport-grid" class="public-sport-grid" aria-label="Choose a sport"></div>
+      </section>
+
+      <section id="public-sport-results" class="is-hidden">
+        <div class="public-results-toolbar">
+          <button id="btn-public-back" class="public-back">← ALL SPORTS</button>
+        </div>
+        <div class="public-sport-head">
+          <span id="public-sport-icon" class="big-icon"></span>
+          <h1 id="public-sport-name"></h1>
+          <p id="public-round-name"></p>
+        </div>
+
+        <div id="public-pending" class="public-pending is-hidden">
+          <div class="pac" aria-hidden="true"></div>
+          <h2>DRAW NOT AVAILABLE YET</h2>
+          <p>The official draw will appear here automatically after it is completed by the organizers.</p>
+        </div>
+
+        <div id="public-match-results" class="public-match-results is-hidden"></div>
+      </section>
+    </main>
+
+    <footer class="public-footer">IEEE SPORTS TOURNAMENT 2026 · OFFICIAL DRAW RESULTS</footer>
+  </div>
+
+  <script src="js/public-config.js?v=6.0"></script>
+  <script src="js/public-results.js?v=6.0"></script>
+</body>
+</html>

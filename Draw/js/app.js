@@ -43,11 +43,7 @@
       return { label: 'DRAFT', cls: 'draft', detail: `${filled}/${sport.participants} أسماء محفوظة` };
     }
     if (session.phase === 'locked') return { label: 'READY', cls: 'ready', detail: 'جاهزة للبدء' };
-    if (session.phase === 'complete') {
-      const decided = session.matches.filter((match) => !!match.winnerId).length;
-      const suffix = decided ? `${decided}/${session.matches.length} نتائج مسجلة` : 'القرعة مكتملة · النتائج بانتظار الإدخال';
-      return { label: decided === session.matches.length && session.matches.length ? 'RESULTS' : 'COMPLETE', cls: 'complete', detail: suffix };
-    }
+    if (session.phase === 'complete') return { label: 'COMPLETE', cls: 'complete', detail: 'النتائج محفوظة' };
     return { label: 'LIVE', cls: 'live', detail: `${session.matches.length}/${sport.matches} مواجهات` };
   }
 
@@ -193,9 +189,8 @@
     $('#btn-controller-home').addEventListener('click', () => routeTo('landing'));
     $('#btn-back-sports').addEventListener('click', () => routeTo('landing'));
 
-    ['btn-open-display-top', 'btn-open-display', 'btn-open-display-results'].forEach((id) => {
-      const button = document.getElementById(id);
-      if (button) button.addEventListener('click', openDisplay);
+    ['btn-open-display-top', 'btn-open-display'].forEach((id) => {
+      document.getElementById(id).addEventListener('click', openDisplay);
     });
 
     $('#btn-controller-fullscreen').addEventListener('click', () => toggleFullscreen(document.documentElement));

@@ -176,39 +176,14 @@
       : '<div class="empty-log">لا توجد مواجهات مقفلة بعد.</div>';
   }
 
-  function resultSideButton(match, side) {
-    const id = side === 'a' ? match.aId : match.bId;
-    const name = side === 'a' ? match.aName : match.bName;
-    const isWinner = match.winnerId === id;
-    const hasWinner = !!match.winnerId;
-    const isLoser = hasWinner && !isWinner;
-    return `
-      <button
-        class="winner-choice ${isWinner ? 'is-winner' : ''} ${isLoser ? 'is-loser' : ''}"
-        data-match-number="${match.number}"
-        data-winner-id="${esc(id)}"
-        title="تسجيل ${esc(name)} كفائز">
-        <span class="winner-choice-name">${esc(name)}</span>
-        <span class="winner-choice-status">${isWinner ? '🏆 WINNER' : isLoser ? 'LOSER' : 'SELECT WINNER'}</span>
-      </button>
-    `;
-  }
-
   function resultsCards(state) {
     return state.matches.map((match) => `
-      <article class="result-card result-admin-card ${match.winnerId ? 'has-winner' : 'pending-result'}">
-        <div class="result-admin-topline">
-          <div class="result-number pixel">MATCH ${formatNumber(match.number)}</div>
-          <span class="result-state-pill ${match.winnerId ? 'decided' : 'pending'}">${match.winnerId ? 'RESULT RECORDED ✓' : 'WAITING FOR RESULT'}</span>
-        </div>
-        <div class="winner-choice-row">
-          ${resultSideButton(match, 'a')}
+      <article class="result-card">
+        <div class="result-number pixel">MATCH ${formatNumber(match.number)}</div>
+        <div class="result-pair">
+          <strong>${esc(match.aName)}</strong>
           <span class="result-vs pixel">VS</span>
-          ${resultSideButton(match, 'b')}
-        </div>
-        <div class="result-admin-footer">
-          <span>${match.winnerId ? `Winner: <strong>${esc(match.winnerName || '')}</strong>` : 'اضغط على اسم الفائز بعد انتهاء المباراة.'}</span>
-          <button class="clear-winner-btn ${match.winnerId ? '' : 'is-hidden'}" data-clear-winner="${match.number}">CLEAR RESULT</button>
+          <strong>${esc(match.bName)}</strong>
         </div>
       </article>
     `).join('');
@@ -216,20 +191,19 @@
 
   function renderComplete(state, cfg) {
     setStage('controller-complete');
-    const decided = state.matches.filter((match) => !!match.winnerId).length;
-    const allDecided = state.matches.length > 0 && decided === state.matches.length;
     $('#controller-results-title').textContent = `${cfg.name} — ${cfg.round}`;
-    $('#controller-results-sub').textContent = `${state.matches.length} matches locked · ${decided}/${state.matches.length} results recorded · Session ${state.sessionId || ''}`;
-    $('#results-progress').textContent = allDecided
-      ? `ALL ${decided} RESULTS RECORDED ✓`
-      : `${decided} / ${state.matches.length} RESULTS`;
-    $('#results-progress').classList.toggle('complete', allDecided);
+    $('#controller-results-sub').textContent = `${state.matches.length} matches locked · Session ${state.sessionId || ''}`;
     $('#controller-results-grid').innerHTML = resultsCards(state);
+    const publishButton = $('#btn-publish-public');
+    if (publishButton) {
+      const published = state.publicPublishedSessionId && state.publicPublishedSessionId === state.sessionId;
+      publishButton.disabled = !!published;
+      publishButton.textContent = published ? '🌐 PUBLISHED TO WEBSITE ✓' : '🌐 PUBLISH TO WEBSITE';
+    }
     $('#controller-audit').innerHTML = `
       <span><strong>Random:</strong> ${esc(state.randomAlgorithm || '')}</span>
-      <span><strong>Draw started:</strong> ${esc(state.startedAt || '')}</span>
-      <span><strong>Draw completed:</strong> ${esc(state.completedAt || '')}</span>
-      <span><strong>Results completed:</strong> ${esc(state.resultsCompletedAt || 'Pending')}</span>
+      <span><strong>Started:</strong> ${esc(state.startedAt || '')}</span>
+      <span><strong>Completed:</strong> ${esc(state.completedAt || '')}</span>
       <span><strong>Audit events:</strong> ${state.audit.length}</span>
     `;
   }
@@ -283,18 +257,9 @@
     $('#btn-start-live').addEventListener('click', () => Engine.startLiveDraw());
     $('#btn-spin').addEventListener('click', () => Engine.handleSpin());
     $('#btn-next').addEventListener('click', () => Engine.advanceMatch());
-
-    $('#controller-results-grid').addEventListener('click', (event) => {
-      const winnerButton = event.target.closest('[data-winner-id]');
-      if (winnerButton) {
-        State.setMatchWinner(Number(winnerButton.dataset.matchNumber), winnerButton.dataset.winnerId);
-        PacDraw.Audio.lock();
-        return;
-      }
-
-      const clearButton = event.target.closest('[data-clear-winner]');
-      if (clearButton) {
-        State.clearMatchWinner(Number(clearButton.dataset.clearWinner));
+    $('#btn-publish-public').addEventListener('click', () => {
+      if (PacDraw.Publish && typeof PacDraw.Publish.publishCompletedDraw === 'function') {
+        PacDraw.Publish.publishCompletedDraw(State.get(), { interactive: true, force: true });
       }
     });
 
