@@ -275,7 +275,26 @@
     }
   }
 
-  $("btn-back-home").addEventListener("click", ()=>{ renderHome(); showScreen("screen-home"); });
+$("btn-back-home").addEventListener("click", ()=>{
+
+  // Extra safety: save names before leaving setup
+  if(
+    currentSportKey &&
+    draftParticipants[currentSportKey] &&
+    dbState[currentSportKey].stage === "idle"
+  ){
+    const names = [...draftParticipants[currentSportKey]];
+
+    dbState[currentSportKey].participants = names;
+
+    writeSportState(currentSportKey, {
+      participants: names
+    });
+  }
+
+  renderHome();
+  showScreen("screen-home");
+});
   $("btn-home-from-results").addEventListener("click", ()=>{ renderHome(); showScreen("screen-home"); });
 
   /* ---------------- SETUP (admin only) ---------------- */
@@ -293,18 +312,39 @@
       grid.appendChild(field);
     });
     $("setup-err").textContent = "";
-    grid.querySelectorAll("input").forEach(inp=>{
-      inp.addEventListener("input", e=>{
-        draftParticipants[key][+e.target.dataset.idx] = e.target.value;
-      });
-    });
-  }
+   grid.querySelectorAll("input").forEach(inp=>{
+  inp.addEventListener("input", e=>{
+    const index = +e.target.dataset.idx;
 
-  $("btn-reset-names").addEventListener("click", ()=>{
-    if(!currentSportKey) return;
-    draftParticipants[currentSportKey] = [...SPORTS[currentSportKey].defaults];
-    renderSetup(currentSportKey);
+    // Update the local draft
+    draftParticipants[key][index] = e.target.value;
+
+    // Save immediately in the local state
+    const names = [...draftParticipants[key]];
+    dbState[key].participants = names;
+
+    // Save immediately to Firebase
+    writeSportState(key, {
+      participants: names
+    });
   });
+});
+  }
+$("btn-reset-names").addEventListener("click", ()=>{
+  if(!currentSportKey) return;
+
+  const key = currentSportKey;
+  const names = [...SPORTS[key].defaults];
+
+  draftParticipants[key] = names;
+  dbState[key].participants = [...names];
+
+  writeSportState(key, {
+    participants: names
+  });
+
+  renderSetup(key);
+});
 
   $("btn-start-draw").addEventListener("click", ()=>{
     const key = currentSportKey;
