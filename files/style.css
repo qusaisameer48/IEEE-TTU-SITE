@@ -2306,3 +2306,557 @@ body.role-admin .viewer-only{
   }
 
 }
+
+
+
+
+
+
+/* ============================================================
+   CLIENT-FACING VISUAL POLISH
+   Structure and draw logic are intentionally unchanged.
+   ============================================================ */
+
+
+/* ============================================================
+   LONG CONTENT SAFETY
+   ============================================================ */
+
+.slot .val,
+.match-card .team,
+.completed-item,
+.pick-btn,
+.decided-team,
+.chip{
+  min-width:0;
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+
+/* ============================================================
+   GLOBAL CONTENT ALIGNMENT
+   ============================================================ */
+
+.tiles,
+.setup-grid,
+.results-grid,
+.bracket-container{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+.results-grid,
+.bracket-container{
+  width:100%;
+  max-width:1300px;
+}
+
+
+/* ============================================================
+   HEADER / ROLE BADGE COLLISION FIX
+   ============================================================ */
+
+@media(min-width:1200px){
+
+  .topbar{
+    padding-right:330px;
+  }
+
+
+  .role-badge{
+    top:28px;
+
+    right:
+      clamp(
+        22px,
+        4vw,
+        72px
+      );
+  }
+
+}
+
+
+/* ============================================================
+   DRAW SCREEN LAYOUT FIX
+   ============================================================ */
+
+/*
+  IMPORTANT:
+
+  Your existing HTML contains:
+
+  .draw-stage
+      .draw-stage.admin-only
+
+  We keep this structure exactly as it is.
+
+  The outer element becomes the vertical page layout.
+  The inner element becomes the actual A VS B stage.
+*/
+
+
+#screen-draw > .draw-stage{
+  flex:1;
+
+  width:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:stretch;
+
+  justify-content:flex-start;
+
+  gap:0;
+
+  flex-wrap:nowrap;
+
+  padding:
+    8px
+    0
+    24px;
+}
+
+
+/* Actual match stage */
+
+#screen-draw > .draw-stage > .draw-stage{
+  flex:
+    0
+    0
+    auto;
+
+  width:100%;
+
+  display:flex;
+
+  flex-direction:row;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:
+    clamp(
+      28px,
+      6vw,
+      88px
+    );
+
+  flex-wrap:wrap;
+
+  padding:
+    30px
+    0
+    22px;
+}
+
+
+/* ============================================================
+   VIEWER LIVE SLOTS FIX
+   ============================================================ */
+
+/*
+  The inner draw-stage carries admin-only in the original HTML.
+
+  We explicitly expose ONLY this match display to the viewer.
+
+  The SPIN button remains admin-only because it is a different element.
+*/
+
+body.role-viewer
+#screen-draw
+> .draw-stage
+> .draw-stage.admin-only{
+  display:flex !important;
+}
+
+
+/* ============================================================
+   COMPACT VIEWER LIVE STATUS
+   ============================================================ */
+
+/*
+  compact-live-status already exists in your HTML.
+
+  Styling is kept here instead of using JavaScript .style properties.
+*/
+
+.compact-live-status{
+  min-height:0;
+
+  flex:
+    0
+    0
+    auto;
+
+  width:
+    min(
+      900px,
+      100%
+    );
+
+  align-self:center;
+
+  margin:
+    10px
+    auto
+    2px;
+
+  padding:
+    12px
+    16px;
+
+  gap:9px;
+
+  font-size:
+    clamp(
+      13px,
+      1.35vw,
+      17px
+    );
+
+  letter-spacing:.7px;
+
+  border:
+    1px
+    solid
+    rgba(
+      0,
+      34,
+      255,
+      .22
+    );
+
+  border-radius:8px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,34,255,.035),
+      rgba(0,34,255,.09),
+      rgba(0,34,255,.035)
+    );
+}
+
+
+.compact-live-status .pulse-dot{
+  width:9px;
+  height:9px;
+}
+
+
+/* ============================================================
+   DRAW BUTTON
+   ============================================================ */
+
+.spin-cta{
+  padding:
+    16px
+    0
+    16px;
+}
+
+
+#btn-spin{
+  min-height:58px;
+}
+
+
+/* ============================================================
+   REMAINING POOL
+   ============================================================ */
+
+.pool-panel{
+  border:
+    1px
+    solid
+    rgba(
+      0,
+      34,
+      255,
+      .14
+    );
+
+  border-radius:10px;
+
+  background:
+    rgba(
+      3,
+      7,
+      21,
+      .44
+    );
+}
+
+
+/* ============================================================
+   COMPLETED MATCHES PANEL
+   ============================================================ */
+
+.completed-panel{
+  padding:18px;
+
+  border:
+    1px
+    solid
+    rgba(
+      0,
+      34,
+      255,
+      .16
+    );
+
+  border-radius:10px;
+
+  background:
+    rgba(
+      3,
+      7,
+      21,
+      .34
+    );
+}
+
+
+.completed-item > span:last-child{
+  min-width:0;
+
+  text-align:right;
+}
+
+
+/* ============================================================
+   RESULT CARDS
+   ============================================================ */
+
+.match-card .team{
+  flex:
+    1
+    1
+    0;
+
+  max-width:none;
+
+  text-align:center;
+
+  line-height:1.25;
+}
+
+
+.match-card .vsx{
+  flex:
+    0
+    0
+    auto;
+}
+
+
+/* ============================================================
+   PANEL POLISH
+   ============================================================ */
+
+.round-section,
+.match-card,
+.pick-card,
+.slot,
+.tile,
+.modal{
+  backdrop-filter:
+    saturate(110%);
+}
+
+
+/* ============================================================
+   KEYBOARD / ACCESSIBILITY
+   ============================================================ */
+
+.icon-btn:focus-visible,
+.btn:focus-visible,
+.back:focus-visible,
+.p-field input:focus-visible,
+.admin-input:focus-visible,
+.pick-btn:focus-visible{
+  outline:
+    2px
+    solid
+    var(--yellow);
+
+  outline-offset:3px;
+}
+
+
+/* ============================================================
+   FLEX OVERFLOW SAFETY
+   ============================================================ */
+
+.brand-text,
+.match-card .row,
+.decided-row{
+  min-width:0;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media(max-width:1199px){
+
+  .screen{
+    padding-top:68px;
+  }
+
+
+  .role-badge{
+    top:12px;
+
+    right:
+      clamp(
+        14px,
+        3vw,
+        24px
+      );
+  }
+
+
+  .topbar{
+    padding-right:0;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media(max-width:700px){
+
+  #screen-draw > .draw-stage{
+    padding-top:4px;
+  }
+
+
+  #screen-draw > .draw-stage > .draw-stage{
+    flex-direction:column;
+
+    gap:18px;
+
+    padding:
+      22px
+      0
+      18px;
+  }
+
+
+  .compact-live-status{
+    padding:
+      10px
+      12px;
+
+    font-size:13px;
+  }
+
+
+  .match-card .row{
+    gap:10px;
+  }
+
+
+  .completed-item{
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+
+  .completed-item > span:last-child{
+    text-align:left;
+  }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media(max-width:470px){
+
+  .brand-text .t1{
+    letter-spacing:1.2px;
+  }
+
+
+  .brand-text .t2{
+    line-height:1.2;
+  }
+
+
+  .eyebrow{
+    letter-spacing:3px;
+  }
+
+
+  .slot{
+    height:auto;
+
+    min-height:165px;
+  }
+
+
+  .match-card{
+    padding:
+      20px
+      16px;
+  }
+
+
+  .match-card .row{
+    align-items:stretch;
+
+    flex-direction:column;
+
+    text-align:center;
+  }
+
+
+  .match-card .team{
+    width:100%;
+  }
+
+
+  .modal{
+    padding:
+      24px
+      20px;
+  }
+
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+
+    animation-duration:.01ms !important;
+
+    animation-iteration-count:1 !important;
+
+    transition-duration:.01ms !important;
+  }
+
+}
