@@ -43,8 +43,36 @@
   const dbState = {};
   Object.keys(SPORTS).forEach(k=> dbState[k] = defaultSportState(k));
 
-  // local-only draft used while an admin is editing names before a draw starts
+  // Local draft used while an admin is editing names before a draw starts
   const draftParticipants = {};
+
+  // Persistent backup for participant/team names on this browser.
+  // Firebase remains the live-sync source; localStorage prevents names from
+  // disappearing if the page is refreshed, closed, or Firebase is temporarily unavailable.
+  const NAMES_STORAGE_PREFIX = "ieee_draw_names_";
+
+  function saveNamesLocal(key, names){
+    try{
+      localStorage.setItem(NAMES_STORAGE_PREFIX + key, JSON.stringify(names));
+    }catch(e){
+      console.error("Could not save participant names locally", e);
+    }
+  }
+
+  function loadNamesLocal(key){
+    try{
+      const raw = localStorage.getItem(NAMES_STORAGE_PREFIX + key);
+      if(!raw) return null;
+
+      const names = JSON.parse(raw);
+      if(Array.isArray(names) && names.length === SPORTS[key].count){
+        return names.map(n => String(n));
+      }
+    }catch(e){
+      console.error("Could not load participant names locally", e);
+    }
+    return null;
+  }
 
   let currentSportKey = null;
   let muted = false;
@@ -119,12 +147,26 @@
   }
 
   function writeSportState(key, partial){
-    if(!fbReady){ Object.assign(dbState[key], partial); onSportStateChanged(key); return; }
-    dbRefs[key].update(partial);
+    if(!fbReady){
+      Object.assign(dbState[key], partial);
+      onSportStateChanged(key);
+      return Promise.resolve();
+    }
+    return dbRefs[key].update(partial).catch(e=>{
+      console.error(`Firebase update failed for ${key}`, e);
+      throw e;
+    });
   }
   function setSportState(key, full){
-    if(!fbReady){ dbState[key] = full; onSportStateChanged(key); return; }
-    dbRefs[key].set(full);
+    if(!fbReady){
+      dbState[key] = full;
+      onSportStateChanged(key);
+      return Promise.resolve();
+    }
+    return dbRefs[key].set(full).catch(e=>{
+      console.error(`Firebase set failed for ${key}`, e);
+      throw e;
+    });
   }
 
   function onSportStateChanged(key){
@@ -268,7 +310,23 @@
     if(isAdmin){
       if(st.done){ renderResults(key); showScreen("screen-results"); }
       else if(st.stage === "drawing"){ renderDraw(key); showScreen("screen-draw"); }
-      else { draftParticipants[key] = [...st.participants]; renderSetup(key); showScreen("screen-setup"); }
+      else {
+        // Prefer the local backup while the draw has not started.
+        // This prevents Firebase defaults (or a delayed connection) from erasing typed names.
+        const savedNames = loadNamesLocal(key);
+        const names = savedNames || [...st.participants];
+
+        draftParticipants[key] = [...names];
+        dbState[key].participants = [...names];
+
+        // If a local backup exists, push it back to Firebase for the live display.
+        if(savedNames){
+          writeSportState(key, { participants:[...savedNames] }).catch(()=>{});
+        }
+
+        renderSetup(key);
+        showScreen("screen-setup");
+      }
     } else {
       if(st.done){ renderResults(key); showScreen("screen-results"); }
       else { renderDraw(key); showScreen("screen-draw"); }
@@ -277,7 +335,7 @@
 
 $("btn-back-home").addEventListener("click", ()=>{
 
-  // Extra safety: save names before leaving setup
+  // Extra safety: save names before leaving setup.
   if(
     currentSportKey &&
     draftParticipants[currentSportKey] &&
@@ -285,11 +343,12 @@ $("btn-back-home").addEventListener("click", ()=>{
   ){
     const names = [...draftParticipants[currentSportKey]];
 
-    dbState[currentSportKey].participants = names;
+    saveNamesLocal(currentSportKey, names);
+    dbState[currentSportKey].participants = [...names];
 
     writeSportState(currentSportKey, {
       participants: names
-    });
+    }).catch(()=>{});
   }
 
   renderHome();
@@ -312,36 +371,41 @@ $("btn-back-home").addEventListener("click", ()=>{
       grid.appendChild(field);
     });
     $("setup-err").textContent = "";
-   grid.querySelectorAll("input").forEach(inp=>{
-  inp.addEventListener("input", e=>{
-    const index = +e.target.dataset.idx;
+    grid.querySelectorAll("input").forEach(inp=>{
+      inp.addEventListener("input", e=>{
+        const index = +e.target.dataset.idx;
 
-    // Update the local draft
-    draftParticipants[key][index] = e.target.value;
+        // Update the draft immediately.
+        draftParticipants[key][index] = e.target.value;
+        const names = [...draftParticipants[key]];
 
-    // Save immediately in the local state
-    const names = [...draftParticipants[key]];
-    dbState[key].participants = names;
+        // Save to this browser immediately so refresh/back/close cannot lose the names.
+        saveNamesLocal(key, names);
 
-    // Save immediately to Firebase
-    writeSportState(key, {
-      participants: names
+        // Keep the local mirror current.
+        dbState[key].participants = [...names];
+
+        // Also sync to Firebase for the live display / other devices.
+        writeSportState(key, {
+          participants: names
+        }).catch(()=>{});
+      });
     });
-  });
-});
   }
+
 $("btn-reset-names").addEventListener("click", ()=>{
   if(!currentSportKey) return;
 
   const key = currentSportKey;
   const names = [...SPORTS[key].defaults];
 
-  draftParticipants[key] = names;
+  draftParticipants[key] = [...names];
   dbState[key].participants = [...names];
+  saveNamesLocal(key, names);
 
   writeSportState(key, {
     participants: names
-  });
+  }).catch(()=>{});
 
   renderSetup(key);
 });
@@ -358,6 +422,10 @@ $("btn-reset-names").addEventListener("click", ()=>{
       $("setup-err").textContent = "Names must be unique — two entries cannot share the same name.";
       return;
     }
+
+    // Store the final confirmed names locally before the draw starts.
+    saveNamesLocal(key, names);
+
     setSportState(key, {
       participants:names, pool:[...names], matches:[], matchIndex:0,
       done:false, stage:"drawing", rounds:[], champion:null, liveDrawing:false
@@ -692,6 +760,7 @@ $("btn-reset-names").addEventListener("click", ()=>{
     $("modal-reset").classList.remove("active");
     currentSportKey = key;
     draftParticipants[key] = [...SPORTS[key].defaults];
+    saveNamesLocal(key, draftParticipants[key]);
     renderSetup(key);
     showScreen("screen-setup");
   });
