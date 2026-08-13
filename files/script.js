@@ -756,14 +756,21 @@ $("btn-reset-names").addEventListener("click", ()=>{
   $("modal-cancel").addEventListener("click", ()=> $("modal-reset").classList.remove("active"));
   $("modal-confirm").addEventListener("click", ()=>{
     const key = resetTargetKey;
-    setSportState(key, defaultSportState(key));
+
+    // نحافظ على الأسماء الحالية بدل ما نرجعها للافتراضي
+    const keptNames = (loadNamesLocal(key) || dbState[key].participants || [...SPORTS[key].defaults]).slice();
+
+    const freshState = defaultSportState(key);
+    freshState.participants = keptNames;
+
+    setSportState(key, freshState);
     $("modal-reset").classList.remove("active");
     currentSportKey = key;
-    draftParticipants[key] = [...SPORTS[key].defaults];
-    saveNamesLocal(key, draftParticipants[key]);
+    draftParticipants[key] = [...keptNames];
+    saveNamesLocal(key, keptNames);
     renderSetup(key);
     showScreen("screen-setup");
-  });
+});
 
   /* ---------------- boot ---------------- */
   isAdmin = localStorage.getItem("ieee_draw_admin") === "1";
