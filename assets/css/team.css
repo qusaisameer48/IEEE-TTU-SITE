@@ -116,7 +116,7 @@ body{
 .hero-overlay{
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.30);
+  background: rgba(0,0,0,0.10);
 }
 
 html[data-theme="dark"] .hero-overlay{
@@ -135,7 +135,7 @@ html[data-theme="dark"] .hero-overlay{
 .hero-content h1{
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
