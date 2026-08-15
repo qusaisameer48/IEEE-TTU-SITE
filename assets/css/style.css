@@ -222,7 +222,7 @@
 }
 
 .nav a:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 /* Hero */
@@ -230,9 +230,9 @@
   position: relative;
   height: 85vh;
   padding-top: 100px;
-  background-image: url("../img/TeamNewEdit.jpeg");
+  background-image: url("../img/IEEE\ Sports\ Team.JPG");
   background-size: 100%;
-  background-position: center 80%;
+  background-position: center 35%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -242,7 +242,7 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.30);
 }
 
 .hero-content {
@@ -250,7 +250,7 @@
   z-index: 1;
   color: #fff;
   max-width: 900px;
-  padding: 0 20px;
+  padding: 0 10px;
   margin: 0 auto;
 }
 
@@ -283,6 +283,9 @@
 .hero-btn:hover::after {
   transform: translateX(5px);
 }
+
+
+
 
 /* About Section */
 .about-section {
