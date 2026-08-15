@@ -616,3 +616,147 @@ html[data-theme="dark"] .social-link:hover{
   -webkit-user-drag: none;
    user-select: none;
  }
+
+
+
+ .member-image-jenan {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.member-image-jenan img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center 35%;
+
+  image-rendering: auto;
+  display: block;
+
+  /* مهم */
+  transform: none;
+}
+.team-member-jenan:hover .member-image-jenan img{
+  transform: none;
+}
+
+.member-image-jenan img{ 
+  object-position: center 35%; 
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+   JENAN IMAGE - FINAL FIX
+   ضع هذا الكود في آخر ملف team.css
+===================================================== */
+
+/* دائرة الصورة */
+.team-member-jenan .member-image-jenan {
+  width: 180px !important;
+  height: 180px !important;
+
+  margin: 0 auto 25px !important;
+
+  border-radius: 50% !important;
+  overflow: hidden !important;
+
+  border: 4px solid var(--img-ring) !important;
+  box-shadow: var(--img-shadow) !important;
+
+  /* منع أي تكبير يسبب تغبيش */
+  transform: none !important;
+  scale: 1 !important;
+
+  /* منع المتصفح من تغيير أبعاد العنصر */
+  flex-shrink: 0 !important;
+
+  position: relative !important;
+}
+
+
+/* الصورة نفسها */
+.team-member-jenan .member-image-jenan img {
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: none !important;
+
+  object-fit: cover !important;
+
+  /* مكان الوجه داخل الدائرة */
+  object-position: center 35% !important;
+
+  /* أهم شيء للوضوح */
+  transform: none !important;
+  scale: 1 !important;
+
+  filter: none !important;
+  opacity: 1 !important;
+
+  image-rendering: auto !important;
+
+  /* منع أي تأثيرات غير مرغوبة */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  transition: none !important;
+}
+
+
+/* =====================================================
+   منع الـ hover القديم من تكبير دائرة Jenan
+===================================================== */
+
+.team-member-jenan:hover .member-image-jenan {
+  transform: none !important;
+  scale: 1 !important;
+
+  border-color: rgba(0, 153, 204, 0.75) !important;
+  box-shadow: 0 12px 40px rgba(0,153,204,0.45) !important;
+}
+
+
+/* منع تكبير الصورة نفسها */
+.team-member-jenan:hover .member-image-jenan img {
+  transform: none !important;
+  scale: 1 !important;
+
+  filter: none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .team-member-jenan .member-image-jenan {
+    width: 150px !important;
+    height: 150px !important;
+
+    transform: none !important;
+  }
+
+  .team-member-jenan .member-image-jenan img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    object-position: center 35% !important;
+
+    transform: none !important;
+  }
+}
