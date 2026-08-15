@@ -97,15 +97,20 @@ body{
 /* ============================= */
 .hero{
   position: relative;
-  height: 55vh;
+  height: 85vh;
   padding-top: 100px;
-  background-image: url("../img/Our_Team.png");
+  box-sizing: border-box;
+  background-image: url("../img/COVER_PAGE.JPG");
   background-size: cover;
-  background-position: center 80%;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  overflow: hidden;
 }
 
 .hero-overlay{
